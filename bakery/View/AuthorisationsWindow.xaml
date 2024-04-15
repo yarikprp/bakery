@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery.View"
         mc:Ignorable="d"
-        Title="Авторизация" Height="450" Width="800">
+        Title="Авторизация" WindowState="Maximized">
     <Grid Background="#fffeb6">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -20,11 +20,11 @@
         <Border BorderBrush="Black" BorderThickness="1" Margin="152,53,122,116" Grid.Row="1" >
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" Height="200" Width="500">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Логин" FontSize="16" Margin="5" Width="100" Height="30"/>
+                    <TextBlock x:Name="log" Text="Логин" FontSize="16" Margin="5" Width="100" Height="30"/>
                     <TextBox Name="textBoxLogin" Margin="5" Height="30" Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Пароль" FontSize="16" Margin="5" Width="100" Height="30" TextAlignment="Justify"/>
+                    <TextBlock x:Name="passwd" Text="Пароль" FontSize="16" Margin="5" Width="100" Height="30" TextAlignment="Justify"/>
                     <PasswordBox Name="textBoxPassword" Margin="5" Height="30" Width="250"/>
                 </StackPanel>
                 <Button x:Name="buttonLogin" Content="Войти" Height="28" Width="152" Click="buttonLogin_Click" />

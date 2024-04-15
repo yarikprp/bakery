@@ -1,18 +1,6 @@
 ﻿using bakery.Model;
 using kulinaria_app_v2.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace bakery.View
 {
@@ -23,7 +11,6 @@ namespace bakery.View
     {
         public static User CurrentUser { get; set; } = null;
 
-        private int loginButtonClickCount = 0;
         public AuthorisationsWindow()
         {
             InitializeComponent();
@@ -38,11 +25,7 @@ namespace bakery.View
             }
             else
             {
-                if (loginButtonClickCount == 1)
-                {
-/*                    ShowCaptchaForm();
-*/                }
-                else
+                if (!string.IsNullOrEmpty(textBoxLogin.Text))
                 {
                     CurrentUser = await UserFromDb.GetUser(textBoxLogin.Text, textBoxPassword.Password);
 
@@ -55,11 +38,11 @@ namespace bakery.View
                     else
                     {
                         MessageBox.Show("Такого пользователя не существует");
-                        loginButtonClickCount++;
                     }
                 }
             }
         }
+
 
         private void buttonRegister_Click(object sender, RoutedEventArgs e)
         {
@@ -75,7 +58,6 @@ namespace bakery.View
             {
                 registrationWindow.Close();
             }
-
         }
     }
 }

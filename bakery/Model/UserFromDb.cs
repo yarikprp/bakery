@@ -44,7 +44,7 @@ namespace bakery.Model
                                     birthday = reader.GetDateTime(4);
                                 }
                                 user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
-                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9));
+                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(8), reader.GetString(9));
                             }
                             else
                             {
@@ -159,7 +159,7 @@ namespace bakery.Model
             }
         }
 
-        public static async Task AddUser(string login, string password, string firstName, string lastName)
+        public static async Task AddUser(string login, string password, string firstName, string lastName, string email)
         {
             try
             {
@@ -167,12 +167,13 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "INSERT INTO public.tb_user (first_name, last_name, patronymic, login, user_password, phone, adress, id_role) " +
-                        "VALUES (@firstName, @lastName, '', @login, @password, '', '', default)";
+                    string add = "INSERT INTO public.tb_user (first_name, last_name, patronymic, login, user_password, phone, adress, id_role, email) " +
+                        "VALUES (@firstName, @lastName, '', @login, @password, '', '', default, @email)";
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("firstName", firstName);
                     command.Parameters.AddWithValue("lastName", lastName);
                     command.Parameters.AddWithValue("login", login);
+                    command.Parameters.AddWithValue("email", email);
                     command.Parameters.AddWithValue("password", Verification.GetSHA512Hash(password));
 
                     int i = await command.ExecuteNonQueryAsync();
@@ -204,7 +205,7 @@ namespace bakery.Model
                     await connection.OpenAsync();
 
                     string getUsers = "SELECT user_id, first_name, last_name, patronymic, date_of_birthday, login, user_password, " +
-                        "phone, adress, id_role FROM public.tb_user;";
+                        "phone, adress, id_role, email FROM public.tb_user;";
 
                     NpgsqlCommand command = new NpgsqlCommand(getUsers, connection);
 
@@ -219,7 +220,7 @@ namespace bakery.Model
                                 birthday = reader.GetDateTime(4);
                             }
                             users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
-                                reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9)));
+                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9), reader.GetString(10)));
                         }
                     }
                 }
@@ -230,6 +231,28 @@ namespace bakery.Model
             }
 
             return users;
+        }
+
+        public static async Task SendEmailAsync(string email, string message)
+        {
+            var emailMessage = new MimeMessage();
+
+            emailMessage.From.Add(new MailboxAddress("Администрация пекарни", "Beggar-bro@yandex.ru"));
+            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.Subject = "Логин и пароль";
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+            {
+                Text = message
+            };
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                await client.ConnectAsync("smtp.yandex.ru", 25, false);
+                await client.AuthenticateAsync("Beggar-bro@yandex.ru", "vmkzcaydjlyxkbhw");
+                await client.SendAsync(emailMessage);
+
+                await client.DisconnectAsync(true);
+            }
         }
     }
 }

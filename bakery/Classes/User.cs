@@ -17,9 +17,10 @@ namespace kulinaria_app_v2.Classes
         public string Phone { get; set; }
         public string Adress { get; set; }
         public int RoleId { get; set; }
-
+        public string Email { get; set; }
+     
         public User(int userId, string firstName, string lastName, string patronymic, DateTime dateOfBirthday,
-            string login, string phone, string adress, int roleId)
+            string login, string phone, string adress, int roleId, string email)
         {
             UserId = userId;
             FirstName = firstName;
@@ -30,6 +31,7 @@ namespace kulinaria_app_v2.Classes
             Phone = phone;
             Adress = adress;
             RoleId = roleId;
+            Email = email;
         }
     }
 }

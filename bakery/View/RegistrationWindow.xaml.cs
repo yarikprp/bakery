@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -47,27 +48,38 @@ namespace bakery.View
         private async void buttonRegister_Click(object sender, RoutedEventArgs e)
         {
             if (textBoxFirstName.Text == "" || textBoxLastName.Text == "" || textBoxLogin.Text == ""
-                || textBoxPassword.Text == "" || textBoxPasswordRepeat.Text == "")
+                || textBoxPassword.Text == "" || textBoxPasswordRepeat.Text == "" || textBoxEmail.Text == "")
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
             else
             {
+                if (!IsValidEmail(textBoxEmail.Text))
+                {
+                    MessageBox.Show("Некорректный адрес электронной почты");
+                    return;
+                }
+
                 if (await UserFromDb.CheckUser(textBoxLogin.Text) && UserFromDb.CheckPassword(textBoxPassword.Text, textBoxPasswordRepeat.Text))
                 {
-                    await UserFromDb.AddUser(textBoxLogin.Text, textBoxPassword.Text, textBoxFirstName.Text, textBoxLastName.Text);
+                    await UserFromDb.AddUser(textBoxLogin.Text, textBoxPassword.Text, textBoxFirstName.Text, textBoxLastName.Text, textBoxEmail.Text);
 
-                    MessageBoxResult MessageBoxResult = MessageBoxResult.OK;
+                    await UserFromDb.SendEmailAsync(textBoxEmail.Text, textBoxPassword.Text + textBoxLogin);
+
                     Close();
                 }
                 else
                 {
-                    MessageBoxResult MessageBoxResult = MessageBoxResult.OK;
                     Close();
                 }
             }
+        }
 
+        private bool IsValidEmail(string email)
+        {
+            string emailPattern = @"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$";
+            return Regex.IsMatch(email, emailPattern);
         }
     }
 }

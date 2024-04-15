@@ -31,6 +31,10 @@
                 <TextBox Name="textBoxLogin" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Почта" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
+                <TextBox Name="textBoxEmail" Margin="5" Height="30" Width="250"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Пароль" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
                 <TextBox Name="textBoxPassword" Margin="5" Height="30" Width="250"/>
             </StackPanel>
