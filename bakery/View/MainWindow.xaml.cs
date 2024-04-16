@@ -76,12 +76,28 @@ namespace bakery
             };
             var item0 = new ItemMenu("Пользователи", menuiUser, PackIconKind.Register);
 
-            Menu.Children.Add(new UserControl1(item0));
-            Menu.Children.Add(new UserControl1(item6));
-            Menu.Children.Add(new UserControl1(item1));
-            Menu.Children.Add(new UserControl1(item2));
-            Menu.Children.Add(new UserControl1(item3));
-            Menu.Children.Add(new UserControl1(item4));
+            switch (AuthorisationsWindow.CurrentUser.RoleId)
+            {
+                case 1:
+                    Menu.Children.Add(new UserControl1(item1));
+                    Menu.Children.Add(new UserControl1(item2));
+                    Menu.Children.Add(new UserControl1(item3));
+                    Menu.Children.Add(new UserControl1(item4));
+                    Menu.Children.Add(new UserControl1(item0));
+                    Menu.Children.Add(new UserControl1(item6));
+                    break;
+                case 2:
+                    Menu.Children.Add(new UserControl1(item0));
+                    Menu.Children.Add(new UserControl1(item6));
+                    Menu.Children.Add(new UserControl1(item4));
+                    break;
+                case 3:
+                    Menu.Children.Add(new UserControl1(item1));
+                    Menu.Children.Add(new UserControl1(item2));
+                    Menu.Children.Add(new UserControl1(item3));
+                    Menu.Children.Add(new UserControl1(item6));
+                    break;
+            }
         }
 
         private void EditProfile_Click_Exit(object sender, RoutedEventArgs e)
