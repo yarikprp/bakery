@@ -155,6 +155,12 @@
     <Compile Include="View\AuthorisationsWindow.xaml.cs">
       <DependentUpon>AuthorisationsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\PasswordChangeWindow.xaml.cs">
+      <DependentUpon>PasswordChangeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProfileEditWindow.xaml.cs">
+      <DependentUpon>ProfileEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
@@ -180,6 +186,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\PasswordChangeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ProfileEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

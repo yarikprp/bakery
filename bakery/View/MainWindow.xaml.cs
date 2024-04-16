@@ -86,17 +86,27 @@ namespace bakery
 
         private void EditProfile_Click_Exit(object sender, RoutedEventArgs e)
         {
-
+            ProfileEditWindow profileEditWindow = new ProfileEditWindow();
+            profileEditWindow.Show();
         }
 
         private void ChangePassword_Click_Exit(object sender, RoutedEventArgs e)
         {
+            PasswordChangeWindow passwordChange = new PasswordChangeWindow();
+            bool? result = passwordChange.ShowDialog();
 
+            if (result == true)
+            {
+                Application.Current.MainWindow.Show();
+                Close();
+            }
         }
 
         private void ChangeUser_Click_Exit(object sender, RoutedEventArgs e)
         {
-
+            AuthorisationsWindow.CurrentUser = null;
+            Application.Current.MainWindow.Show();
+            Close();
         }
 
         private void Button_Click_Exit(object sender, RoutedEventArgs e)

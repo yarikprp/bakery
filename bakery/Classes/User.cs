@@ -14,13 +14,14 @@ namespace kulinaria_app_v2.Classes
         public string Patronymic { get; set; }
         public DateTime DateOfBirthday { get; set; }
         public string Login { get; set; }
+        public string Password { get; set; }
         public string Phone { get; set; }
         public string Adress { get; set; }
         public int RoleId { get; set; }
         public string Email { get; set; }
      
         public User(int userId, string firstName, string lastName, string patronymic, DateTime dateOfBirthday,
-            string login, string phone, string adress, int roleId, string email)
+            string login, string password, string phone, string adress, int roleId, string email)
         {
             UserId = userId;
             FirstName = firstName;
@@ -28,6 +29,7 @@ namespace kulinaria_app_v2.Classes
             Patronymic = patronymic;
             DateOfBirthday = dateOfBirthday;
             Login = login;
+            Password = password;
             Phone = phone;
             Adress = adress;
             RoleId = roleId;

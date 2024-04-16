@@ -44,7 +44,7 @@ namespace bakery.Model
                                     birthday = reader.GetDateTime(4);
                                 }
                                 user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
-                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9), reader.GetString(10));
+                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetString(8), reader.GetInt32(9), reader.GetString(10));
                             }
                             else
                             {
@@ -67,6 +67,66 @@ namespace bakery.Model
             return user;
         }
 
+        public static async Task UpdateUserProfile(User user)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "UPDATE public.tb_user SET first_name=@fName, last_name=@lName, patronymic=@patronymic, " +
+                        "date_of_birthday=@birthday, phone=@phone, adress=@adress " +
+                        "WHERE user_id=@id;";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("fName", user.FirstName);
+                    command.Parameters.AddWithValue("lName", user.LastName);
+                    command.Parameters.AddWithValue("patronymic", user.Patronymic);
+                    command.Parameters.AddWithValue("birthday", user.DateOfBirthday);
+                    command.Parameters.AddWithValue("phone", user.Phone);
+                    command.Parameters.AddWithValue("adress", user.Adress);
+                    command.Parameters.AddWithValue("id", user.UserId);
+
+                    await command.ExecuteNonQueryAsync();
+                }
+            }
+
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task ChangePassword(int idUser, string newPass)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string change = "UPDATE public.tb_user SET user_password=@new " +
+                        "WHERE user_id = @id";
+
+                    NpgsqlCommand command = new NpgsqlCommand(change, connection);
+                    command.Parameters.AddWithValue("id", idUser);
+                    command.Parameters.AddWithValue("new", Verification.GetSHA512Hash(newPass));
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show("Пароль изменён");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запрос отклонён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         public static bool CheckPassword(string password, string passRepeat)
         {
