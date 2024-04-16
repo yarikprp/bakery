@@ -134,6 +134,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Company.cs" />
+    <Compile Include="Classes\ConsumptionOfIngredients.cs" />
+    <Compile Include="Classes\Employee.cs" />
+    <Compile Include="Classes\EmploymentSchedule.cs" />
+    <Compile Include="Classes\Ingredients.cs" />
+    <Compile Include="Classes\Post.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Classes\ProductReleasePlan.cs" />
+    <Compile Include="Classes\ReceiptWarehouse.cs" />
+    <Compile Include="Classes\Recipe.cs" />
+    <Compile Include="Classes\Sale.cs" />
+    <Compile Include="Classes\Supplier.cs" />
+    <Compile Include="Classes\TypeIngredients.cs" />
+    <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Verification.cs" />
     <Compile Include="Model\UserFromDb.cs" />
     <Compile Include="ViewModel\ItemMenu.cs" />
