@@ -44,7 +44,7 @@ namespace bakery.Model
                                     birthday = reader.GetDateTime(4);
                                 }
                                 user = new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
-                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(8), reader.GetString(9));
+                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9), reader.GetString(10));
                             }
                             else
                             {
@@ -192,45 +192,6 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
                 return;
             }
-        }
-
-        public static async Task<List<User>> GetUsers()
-        {
-            List<User> users = new List<User>();
-
-            try
-            {
-                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
-                {
-                    await connection.OpenAsync();
-
-                    string getUsers = "SELECT user_id, first_name, last_name, patronymic, date_of_birthday, login, user_password, " +
-                        "phone, adress, id_role, email FROM public.tb_user;";
-
-                    NpgsqlCommand command = new NpgsqlCommand(getUsers, connection);
-
-                    NpgsqlDataReader reader = await command.ExecuteReaderAsync();
-                    if (reader.HasRows)
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            DateTime birthday = DateTime.Now;
-                            if (!(reader[4] is DBNull))
-                            {
-                                birthday = reader.GetDateTime(4);
-                            }
-                            users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
-                                    reader.GetString(5), reader.GetString(6), reader.GetString(7), reader.GetInt32(9), reader.GetString(10)));
-                        }
-                    }
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            return users;
         }
 
         public static async Task SendEmailAsync(string email, string message)

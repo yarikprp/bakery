@@ -25,20 +25,17 @@ namespace bakery.View
             }
             else
             {
-                if (!string.IsNullOrEmpty(textBoxLogin.Text))
-                {
-                    CurrentUser = await UserFromDb.GetUser(textBoxLogin.Text, textBoxPassword.Password);
+                CurrentUser = await UserFromDb.GetUser(textBoxLogin.Text, textBoxPassword.Password);
 
-                    if (CurrentUser != null)
-                    {
-                        MainWindow mainWindow = new MainWindow();
-                        mainWindow.Show();
-                        Hide();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Такого пользователя не существует");
-                    }
+                if (CurrentUser != null)
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Такого пользователя не существует");
                 }
             }
         }
