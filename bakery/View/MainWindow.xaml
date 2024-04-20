@@ -5,44 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bakery" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Главная" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Главная" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized" Loaded="MainWindow_Loaded">
     <Grid Background="#fffeb6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <materialDesign:ColorZone Mode="PrimaryMid" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
-            <Grid>
-                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges" HorizontalAlignment="Right" Margin="10">
-                    <StackPanel>
-                        <Button Content="Редактировать профиль" Click="EditProfile_Click_Exit"/>
-                        <Button Content="Сменить пароль" Click="ChangePassword_Click_Exit"/>
-                        <Button Content="Сменить пользователя" Click="ChangeUser_Click_Exit"/>
-                        <Button Content="Выход" Click="Button_Click_Exit"/>
+        <Menu>
+            <MenuItem Header="Действия">
+                <MenuItem Header="Редактировать профиль" Click="EditProfile_Click"/>
+                <MenuItem Header="Сменить пароль" Click="ChangePassword_Click"/>
+                <MenuItem Header="Сменить пользователя" Click="ChangeUser_Click"/>
+                <MenuItem Header="Выход" Click="Button_Click_Exit"/>
+            </MenuItem>
+        </Menu>
+
+        <TabControl Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" >
+
+            <TabItem  Background="#e6f5f3">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Управление"/>
                     </StackPanel>
-                </materialDesign:PopupBox>
-            </Grid>
-        </materialDesign:ColorZone>
-        <Grid HorizontalAlignment="Stretch" Grid.Row="1" Background="{StaticResource PrimaryHueMidBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="326*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="#fffeb6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="22*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="/View/bakary.png" Grid.ColumnSpan="2"/>
-            </Grid>
-            <ScrollViewer HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="1">
-                <StackPanel x:Name="Menu" Margin="10"/>
-            </ScrollViewer>
-        </Grid>
+                </TabItem.Header>
+
+                <Frame x:Name="userManegmentFrame" NavigationUIVisibility="Hidden"/>
+
+            </TabItem>
+            <TabItem  >
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Склад"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Frame x:Name="warehouseFrame"/>
+            </TabItem>
+
+            <TabItem    Header="Компании">
+                <Frame x:Name="companyFrame"/>
+            </TabItem>
+            <TabItem  Background="#e6f5f3">
+
+
+            </TabItem>
+
+        </TabControl>
+
     </Grid>
 </Window>

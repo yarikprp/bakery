@@ -138,6 +138,7 @@
     <Compile Include="Classes\ConsumptionOfIngredients.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\EmploymentSchedule.cs" />
+    <Compile Include="Classes\FrameClass.cs" />
     <Compile Include="Classes\Ingredients.cs" />
     <Compile Include="Classes\Post.cs" />
     <Compile Include="Classes\Product.cs" />
@@ -150,8 +151,15 @@
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Verification.cs" />
     <Compile Include="Model\UserFromDb.cs" />
-    <Compile Include="ViewModel\ItemMenu.cs" />
-    <Compile Include="ViewModel\SubItem.cs" />
+    <Compile Include="Page\CompanyFrame.xaml.cs">
+      <DependentUpon>CompanyFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\UserManegmentFrame.xaml.cs">
+      <DependentUpon>UserManegmentFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\WarehouseFrame.xaml.cs">
+      <DependentUpon>WarehouseFrame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AuthorisationsWindow.xaml.cs">
       <DependentUpon>AuthorisationsWindow.xaml</DependentUpon>
     </Compile>
@@ -164,9 +172,18 @@
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
+    <Page Include="Page\CompanyFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\UserManegmentFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\WarehouseFrame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AuthorisationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,10 +212,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegistrationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -236,9 +249,7 @@
   <ItemGroup>
     <Resource Include="Images\bakary.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Page\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="View\bakary.png" />
   </ItemGroup>

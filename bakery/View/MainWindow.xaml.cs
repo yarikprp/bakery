@@ -1,9 +1,12 @@
-﻿using bakery.View;
-using bakery.ViewModel;
+﻿using bakery.Classes;
+using bakery.Page;
+using bakery.View;
 using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,87 +29,25 @@ namespace bakery
         public MainWindow()
         {
             InitializeComponent();
-
-            var menuRecite = new List<SubItem>
-            {
-                new SubItem("Склад"),
-                new SubItem("Остатки"),
-                new SubItem("Реализация")
-            };
-            var item6 = new ItemMenu("Склад", menuRecite, PackIconKind.Home);
-
-            var menuProduct = new List<SubItem>
-            {
-                new SubItem("Продукты")
-            };
-            var item1 = new ItemMenu("Продукция", menuProduct, PackIconKind.Schedule);
-
-            var menuGuide = new List<SubItem>
-            {
-                new SubItem("Единицы"),
-                new SubItem("Рецепты"),
-                new SubItem("Компании"),
-                new SubItem("Поставщики"),
-                new SubItem("Продажи"),
-                new SubItem("Компании")
-            };
-            var item2 = new ItemMenu("Справочники",  menuGuide, PackIconKind.FileReport);
-
-            var menuIngredient = new List<SubItem>
-            {
-                new SubItem("Тип ингредиента"),
-                new SubItem("Ингредиенты"),
-                new SubItem("Расход ингредиентов")
-            };
-            var item3 = new ItemMenu("Ингардиаенты", menuIngredient, PackIconKind.ShoppingBasket);
-
-            var menuiEmployee = new List<SubItem>
-            {
-                new SubItem("Сотрудники"),
-                new SubItem("Занятости"),
-                new SubItem("Должности")
-            };
-            var item4 = new ItemMenu("Сотрудники", menuiEmployee, PackIconKind.ScaleBalance);
-
-            var menuiUser = new List<SubItem>
-            {
-                new SubItem("Сотрудники"),
-                new SubItem("Занятости"),
-                new SubItem("Должности")
-            };
-            var item0 = new ItemMenu("Пользователи", menuiUser, PackIconKind.Register);
-
-            switch (AuthorisationsWindow.CurrentUser.RoleId)
-            {
-                case 1:
-                    Menu.Children.Add(new UserControl1(item1));
-                    Menu.Children.Add(new UserControl1(item2));
-                    Menu.Children.Add(new UserControl1(item3));
-                    Menu.Children.Add(new UserControl1(item4));
-                    Menu.Children.Add(new UserControl1(item0));
-                    Menu.Children.Add(new UserControl1(item6));
-                    break;
-                case 2:
-                    Menu.Children.Add(new UserControl1(item0));
-                    Menu.Children.Add(new UserControl1(item6));
-                    Menu.Children.Add(new UserControl1(item4));
-                    break;
-                case 3:
-                    Menu.Children.Add(new UserControl1(item1));
-                    Menu.Children.Add(new UserControl1(item2));
-                    Menu.Children.Add(new UserControl1(item3));
-                    Menu.Children.Add(new UserControl1(item6));
-                    break;
-            }
         }
 
-        private void EditProfile_Click_Exit(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            FrameClass.userManegmentFrame = userManegmentFrame;
+            FrameClass.userManegmentFrame.Navigate(new Page.UserManegmentFrame());
+            FrameClass.warehouseFrame = warehouseFrame;
+            FrameClass.warehouseFrame.Navigate(new Page.WarehouseFrame());
+            FrameClass.companyFrame = companyFrame;
+            FrameClass.companyFrame.Navigate(new Page.WarehouseFrame());
+        }
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
         {
             ProfileEditWindow profileEditWindow = new ProfileEditWindow();
             profileEditWindow.Show();
         }
 
-        private void ChangePassword_Click_Exit(object sender, RoutedEventArgs e)
+        private void ChangePassword_Click(object sender, RoutedEventArgs e)
         {
             PasswordChangeWindow passwordChange = new PasswordChangeWindow();
             bool? result = passwordChange.ShowDialog();
@@ -118,7 +59,7 @@ namespace bakery
             }
         }
 
-        private void ChangeUser_Click_Exit(object sender, RoutedEventArgs e)
+        private void ChangeUser_Click(object sender, RoutedEventArgs e)
         {
             AuthorisationsWindow.CurrentUser = null;
             Application.Current.MainWindow.Show();
