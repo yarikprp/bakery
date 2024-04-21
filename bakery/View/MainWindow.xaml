@@ -13,7 +13,10 @@
         </Grid.RowDefinitions>
 
         <Menu>
-            <MenuItem Header="Действия">
+            <MenuItem Header="Пользователь" x:Name="nameUser">
+                <MenuItem.Icon>
+                    <Image Source="/Images/profile.png" Margin="0,0,-13,-6" />
+                </MenuItem.Icon>
                 <MenuItem Header="Редактировать профиль" Click="EditProfile_Click"/>
                 <MenuItem Header="Сменить пароль" Click="ChangePassword_Click"/>
                 <MenuItem Header="Сменить пользователя" Click="ChangeUser_Click"/>
@@ -22,36 +25,105 @@
         </Menu>
 
         <TabControl Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center" >
-
-            <TabItem  Background="#e6f5f3">
+            <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/manegment.png"/>
                         <TextBlock Text="Управление"/>
                     </StackPanel>
                 </TabItem.Header>
-
-                <Frame x:Name="userManegmentFrame" NavigationUIVisibility="Hidden"/>
-
+                <Frame x:Name="userManegmentFrame"/>
             </TabItem>
-            <TabItem  >
+            <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/witehouse.png"/>
                         <TextBlock Text="Склад"/>
                     </StackPanel>
                 </TabItem.Header>
-
                 <Frame x:Name="warehouseFrame"/>
             </TabItem>
-
-            <TabItem    Header="Компании">
-                <Frame x:Name="companyFrame"/>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/supplier.png"/>
+                        <TextBlock Text="Продавец"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="supplierFrame"/>
             </TabItem>
-            <TabItem  Background="#e6f5f3">
-
-
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                    <Image Width="16" Height="16" Source="/Images/employee.png"/>
+                    <TextBlock Text="Сотрудники"/>
+                </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="employeeFrame"/>
             </TabItem>
-
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/product.png"/>
+                        <TextBlock Text="Продукты"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="productFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/ingredient.png"/>
+                        <TextBlock Text="Ингредиенты"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="ingredientFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/recipe.png"/>
+                        <TextBlock Text="Рецепты"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="recipeFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/sale.png"/>
+                        <TextBlock Text="Продажи"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="saleFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/plan.png"/>
+                        <TextBlock Text="План"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="productRealsePlanFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/ostatok.png"/>
+                        <TextBlock Text="Остатки"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="receiptWarehouseFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/rashod.png"/>
+                    <TextBlock Text="Расход"/>
+                </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="consumptionOfIngredientsFrame"/>
+            </TabItem>
         </TabControl>
-
     </Grid>
 </Window>

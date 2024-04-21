@@ -33,12 +33,45 @@ namespace bakery
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            FrameClass.userManegmentFrame = userManegmentFrame;
-            FrameClass.userManegmentFrame.Navigate(new Page.UserManegmentFrame());
-            FrameClass.warehouseFrame = warehouseFrame;
-            FrameClass.warehouseFrame.Navigate(new Page.WarehouseFrame());
-            FrameClass.companyFrame = companyFrame;
-            FrameClass.companyFrame.Navigate(new Page.WarehouseFrame());
+            switch (AuthorisationsWindow.CurrentUser.RoleId)
+            {
+                case 1:
+                    FrameClass.userManegmentFrame = userManegmentFrame;
+                    FrameClass.userManegmentFrame.Navigate(new Page.UserManegmentPage());
+                    FrameClass.supplierFrame = supplierFrame;
+                    FrameClass.supplierFrame.Navigate(new Page.SupplierPage());
+                    FrameClass.warehouseFrame = warehouseFrame;
+                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage()); 
+                    FrameClass.employeeFrame = employeeFrame; 
+                    FrameClass.employeeFrame.Navigate(new Page.EmployeePage()); 
+                    FrameClass.productFrame = productFrame; 
+                    FrameClass.productFrame.Navigate(new Page.ProductPage());
+                    FrameClass.ingredientFrame = ingredientFrame; 
+                    FrameClass.ingredientFrame.Navigate(new Page.IngredientPage());
+                    FrameClass.recipeFrame = recipeFrame; 
+                    FrameClass.recipeFrame.Navigate(new Page.RecipePage());
+                    FrameClass.saleFrame = saleFrame; 
+                    FrameClass.saleFrame.Navigate(new Page.SalePage());
+                    FrameClass.productRealsePlanFrame = productRealsePlanFrame; 
+                    FrameClass.productRealsePlanFrame.Navigate(new Page.ProductRealsePlanPage());
+                    FrameClass.receiptWarehouseFrame = receiptWarehouseFrame; 
+                    FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
+                    FrameClass.consumptionOfIngredientsFrame = consumptionOfIngredientsFrame; 
+                    FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
+                    break;
+                case 2:
+                    FrameClass.warehouseFrame = warehouseFrame;
+                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
+                    FrameClass.supplierFrame = supplierFrame;
+                    FrameClass.supplierFrame.Navigate(new Page.SupplierPage());
+                    break;
+                case 3:
+                    FrameClass.warehouseFrame = warehouseFrame;
+                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
+                    break;
+            }
+
+            nameUser.Header = AuthorisationsWindow.CurrentUser.FirstName + " " + AuthorisationsWindow.CurrentUser.LastName;
         }
 
         private void EditProfile_Click(object sender, RoutedEventArgs e)

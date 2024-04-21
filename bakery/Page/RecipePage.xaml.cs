@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace bakery.Page
 {
     /// <summary>
-    /// Логика взаимодействия для WarehouseFrame.xaml
+    /// Логика взаимодействия для RecipePage.xaml
     /// </summary>
-    public partial class WarehouseFrame : System.Windows.Controls.Page
+    public partial class RecipePage : System.Windows.Controls.Page
     {
-        public WarehouseFrame()
+        public RecipePage()
         {
             InitializeComponent();
         }

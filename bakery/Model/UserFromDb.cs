@@ -24,7 +24,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getUser = "SELECT * FROM public.tb_user where login = @login";
+                    string getUser = "SELECT * FROM get_user_by_login(@login); ";
                     NpgsqlCommand command = new NpgsqlCommand(getUser, connection);
                     command.Parameters.AddWithValue("login", login);
 
@@ -195,7 +195,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string check = "select login from tb_user where login = @login";
+                    string check = "SELECT * FROM get_user_by_login(@login); ";
                     NpgsqlCommand command = new NpgsqlCommand(check, connection);
                     command.Parameters.AddWithValue("login", login);
 
@@ -253,6 +253,107 @@ namespace bakery.Model
                 return;
             }
         }
+        public static async Task<List<User>> GetUsers()
+        {
+            List<User> users = new List<User>();
+
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string getUsers = "SELECT user_id, first_name, last_name, patronymic, date_of_birthday, login, user_password, " +
+                        "phone, adress, id_role, email FROM public.tb_user;";
+
+                    NpgsqlCommand command = new NpgsqlCommand(getUsers, connection);
+
+                    NpgsqlDataReader reader = await command.ExecuteReaderAsync();
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            DateTime birthday = DateTime.Now;
+                            string adress = "";
+                            if (!(reader[4] is DBNull))
+                            {
+                                birthday = reader.GetDateTime(4);
+                            }
+                            if (!(reader[8] is DBNull))
+                            {
+                                adress = reader.GetString(8);
+                            }
+                            users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
+                                reader.GetString(5), reader.GetString(6), reader.GetString(7), adress, reader.GetInt32(9), reader.GetString(10)));
+                        }
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return users;
+        }
+
+        public static async Task DeleteUser(User user)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_user(@user_id)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("user_id", user.UserId);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Пользователь {user.FirstName} {user.LastName} удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Пользователь {user.FirstName} {user.LastName} удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task ChangeRole(User user, int newRole)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string updateRole = "update tb_user set id_role = @id_role where user_id = @id";
+                    NpgsqlCommand command = new NpgsqlCommand(updateRole, connection);
+                    command.Parameters.AddWithValue("id_role", newRole);
+                    command.Parameters.AddWithValue("id", user.UserId);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Роль пользователя {user.FirstName} {user.LastName} обновлена");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запрос отклонён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         public static async Task SendEmailAsync(string email, string message)
         {

@@ -43,9 +43,6 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.3.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="EasyCaptcha.Wpf, Version=0.9.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EasyCaptcha.Wpf.0.9.0.3\lib\net45\EasyCaptcha.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="MailKit, Version=4.4.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
       <HintPath>..\packages\MailKit.4.4.0\lib\net48\MailKit.dll</HintPath>
     </Reference>
@@ -150,15 +147,40 @@
     <Compile Include="Classes\TypeIngredients.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Verification.cs" />
+    <Compile Include="Model\RoleFromDb.cs" />
     <Compile Include="Model\UserFromDb.cs" />
-    <Compile Include="Page\CompanyFrame.xaml.cs">
-      <DependentUpon>CompanyFrame.xaml</DependentUpon>
+    <Compile Include="Page\IngredientPage.xaml.cs">
+      <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page\UserManegmentFrame.xaml.cs">
-      <DependentUpon>UserManegmentFrame.xaml</DependentUpon>
+    <Compile Include="Page\ProductPage.xaml.cs">
+      <DependentUpon>ProductPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Page\WarehouseFrame.xaml.cs">
-      <DependentUpon>WarehouseFrame.xaml</DependentUpon>
+    <Compile Include="Page\ProductRealsePlanPage.xaml.cs">
+      <DependentUpon>ProductRealsePlanPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\ReceiptWarehousePage.xaml.cs">
+      <DependentUpon>ReceiptWarehousePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\RecipePage.xaml.cs">
+      <DependentUpon>RecipePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\SalePage.xaml.cs">
+      <DependentUpon>SalePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\SupplierPage.xaml.cs">
+      <DependentUpon>SupplierPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\EmployeePage.xaml.cs">
+      <DependentUpon>EmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\UserManegmentPage.xaml.cs">
+      <DependentUpon>UserManegmentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\WarehousePage.xaml.cs">
+      <DependentUpon>WarehousePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Page\СonsumptionOfIngredientsPage.xaml.cs">
+      <DependentUpon>СonsumptionOfIngredientsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AuthorisationsWindow.xaml.cs">
       <DependentUpon>AuthorisationsWindow.xaml</DependentUpon>
@@ -172,15 +194,47 @@
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Page\CompanyFrame.xaml">
+    <Page Include="Page\IngredientPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page\UserManegmentFrame.xaml">
+    <Page Include="Page\ProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Page\WarehouseFrame.xaml">
+    <Page Include="Page\ProductRealsePlanPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\ReceiptWarehousePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\RecipePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\SalePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\SupplierPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\EmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\UserManegmentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\WarehousePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Page\СonsumptionOfIngredientsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -249,9 +303,44 @@
   <ItemGroup>
     <Resource Include="Images\bakary.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="View\bakary.png" />
+    <Resource Include="Images\bakary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\manegment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\witehouse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\supplier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\employee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ingredient.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\recipe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\plan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ostatok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rashod.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

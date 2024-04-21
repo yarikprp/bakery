@@ -16,13 +16,13 @@ using System.Windows.Shapes;
 namespace bakery.Page
 {
     /// <summary>
-    /// Логика взаимодействия для UserManegmentFrame.xaml
+    /// Логика взаимодействия для IngredientPage.xaml
     /// </summary>
-    public partial class UserManegmentFrame : System.Windows.Controls.Page 
-    { 
-        public UserManegmentFrame() 
-        { 
-            InitializeComponent(); 
+    public partial class IngredientPage : System.Windows.Controls.Page
+    {
+        public IngredientPage()
+        {
+            InitializeComponent();
         }
     }
 }
