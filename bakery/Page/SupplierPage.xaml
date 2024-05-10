@@ -6,9 +6,36 @@
       xmlns:local="clr-namespace:bakery.Page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SupplierPage" Background="#fffeb6">
+      Title="SupplierPage" Background="#fffeb6" Loaded="CompanyPage_Loaded">
 
     <Grid>
-        <TextBlock Text="Продавец с компанией"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0">
+            <TextBlock Text="Поиск" Height="30" Margin="120,0,0,0"/>
+            <TextBox x:Name="txbSearchs" Width="150" Height="30" Margin="20,0,0,0" TextChanged="txbSearchs_TextChanged"/>
+            <ComboBox x:Name="comboBoxCompany" DisplayMemberPath="companyName"  
+                      Width="200" Height="30" Margin="120,0,0,0" SelectionChanged="comboBoxPost_SelectionChanged" />
+            <Button x:Name="Add" Content="Добавить" Margin="10" Click="buttonAdd_Click"/>
+
+        </StackPanel>
+
+        <DataGrid x:Name="dataGridCompany" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ингердиент" Binding="{Binding Ingredient}" />
+                <DataGridTextColumn Header="Компания" Binding="{Binding NameCompany}" />
+                <DataGridTextColumn Header="Фио" Binding="{Binding IdCompany}" />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding NamePhone}" />
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Adress}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            <Button x:Name="EditButton" Content="Редактировать" Click="buttonEdit_Click" Margin="10" Width="100"/>
+            <Button x:Name="DeleteButton" Content="Удалить" Margin="10" Click="buttonDelete_Click" Width="100"/>
+        </StackPanel>
     </Grid>
 </Page>

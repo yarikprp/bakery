@@ -145,8 +145,19 @@
     <Compile Include="Classes\TypeIngredients.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Verification.cs" />
+    <Compile Include="Model\CompanyFromDb.cs" />
+    <Compile Include="Model\ConsumptionFromDb.cs" />
     <Compile Include="Model\EmployeeFromDb.cs" />
+    <Compile Include="Model\IngredientsFromDb.cs" />
+    <Compile Include="Model\PostFromDb.cs" />
+    <Compile Include="Model\ProductFromDb.cs" />
+    <Compile Include="Model\ProductReleasePlanFromDb.cs" />
+    <Compile Include="Model\ReceiptWarehouseFromDb.cs" />
     <Compile Include="Model\RoleFromDb.cs" />
+    <Compile Include="Model\SaleFromDb.cs" />
+    <Compile Include="Model\SupplierFromDb.cs" />
+    <Compile Include="Model\TypeIngredientsFromDb.cs" />
+    <Compile Include="Model\UnitFromDb.cs" />
     <Compile Include="Model\UserFromDb.cs" />
     <Compile Include="Page\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
@@ -303,9 +314,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\manegment.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\witehouse.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\supplier.png" />

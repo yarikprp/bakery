@@ -1,5 +1,4 @@
 ﻿using bakery.Classes;
-using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -10,11 +9,11 @@ using System.Windows;
 
 namespace bakery.Model
 {
-    internal class EmployeeFromDb
+    internal static class SaleFromDb
     {
-        public static async Task<List<Employee>> GetEmployee()
+        public static async Task<List<Sale>> GetSale()
         {
-            List<Employee> employee = new List<Employee>();
+            List<Sale> sale = new List<Sale>();
 
             try
             {
@@ -22,21 +21,21 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getEmployee = "SELECT * FROM public.employee; ";
+                    string getSale = "SELECT * FROM public.sale; ";
 
-                    NpgsqlCommand command = new NpgsqlCommand(getEmployee, connection);
+                    NpgsqlCommand command = new NpgsqlCommand(getSale, connection);
 
                     NpgsqlDataReader reader = await command.ExecuteReaderAsync();
                     if (reader.HasRows)
                     {
                         while (await reader.ReadAsync())
                         {
-                            DateTime birthday = DateTime.Now;
-                            if (!(reader[4] is DBNull))
+                            DateTime date_of_sale = DateTime.Now;
+                            if (!(reader[3] is DBNull))
                             {
-                                birthday = reader.GetDateTime(4);
+                                date_of_sale = reader.GetDateTime(3);
                             }
-                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetDecimal(3), birthday));
+                            sale.Add(new Sale(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), date_of_sale, reader.GetInt32(4)));
                         }
                     }
                 }
@@ -46,7 +45,7 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
 
-            return employee;
+            return sale;
         }
     }
 }

@@ -40,8 +40,6 @@ namespace bakery
                     FrameClass.userManegmentFrame.Navigate(new Page.UserManegmentPage());
                     FrameClass.supplierFrame = supplierFrame;
                     FrameClass.supplierFrame.Navigate(new Page.SupplierPage());
-                    FrameClass.warehouseFrame = warehouseFrame;
-                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage()); 
                     FrameClass.employeeFrame = employeeFrame; 
                     FrameClass.employeeFrame.Navigate(new Page.EmployeePage()); 
                     FrameClass.productFrame = productFrame; 
@@ -52,16 +50,14 @@ namespace bakery
                     FrameClass.saleFrame.Navigate(new Page.SalePage());
                     FrameClass.productRealsePlanFrame = productRealsePlanFrame; 
                     FrameClass.productRealsePlanFrame.Navigate(new Page.ProductRealsePlanPage());
-                    FrameClass.receiptWarehouseFrame = receiptWarehouseFrame; 
-                    FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
                     FrameClass.consumptionOfIngredientsFrame = consumptionOfIngredientsFrame; 
                     FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
+                    FrameClass.receiptWarehouseFrame = receiptWarehouseFrame;
+                    FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
                     break;
                 case 2:
                     FrameClass.supplierFrame = supplierFrame;
                     FrameClass.supplierFrame.Navigate(new Page.SupplierPage());
-                    FrameClass.warehouseFrame = warehouseFrame;
-                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
                     FrameClass.employeeFrame = employeeFrame;
                     FrameClass.employeeFrame.Navigate(new Page.EmployeePage());
                     FrameClass.saleFrame = saleFrame;
@@ -74,8 +70,6 @@ namespace bakery
                     FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
                     break;
                 case 3:
-                    FrameClass.warehouseFrame = warehouseFrame;
-                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
                     FrameClass.productFrame = productFrame;
                     FrameClass.productFrame.Navigate(new Page.ProductPage());
                     FrameClass.ingredientFrame = ingredientFrame;

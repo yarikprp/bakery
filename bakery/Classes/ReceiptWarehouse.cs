@@ -13,8 +13,8 @@ namespace bakery.Classes
         public int IdProduct { get; set; }
         public int IdSupplier { get; set; }
         public DateTime DateOfReceipt { get; set; }
-        public int Quantity { get; set; }
-        public ReceiptWarehouse(int idBalance, int idIngredients, int idProduct, int idSupplier, DateTime dateOfReceipt, int quantity)
+        public string Quantity { get; set; }
+        public ReceiptWarehouse(int idBalance, int idIngredients, int idProduct, int idSupplier, DateTime dateOfReceipt, string quantity)
         {
             IdBalance = idBalance;
             IdIngredients = idIngredients;

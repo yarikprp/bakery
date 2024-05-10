@@ -1,4 +1,6 @@
-﻿using System;
+﻿using bakery.Classes;
+using bakery.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,78 @@ namespace bakery.Page
     /// </summary>
     public partial class SupplierPage : System.Windows.Controls.Page
     {
-        public SupplierPage()
+        List<Supplier> supplier = new List<Supplier>();
+        List<Supplier> supplierSearch = new List<Supplier>();
+/*        static List<Post> post = new List<Post>();
+*/        public SupplierPage()
         {
             InitializeComponent();
+        }
+
+        private async void CompanyPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewAllCompany();/*
+            post = await PostFromDb.GetPost();
+            post.Insert(0, new Post(0, "Все"));*/
+/*
+            comboBoxCompany.ItemsSource = post;
+            comboBoxCompany.DisplayMemberPath = "PostName";
+            comboBoxCompany.SelectedValuePath = "PostRoleId";*/
+        }
+
+        async Task ViewAllCompany()
+        {
+            supplier = await SupplierFromDb.GetSupplier();
+
+            dataGridCompany.ItemsSource = supplier;
+        }
+
+        List<Supplier> SearchSupplier(string searchString)
+        {
+            supplierSearch.Clear();
+
+            foreach (Supplier item in supplier)
+            {
+                if (item.Ingredient.StartsWith(searchString))
+                {
+                    supplierSearch.Add(item);
+                }
+            }
+
+            return supplierSearch;
+        }
+
+
+        private void txbSearchs_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txbSearchs.Text.Length != 0)
+            {
+                dataGridCompany.ItemsSource = SearchSupplier(txbSearchs.Text);
+            }
+            else
+            {
+                dataGridCompany.ItemsSource = supplier;
+            }
+        }
+
+        private void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

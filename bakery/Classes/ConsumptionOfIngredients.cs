@@ -10,10 +10,12 @@ namespace bakery.Classes
     {
         public int IdConsumption { get; set; }
         public int IdPlan { get; set; }
-        public ConsumptionOfIngredients(int idConsumption, int idPlan)
+        public int Consumption {  get; set; }
+        public ConsumptionOfIngredients(int idConsumption, int idPlan, int consumption)
         {
             IdConsumption = idConsumption;
             IdPlan = idPlan;
+            Consumption = consumption;
         }
     }
 }

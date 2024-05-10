@@ -1,6 +1,8 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using kulinaria_app_v2.Classes;
 using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +15,8 @@ namespace bakery.Page
     public partial class EmployeePage : System.Windows.Controls.Page
     {
         List<Employee> employee = new List<Employee>();
+        List<Employee> employeeSearch = new List<Employee>();
+        static List<Post> post = new List<Post>();
         public EmployeePage()
         {
             InitializeComponent();
@@ -20,26 +24,48 @@ namespace bakery.Page
 
         private async void EmployeePage_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewAllUsers();/*
-            role = await RoleFromDb.GetRoles();
-            role.Insert(0, new Role(0, "Все"));*/
-            /*
-                        comboBoxRoles.ItemsSource = role;
-                        comboBoxRoles.DisplayMemberPath = "RoleName";
-                        comboBoxRoles.SelectedValuePath = "RoleId";
-                    }*/
+            await ViewAllEmployee();
+            post = await PostFromDb.GetPost();
+            post.Insert(0, new Post(0, "Все"));
+
+            comboBoxPost.ItemsSource = post;
+            comboBoxPost.DisplayMemberPath = "PostName";
+            comboBoxPost.SelectedValuePath = "PostId";
         }
 
-        async Task ViewAllUsers()
+        async Task ViewAllEmployee()
         {
             employee = await EmployeeFromDb.GetEmployee();
 
             dataGridEmployee.ItemsSource = employee;
         }
 
+        List<Employee> SearchEmployee(string searchString)
+        {
+            employeeSearch.Clear();
+
+            foreach (Employee item in employee)
+            {
+                if (item.Fio.StartsWith(searchString))
+                {
+                    employeeSearch.Add(item);
+                }
+            }
+
+            return employeeSearch;
+        }
+
+
         private void txbSearchs_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if (txbSearchs.Text.Length != 0)
+            {
+                dataGridEmployee.ItemsSource = SearchEmployee(txbSearchs.Text);
+            }
+            else
+            {
+                dataGridEmployee.ItemsSource = employee;
+            }
         }
 
         private void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)

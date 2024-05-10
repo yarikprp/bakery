@@ -37,15 +37,6 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Source="/Images/witehouse.png"/>
-                        <TextBlock Text="Склад"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <Frame x:Name="warehouseFrame"/>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Source="/Images/supplier.png"/>
                         <TextBlock Text="Продавец"/>
                     </StackPanel>

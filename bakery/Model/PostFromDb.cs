@@ -1,5 +1,4 @@
 ﻿using bakery.Classes;
-using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -10,11 +9,11 @@ using System.Windows;
 
 namespace bakery.Model
 {
-    internal class EmployeeFromDb
+    internal static class PostFromDb
     {
-        public static async Task<List<Employee>> GetEmployee()
+        public static async Task<List<Post>> GetPost()
         {
-            List<Employee> employee = new List<Employee>();
+            List<Post> post = new List<Post>();
 
             try
             {
@@ -22,21 +21,16 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getEmployee = "SELECT * FROM public.employee; ";
+                    string getPost = "SELECT * FROM public.post ;";
 
-                    NpgsqlCommand command = new NpgsqlCommand(getEmployee, connection);
+                    NpgsqlCommand command = new NpgsqlCommand(getPost, connection);
 
                     NpgsqlDataReader reader = await command.ExecuteReaderAsync();
                     if (reader.HasRows)
                     {
                         while (await reader.ReadAsync())
                         {
-                            DateTime birthday = DateTime.Now;
-                            if (!(reader[4] is DBNull))
-                            {
-                                birthday = reader.GetDateTime(4);
-                            }
-                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetDecimal(3), birthday));
+                            post.Add(new Post(reader.GetInt32(0), reader.GetString(1)));
                         }
                     }
                 }
@@ -46,7 +40,7 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
 
-            return employee;
+            return post;
         }
     }
 }

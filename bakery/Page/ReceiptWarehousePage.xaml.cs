@@ -1,4 +1,6 @@
-﻿using System;
+﻿using bakery.Classes;
+using bakery.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,72 @@ namespace bakery.Page
     /// </summary>
     public partial class ReceiptWarehousePage : System.Windows.Controls.Page
     {
+        List<ReceiptWarehouse> receiptWarehouse = new List<ReceiptWarehouse>();
+        List<ReceiptWarehouse> receiptWarehouseSearch = new List<ReceiptWarehouse>();
+
         public ReceiptWarehousePage()
         {
             InitializeComponent();
+        }
+
+        private async void ReceiptWarehousePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewAllReceiptWarehouse();
+        }
+
+        async Task ViewAllReceiptWarehouse()
+        {
+            receiptWarehouse = await ReceiptWarehouseFromDb.GetReceiptWarehouse();
+
+            dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
+        }
+
+        List<ReceiptWarehouse> SearchReceiptWarehouse(string searchString)
+        {
+            receiptWarehouseSearch.Clear();
+
+            foreach (ReceiptWarehouse item in receiptWarehouse)
+            {
+               /* if (item.Fio.StartsWith(searchString))
+                {
+                    receiptWarehouseSearch.Add(item);
+                }*/
+            }
+
+            return receiptWarehouseSearch;
+        }
+
+
+        private void txbSearchs_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txbSearchs.Text.Length != 0)
+            {
+                dataGridReceiptWarehouses.ItemsSource = SearchReceiptWarehouse(txbSearchs.Text);
+            }
+            else
+            {
+                dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
+            }
+        }
+
+        private void comboBoxReceiptWarehouses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void buttonAdd_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

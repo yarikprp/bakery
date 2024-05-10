@@ -10,8 +10,8 @@ namespace bakery.Classes
     {
         public int IdSupplier { get; set; }
         public string Ingredient { get; set; }
-        public string IdCompany { get; set; }
-        public Supplier(int idSupplier, string ingredient, string idCompany)
+        public int IdCompany { get; set; }
+        public Supplier(int idSupplier, string ingredient, int idCompany)
         {
             IdSupplier = idSupplier;
             Ingredient = ingredient;
