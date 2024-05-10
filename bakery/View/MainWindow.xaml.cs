@@ -48,8 +48,6 @@ namespace bakery
                     FrameClass.productFrame.Navigate(new Page.ProductPage());
                     FrameClass.ingredientFrame = ingredientFrame; 
                     FrameClass.ingredientFrame.Navigate(new Page.IngredientPage());
-                    FrameClass.recipeFrame = recipeFrame; 
-                    FrameClass.recipeFrame.Navigate(new Page.RecipePage());
                     FrameClass.saleFrame = saleFrame; 
                     FrameClass.saleFrame.Navigate(new Page.SalePage());
                     FrameClass.productRealsePlanFrame = productRealsePlanFrame; 
@@ -60,14 +58,34 @@ namespace bakery
                     FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
                     break;
                 case 2:
-                    FrameClass.warehouseFrame = warehouseFrame;
-                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
                     FrameClass.supplierFrame = supplierFrame;
                     FrameClass.supplierFrame.Navigate(new Page.SupplierPage());
+                    FrameClass.warehouseFrame = warehouseFrame;
+                    FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
+                    FrameClass.employeeFrame = employeeFrame;
+                    FrameClass.employeeFrame.Navigate(new Page.EmployeePage());
+                    FrameClass.saleFrame = saleFrame;
+                    FrameClass.saleFrame.Navigate(new Page.SalePage());
+                    FrameClass.productRealsePlanFrame = productRealsePlanFrame;
+                    FrameClass.productRealsePlanFrame.Navigate(new Page.ProductRealsePlanPage());
+                    FrameClass.receiptWarehouseFrame = receiptWarehouseFrame;
+                    FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
+                    FrameClass.consumptionOfIngredientsFrame = consumptionOfIngredientsFrame;
+                    FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
                     break;
                 case 3:
                     FrameClass.warehouseFrame = warehouseFrame;
                     FrameClass.warehouseFrame.Navigate(new Page.WarehousePage());
+                    FrameClass.productFrame = productFrame;
+                    FrameClass.productFrame.Navigate(new Page.ProductPage());
+                    FrameClass.ingredientFrame = ingredientFrame;
+                    FrameClass.ingredientFrame.Navigate(new Page.IngredientPage());
+                    FrameClass.productRealsePlanFrame = productRealsePlanFrame;
+                    FrameClass.productRealsePlanFrame.Navigate(new Page.ProductRealsePlanPage());
+                    FrameClass.receiptWarehouseFrame = receiptWarehouseFrame;
+                    FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
+                    FrameClass.consumptionOfIngredientsFrame = consumptionOfIngredientsFrame;
+                    FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
                     break;
             }
 

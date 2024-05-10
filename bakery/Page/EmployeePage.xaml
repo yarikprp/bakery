@@ -6,9 +6,32 @@
       xmlns:local="clr-namespace:bakery.Page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EmployeePage" Background="#fffeb6">
+      Title="EmployeePage" Background="#fffeb6" Loaded="EmployeePage_Loaded">
 
     <Grid>
-        <TextBlock Text="Сотрудник"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0">
+            <TextBlock Text="Поиск" Height="30" Margin="120,0,0,0"/>
+            <TextBox x:Name="txbSearchs" Width="150" Height="30" Margin="20,0,0,0" TextChanged="txbSearchs_TextChanged"/>
+            <ComboBox x:Name="comboBoxRoles" DisplayMemberPath="RoleName"  
+                      Width="200" Height="30" Margin="120,0,0,0" SelectionChanged="comboBoxPost_SelectionChanged" />
+            <Button x:Name="Add" Content="Добавить" Margin="10" Click="buttonAdd_Click"/>
+
+        </StackPanel>
+
+        <DataGrid x:Name="dataGridEmployee" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}" />
+                <DataGridTextColumn Header="Должность" Binding="{Binding idPost}" />
+                <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}" />
+                <DataGridTextColumn Header="Дата принятия на работу" Binding="{Binding DateOfEmployment}" />
+                <DataGridTextColumn Header="Занятость" Binding="{Binding IdEmploymentSchedule}" />
+                <DataGridTextColumn Header="Действие" Binding="{Binding }" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

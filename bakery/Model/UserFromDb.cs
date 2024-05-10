@@ -253,6 +253,7 @@ namespace bakery.Model
                 return;
             }
         }
+
         public static async Task<List<User>> GetUsers()
         {
             List<User> users = new List<User>();
@@ -263,8 +264,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getUsers = "SELECT user_id, first_name, last_name, patronymic, date_of_birthday, login, user_password, " +
-                        "phone, adress, id_role, email FROM public.tb_user;";
+                    string getUsers = "SELECT * FROM user_info; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getUsers, connection);
 
@@ -297,8 +297,54 @@ namespace bakery.Model
             return users;
         }
 
-        public static async Task DeleteUser(User user)
+        public static async Task<List<User>> FilterUserByRole(int idRole)
         {
+            List<User> filtered_users = new List<User>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterUser = "SELECT * FROM user_info; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterUser, connection);
+                cmd.Parameters.AddWithValue("", idRole);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        DateTime birthday = DateTime.Now;
+                        string adress = "";
+                        if (!(reader[4] is DBNull))
+                        {
+                            birthday = reader.GetDateTime(4);
+                        }
+                        if (!(reader[8] is DBNull))
+                        {
+                            adress = reader.GetString(8);
+                        }
+                        filtered_users.Add(new User(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday,
+                                reader.GetString(5), reader.GetString(6), reader.GetString(7), adress, reader.GetInt32(9), reader.GetString(10)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_users;
+        }
+
+        public static async Task DeleteUser(User user)        {
             try
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))

@@ -82,15 +82,6 @@
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Width="16" Height="16" Source="/Images/recipe.png"/>
-                        <TextBlock Text="Рецепты"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <Frame x:Name="recipeFrame"/>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Source="/Images/sale.png"/>
                         <TextBlock Text="Продажи"/>
                     </StackPanel>

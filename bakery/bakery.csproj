@@ -134,19 +134,18 @@
     <Compile Include="Classes\Company.cs" />
     <Compile Include="Classes\ConsumptionOfIngredients.cs" />
     <Compile Include="Classes\Employee.cs" />
-    <Compile Include="Classes\EmploymentSchedule.cs" />
     <Compile Include="Classes\FrameClass.cs" />
     <Compile Include="Classes\Ingredients.cs" />
     <Compile Include="Classes\Post.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\ProductReleasePlan.cs" />
     <Compile Include="Classes\ReceiptWarehouse.cs" />
-    <Compile Include="Classes\Recipe.cs" />
     <Compile Include="Classes\Sale.cs" />
     <Compile Include="Classes\Supplier.cs" />
     <Compile Include="Classes\TypeIngredients.cs" />
     <Compile Include="Classes\Unit.cs" />
     <Compile Include="Classes\Verification.cs" />
+    <Compile Include="Model\EmployeeFromDb.cs" />
     <Compile Include="Model\RoleFromDb.cs" />
     <Compile Include="Model\UserFromDb.cs" />
     <Compile Include="Page\IngredientPage.xaml.cs">
@@ -160,9 +159,6 @@
     </Compile>
     <Compile Include="Page\ReceiptWarehousePage.xaml.cs">
       <DependentUpon>ReceiptWarehousePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Page\RecipePage.xaml.cs">
-      <DependentUpon>RecipePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Page\SalePage.xaml.cs">
       <DependentUpon>SalePage.xaml</DependentUpon>
@@ -207,10 +203,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Page\ReceiptWarehousePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Page\RecipePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -326,9 +318,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ingredient.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\recipe.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\sale.png" />

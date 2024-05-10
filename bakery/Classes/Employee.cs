@@ -14,15 +14,13 @@ namespace bakery.Classes
         public int IdPost { get; set; }
         public decimal Salary { get; set; }
         public DateTime DateOfEmployment { get; set; }
-        public int IdEmploymentSchedule { get; set; }
-        public Employee(int idEmployee, string fio, int idPost, decimal salary, DateTime dateOfEmployment, int idEmploymentSchedule)
+        public Employee(int idEmployee, string fio, int idPost, decimal salary, DateTime dateOfEmployment)
         {
             IdEmployee = idEmployee;
             Fio = fio;
             IdPost = idPost;
             Salary = salary;
             DateOfEmployment = dateOfEmployment;
-            IdEmploymentSchedule = idEmploymentSchedule;
         }
     }   
 }

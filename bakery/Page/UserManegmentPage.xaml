@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:bakery.Page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="UserManegmentFrame" Background="#fffeb6" Loaded="UsersControlForm_Loaded">
+      Title="UserManegmentFrame" Background="#fffeb6" Loaded="UsersControl_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -14,44 +14,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0">
             <TextBlock Text="Поиск" Height="30" Margin="120,0,0,0"/>
-            <TextBox x:Name="txbSearchs" Width="150" Height="30" Margin="20,0,0,0"/>
-            <ComboBox x:Name="comboBoxRoles" DisplayMemberPath="CategoryName"  
-                      Width="200" Height="30" Margin="120,0,0,0" />
-        </StackPanel>
-        
-        <ListView Grid.Row="1" x:Name="listViewUser" HorizontalContentAlignment="Stretch">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" >
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="auto"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+            <TextBox x:Name="txbSearchs" Width="150" Height="30" Margin="20,0,0,0" TextChanged="txbSearchs_TextChanged"/>
+            <ComboBox x:Name="comboBoxRoles" DisplayMemberPath="RoleName"  
+                      Width="200" Height="30" Margin="120,0,0,0" SelectionChanged="comboBoxRoles_SelectionChanged" />
+            <Button x:Name="Add" Content="Добавить" Margin="10" Click="buttonAdd_Click"/>
 
-                            <StackPanel Grid.Column="1" Margin="5,0,0,0">
-                                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                                    <TextBlock Text="{Binding FirstName, StringFormat={} Имя: {0} | }"/>
-                                    <TextBlock Text="{Binding LastName, StringFormat={} Фамилия: {0} }"/>
-                                    <TextBlock Text="{Binding Patronymic, StringFormat={} Отчество: {0}  }"/>
-                                </StackPanel>
-                            </StackPanel>
-
-                            <StackPanel Grid.Column="2" Margin="0,10,10,10">
-                                <TextBlock Text="{Binding RoleId, StringFormat={} Роль: {0} }" FontSize="15" FontStyle="Normal" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button x:Name="Add" Content="Добавить" Margin="5" Click="buttonAdd_Click"/>
-            <Button x:Name="Delete" Content="Удалить" Margin="5" Click="buttonDelete_Click"/>
         </StackPanel>
+
+        <DataGrid x:Name="dataGridUser" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" />
+                <DataGridTextColumn Header="Роль" Binding="{Binding RoleId}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+            <Button x:Name="EditButton" Content="Редактировать" Margin="10" Width="100"/>
+            <Button x:Name="DeleteButton" Content="Удалить" Margin="10" Click="buttonDelete_Click" Width="100"/>
+        </StackPanel>
+
     </Grid>
-
 </Page>

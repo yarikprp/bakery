@@ -1,7 +1,9 @@
 ﻿using bakery.Model;
 using bakery.View;
 using kulinaria_app_v2.Classes;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Role = bakery.Classes.Role;
 
 namespace bakery.Page
 {
@@ -20,11 +23,30 @@ namespace bakery.Page
     {
         List<User> users = new List<User>();
         List<User> usersSearch = new List<User>();
+        static List<Role> role = new List<Role>();
         int selectedIndex;
 
         public UserManegmentPage()
         {
             InitializeComponent();
+        }
+
+        private async void UsersControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewAllUsers();
+            role = await RoleFromDb.GetRoles();
+            role.Insert(0, new Role(0, "Все"));
+
+            comboBoxRoles.ItemsSource = role;
+            comboBoxRoles.DisplayMemberPath = "RoleName";
+            comboBoxRoles.SelectedValuePath = "RoleId";
+        }
+
+        async Task ViewAllUsers()
+        {
+            users = await UserFromDb.GetUsers();
+
+            dataGridUser.ItemsSource = users;
         }
 
         private async void buttonAdd_Click(object sender, RoutedEventArgs e)
@@ -36,38 +58,40 @@ namespace bakery.Page
             if (res == true)
             {
                 users = await UserFromDb.GetUsers();
-                listViewUser.ItemsSource = users;
+                dataGridUser.ItemsSource = users;
             }
         }
 
         private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
-            string warning = "Вы действительно хотите удалить пользователя " + users[selectedIndex].FirstName + " " + users[selectedIndex].LastName + "?";
-
-            MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-
-            if (result == MessageBoxResult.OK)
+            if (dataGridUser.SelectedItem != null)
             {
-                if (users[selectedIndex].UserId != AuthorisationsWindow.CurrentUser.UserId)
-                {
-                    await UserFromDb.DeleteUser(users[selectedIndex]);
+                User selectedUser = (User)dataGridUser.SelectedItem;
+                string warning = "Вы действительно хотите удалить пользователя " + selectedUser.FirstName + " " + selectedUser.LastName + "?";
 
-                    users = await UserFromDb.GetUsers();
-                    listViewUser.ItemsSource = users;
-                }
-                else
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
                 {
-                    MessageBox.Show("Извините, но вы не можете удалить себя, пока находитесь в системе");
+                    if (selectedUser.UserId != AuthorisationsWindow.CurrentUser.UserId)
+                    {
+                        await UserFromDb.DeleteUser(selectedUser);
+
+                        users.Remove(selectedUser);
+
+                        dataGridUser.ItemsSource = null;
+                        dataGridUser.ItemsSource = users;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Извините, но вы не можете удалить себя, пока находитесь в системе");
+                    }
                 }
             }
-        }
-
-        private async void buttonChangeRole_Click(object sender, RoutedEventArgs e)
-        {
-            await UserFromDb.ChangeRole(users[selectedIndex], comboBoxRoles.SelectedIndex + 1);
-
-            users = await UserFromDb.GetUsers();
-            listViewUser.ItemsSource = users;
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите пользователя для удаления.");
+            }
         }
 
         List<User> SearchUsers(string searchString)
@@ -90,20 +114,26 @@ namespace bakery.Page
         {
             if (txbSearchs.Text.Length != 0)
             {
-                listViewUser.ItemsSource = SearchUsers(txbSearchs.Text);
+                dataGridUser.ItemsSource = SearchUsers(txbSearchs.Text);
             }
             else
             {
-                listViewUser.ItemsSource = users;
+                dataGridUser.ItemsSource = users;
             }
-
         }
 
-        private async void UsersControlForm_Loaded(object sender, RoutedEventArgs e)
+        private async void comboBoxRoles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            users = await UserFromDb.GetUsers();
-            listViewUser.ItemsSource = users;
-            comboBoxRoles.ItemsSource = await RoleFromDb.GetRoles();
+            if (comboBoxRoles.SelectedIndex == 0)
+            {
+                await ViewAllUsers();
+            }
+            else
+            {
+                users = await UserFromDb.FilterUserByRole(comboBoxRoles.SelectedIndex);
+
+                dataGridUser.ItemsSource = users;
+            }
         }
     }
 }
