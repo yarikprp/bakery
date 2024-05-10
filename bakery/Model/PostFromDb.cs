@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getPost = "SELECT * FROM public.post ;";
+                    string getPost = "SELECT * FROM public.post; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getPost, connection);
 

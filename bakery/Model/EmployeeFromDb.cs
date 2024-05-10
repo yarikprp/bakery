@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace bakery.Model
 {
-    internal class EmployeeFromDb
+    internal static class EmployeeFromDb
     {
         public static async Task<List<Employee>> GetEmployee()
         {
