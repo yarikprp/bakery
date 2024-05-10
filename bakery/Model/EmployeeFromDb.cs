@@ -48,5 +48,33 @@ namespace bakery.Model
 
             return employee;
         }
+
+        public static async Task DeleteEmployee(Employee employee)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_employee(@id_employee)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_employee", employee.IdEmployee);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"{employee.Fio} удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{employee.Fio} удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

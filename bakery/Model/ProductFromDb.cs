@@ -52,5 +52,33 @@ namespace bakery.Model
 
             return product;
         }
+
+        public static async Task DeleteProduct(Product product)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_product(@id_product)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_product", product.IdProduct);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"{product.NameProduct} удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{product.NameProduct} удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -42,5 +42,33 @@ namespace bakery.Model
 
             return supplier;
         }
+
+        public static async Task DeleteSupplier(Supplier supplier)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_supplier(@id_supplier)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_supplier", supplier.IdSupplier);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Поставщик удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Поставщик удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,9 +80,29 @@ namespace bakery.Page
 
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridСonsumptionOfIngredientsPage.SelectedItem != null)
+            {
+                ConsumptionOfIngredients selected = (ConsumptionOfIngredients)dataGridСonsumptionOfIngredientsPage.SelectedItem;
+                string warning = "Вы действительно хотите удалить расход ?";
 
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    await ConsumptionFromDb.DeleteConsumptionOfIngredients(selected);
+
+                    consumptionOfIngredients.Remove(selected);
+
+                    dataGridСonsumptionOfIngredientsPage.ItemsSource = null;
+                    dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите расход для удаления.");
+            }
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)

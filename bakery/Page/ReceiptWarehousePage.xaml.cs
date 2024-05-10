@@ -80,8 +80,29 @@ namespace bakery.Page
 
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridReceiptWarehouses.SelectedItem != null)
+            {
+                ReceiptWarehouse selected = (ReceiptWarehouse)dataGridReceiptWarehouses.SelectedItem;
+                string warning = "Вы действительно хотите удалить товар?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    await ReceiptWarehouseFromDb.DeleteReceiptWarehouse(selected);
+
+                    receiptWarehouse.Remove(selected);
+
+                    dataGridReceiptWarehouses.ItemsSource = null;
+                    dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите товар для удаления.");
+            }
 
         }
 

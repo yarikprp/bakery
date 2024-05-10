@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace bakery.Model
 {
-    internal static class ConsumptionFromDb
+    public static class ConsumptionFromDb
     {
         public static async Task<List<ConsumptionOfIngredients>> GetConsumptionOfIngredients()
         {
@@ -43,5 +44,32 @@ namespace bakery.Model
             return consumptionOfIngredients;
         }
 
+        public static async Task DeleteConsumptionOfIngredients(ConsumptionOfIngredients consumptionOfIngredients)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_consumption_of_ingredients(@consumption_id)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("consumption_id", consumptionOfIngredients.IdConsumption);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Расход удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Расход удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

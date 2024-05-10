@@ -47,5 +47,33 @@ namespace bakery.Model
 
             return sale;
         }
+
+        public static async Task DeleteSale(Sale sale)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_sale(@id_sale)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_sale", sale.IdSale);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Продажа удалёна");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Продажа удалёна");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

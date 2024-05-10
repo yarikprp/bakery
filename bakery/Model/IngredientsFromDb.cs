@@ -42,5 +42,33 @@ namespace bakery.Model
 
             return ingredients;
         }
+
+        public static async Task DeleteIngredients(Ingredients ingredients)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_ingredient(@id_ingredients)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_ingredients", ingredients.IdIngredients);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"{ingredients.NameIngredients} удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{ingredients.NameIngredients} удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

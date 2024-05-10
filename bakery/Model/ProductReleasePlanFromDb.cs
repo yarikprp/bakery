@@ -47,5 +47,33 @@ namespace bakery.Model
 
             return productReleasePlans;
         }
+
+        public static async Task DeleteProductReleasePlan(ProductReleasePlan productReleasePlan)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_product_release_plan(@id_product_release_plan)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_product_release_plan", productReleasePlan.IdPlan);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"План удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"План удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

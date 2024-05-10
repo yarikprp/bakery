@@ -47,5 +47,33 @@ namespace bakery.Model
 
             return receiptWarehouses;
         }
+
+        public static async Task DeleteReceiptWarehouse(ReceiptWarehouse receiptWarehouse)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string delete = "CALL delete_receipt_warehouse(@id_receipt_warehouse)";
+                    NpgsqlCommand command = new NpgsqlCommand(delete, connection);
+                    command.Parameters.AddWithValue("id_receipt_warehouse", receiptWarehouse.IdBalance);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Товар удалён");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Товар удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

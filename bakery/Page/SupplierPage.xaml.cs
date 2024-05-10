@@ -86,8 +86,29 @@ namespace bakery.Page
 
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridCompany.SelectedItem != null)
+            {
+                Supplier selected = (Supplier)dataGridCompany.SelectedItem;
+                string warning = "Вы действительно хотите удалить поставщика?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    await SupplierFromDb.DeleteSupplier(selected);
+
+                    supplier.Remove(selected);
+
+                    dataGridCompany.ItemsSource = null;
+                    dataGridCompany.ItemsSource = supplier;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите поставщика для удаления.");
+            }
 
         }
 

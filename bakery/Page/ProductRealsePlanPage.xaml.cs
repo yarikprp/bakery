@@ -80,8 +80,29 @@ namespace bakery.Page
 
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridProductReleasePlan.SelectedItem != null)
+            {
+                ProductReleasePlan selected = (ProductReleasePlan)dataGridProductReleasePlan.SelectedItem;
+                string warning = "Вы действительно хотите удалить план?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    await ProductReleasePlanFromDb.DeleteProductReleasePlan(selected);
+
+                    productReleasePlans.Remove(selected);
+
+                    dataGridProductReleasePlan.ItemsSource = null;
+                    dataGridProductReleasePlan.ItemsSource = productReleasePlans;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите план для удаления.");
+            }
 
         }
 

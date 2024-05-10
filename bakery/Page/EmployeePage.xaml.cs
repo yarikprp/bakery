@@ -78,8 +78,29 @@ namespace bakery.Page
 
         }
 
-        private void buttonDelete_Click(object sender, RoutedEventArgs e)
+        private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridEmployee.SelectedItem != null)
+            {
+                Employee selected = (Employee)dataGridEmployee.SelectedItem;
+                string warning = "Вы действительно хотите удалить " + selected.Fio + "?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    await EmployeeFromDb.DeleteEmployee(selected);
+
+                    employee.Remove(selected);
+
+                    dataGridEmployee.ItemsSource = null;
+                    dataGridEmployee.ItemsSource = employee;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите сотрудника для удаления.");
+            }
 
         }
 
