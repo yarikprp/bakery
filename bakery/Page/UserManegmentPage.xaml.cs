@@ -24,8 +24,7 @@ namespace bakery.Page
         List<User> users = new List<User>();
         List<User> usersSearch = new List<User>();
         static List<Role> role = new List<Role>();
-        int selectedIndex;
-
+        public int selectedIndex;
         public UserManegmentPage()
         {
             InitializeComponent();
@@ -135,5 +134,46 @@ namespace bakery.Page
                 dataGridUser.ItemsSource = users;
             }
         }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridUser.SelectedItem != null)
+            {
+                User selectedUser = (User)dataGridUser.SelectedItem;
+                string warning = "Вы действительно хотите открыть редактирование пользователя " + selectedUser.FirstName + " " + selectedUser.LastName + "?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    if (selectedUser.UserId != AuthorisationsWindow.CurrentUser.UserId)
+                    {
+                        UserManegmentEdit userManegmentEdit = new UserManegmentEdit();
+
+                        userManegmentEdit.textBoxFirstName.Text = selectedUser.FirstName;
+                        userManegmentEdit.textBoxLastName.Text = selectedUser.LastName;
+                        userManegmentEdit.textBoxPatronymic.Text = selectedUser.Patronymic;
+                        userManegmentEdit.dateTimePickerBirthDay.SelectedDate = selectedUser.DateOfBirthday;
+                        userManegmentEdit.textBoxPhone.Text = selectedUser.Phone;
+                        userManegmentEdit.textBoxAdress.Text = selectedUser.Adress;
+                        userManegmentEdit.textBoxEmail.Text = selectedUser.Email;
+
+                        userManegmentEdit.selectedIndex = users.FindIndex(u => u.UserId == selectedUser.UserId);
+
+                        userManegmentEdit.Show();
+                        dataGridUser.ItemsSource = null;
+                        dataGridUser.ItemsSource = users;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Извините, но вы не можете удалить себя, пока находитесь в системе");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите пользователя для редактирования профиля.");
+            }
+        }
     }
-}
+ }

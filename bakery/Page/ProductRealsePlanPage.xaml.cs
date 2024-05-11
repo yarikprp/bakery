@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,33 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridProductReleasePlan.SelectedItem != null)
+            {
+                ProductReleasePlan selectedEdit = (ProductReleasePlan)dataGridProductReleasePlan.SelectedItem;
+                string warning = "Вы действительно хотите удалить план?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
+
+                    addEditProductRealsePlanWindow.comboBoxProduct.Text = selectedEdit.IdEmployee.ToString();
+                    addEditProductRealsePlanWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditProductRealsePlanWindow.datePickerRelease.Text = selectedEdit.PlannedReleaseDate.ToString();
+
+                    AddEditProductRealsePlanWindow.selectedIndex = productReleasePlans.FindIndex(u => u.IdPlan == selectedEdit.IdPlan);
+
+                    addEditProductRealsePlanWindow.Show();
+
+                    dataGridProductReleasePlan.ItemsSource = null;
+                    dataGridProductReleasePlan.ItemsSource = productReleasePlans;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите план для удаления.");
+            }
 
         }
 
@@ -108,7 +136,8 @@ namespace bakery.Page
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
+            addEditProductRealsePlanWindow.Show();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,35 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridReceiptWarehouses.SelectedItem != null)
+            {
+                ReceiptWarehouse selectedEdit = (ReceiptWarehouse)dataGridReceiptWarehouses.SelectedItem;
+                string warning = "Вы действительно хотите удалить товар?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditReceiptWarehouseWindow addEditReceiptWarehouse = new AddEditReceiptWarehouseWindow();
+
+                    addEditReceiptWarehouse.comboBoxIngredients.Text = selectedEdit.IdIngredients.ToString();
+                    addEditReceiptWarehouse.comboBoxProduct.Text = selectedEdit.IdProduct.ToString();
+                    addEditReceiptWarehouse.comboBoxSupplier.Text = selectedEdit.IdSupplier.ToString();
+                    addEditReceiptWarehouse.dateTimeDateOfReceipt.Text = selectedEdit.DateOfReceipt.ToString();
+                    addEditReceiptWarehouse.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
+
+                    AddEditReceiptWarehouseWindow.selectedIndex = receiptWarehouse.FindIndex(u => u.IdBalance == selectedEdit.IdBalance);
+
+                    addEditReceiptWarehouse.Show();
+
+                    dataGridReceiptWarehouses.ItemsSource = null;
+                    dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите товар для удаления.");
+            }
 
         }
 
@@ -103,12 +133,12 @@ namespace bakery.Page
             {
                 MessageBox.Show("Пожалуйста, выберите товар для удаления.");
             }
-
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditReceiptWarehouseWindow addEditReceiptWarehouseWindow = new AddEditReceiptWarehouseWindow();
+            addEditReceiptWarehouseWindow.Show();
         }
     }
 }

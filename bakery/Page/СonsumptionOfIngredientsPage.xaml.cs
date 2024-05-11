@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace bakery.Page
 {
-    /// <summary>
-    /// Логика взаимодействия для СonsumptionOfIngredientsPage.xaml
-    /// </summary>
     public partial class СonsumptionOfIngredientsPage : System.Windows.Controls.Page
     {
         List<ConsumptionOfIngredients> consumptionOfIngredients = new List<ConsumptionOfIngredients>();
@@ -77,6 +74,32 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridСonsumptionOfIngredientsPage.SelectedItem != null)
+            {
+                ConsumptionOfIngredients selectedEdit = (ConsumptionOfIngredients)dataGridСonsumptionOfIngredientsPage.SelectedItem;
+                string warning = "Вы действительно хотите редактировать расход?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditСonsumptiontWindow addEditСonsumptiontWindow = new AddEditСonsumptiontWindow();
+
+                    addEditСonsumptiontWindow.comboBoxPlan.Text = selectedEdit.IdPlan.ToString();
+                    addEditСonsumptiontWindow.textBoxСonsumption.Text = selectedEdit.Consumption.ToString();
+
+                    AddEditСonsumptiontWindow.selectedIndex = consumptionOfIngredients.FindIndex(u => u.IdConsumption == selectedEdit.IdConsumption);
+
+                    addEditСonsumptiontWindow.Show();
+
+                    dataGridСonsumptionOfIngredientsPage.ItemsSource = null;
+                    dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите расход для редактирования.");
+            }
 
         }
 
@@ -107,7 +130,8 @@ namespace bakery.Page
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditСonsumptiontWindow addEditСonsumptiontWindow = new AddEditСonsumptiontWindow();
+            addEditСonsumptiontWindow.Show();
         }
     }
 }

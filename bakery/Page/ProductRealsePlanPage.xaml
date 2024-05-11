@@ -32,8 +32,8 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
-            <Button x:Name="EditButton" Content="Редактировать" Click="buttonEdit_Click" Margin="10" Width="100"/>
-            <Button x:Name="DeleteButton" Content="Удалить" Margin="10" Click="buttonDelete_Click" Width="100"/>
+            <Button x:Name="EditButton" Content="Редактировать" Click="buttonEdit_Click" Margin="10" Width="150"/>
+            <Button x:Name="DeleteButton" Content="Удалить" Margin="10" Click="buttonDelete_Click" Width="150"/>
         </StackPanel>
     </Grid>
 </Page>

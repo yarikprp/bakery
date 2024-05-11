@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using kulinaria_app_v2.Classes;
 using System.Collections.Generic;
 using System.Data;
@@ -73,11 +74,6 @@ namespace bakery.Page
 
         }
 
-        private void buttonEdit_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private async void buttonDelete_Click(object sender, RoutedEventArgs e)
         {
             if (dataGridEmployee.SelectedItem != null)
@@ -106,6 +102,39 @@ namespace bakery.Page
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
+            AddEditEmployee addEditEmployee = new AddEditEmployee();
+            addEditEmployee.Show();
+        }
+
+        private  void buttonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGridEmployee.SelectedItem != null)
+            {
+                Employee selectedEdit = (Employee)dataGridEmployee.SelectedItem;
+                string warning = "Вы действительно хотите открыть редактирование сотрудника " + selectedEdit.Fio + "?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditEmployee addEditEmployee = new AddEditEmployee();
+
+                    addEditEmployee.textBoxFIO.Text = selectedEdit.Fio;
+                    addEditEmployee.comboBoxPost.Text = selectedEdit.IdPost.ToString();
+                    addEditEmployee.textBoxMoney.Text = selectedEdit.Salary.ToString();
+                    addEditEmployee.dateTimeDateOfEmploymentPickerBirthDay.SelectedDate = selectedEdit.DateOfEmployment;
+
+                    AddEditEmployee.selectedIndex = employee.FindIndex(u => u.IdEmployee == selectedEdit.IdEmployee);
+
+                    addEditEmployee.Show();
+                    dataGridEmployee.ItemsSource = null;
+                    dataGridEmployee.ItemsSource = employee;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите сотрудника для редактирования.");
+            }
 
         }
     }

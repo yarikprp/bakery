@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,34 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridSale.SelectedItem != null)
+            {
+                Sale selectedEdit = (Sale)dataGridSale.SelectedItem;
+                string warning = "Вы действительно хотите редактировать продажу?";
 
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
+
+                    addEditSaleWindow.comboBoxPlan.Text = selectedEdit.IdPlan.ToString();
+                    addEditSaleWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditSaleWindow.dateTimeSale.Text = selectedEdit.DateOfSale.ToString();
+                    addEditSaleWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
+
+                    AddEditSaleWindow.selectedIndex = sale.FindIndex(u => u.IdSale == selectedEdit.IdSale);
+
+                    addEditSaleWindow.Show();
+
+                    dataGridSale.ItemsSource = null;
+                    dataGridSale.ItemsSource = sale;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите продажу для редактирования.");
+            }
         }
 
         private async void buttonDelete_Click(object sender, RoutedEventArgs e)
@@ -100,14 +128,14 @@ namespace bakery.Page
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите ингредиент для удаления.");
+                MessageBox.Show("Пожалуйста, выберите продажу для удаления.");
             }
-
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
+            addEditSaleWindow.Show();
         }
     }
 }

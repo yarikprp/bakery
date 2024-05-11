@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,36 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridIngredient.SelectedItem != null)
+            {
+                Ingredients selectedEdit = (Ingredients)dataGridIngredient.SelectedItem;
+                string warning = "Вы действительно редактировать " + selectedEdit.NameIngredients + "?";
 
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditIngredientWindow addEditIngredientWindow = new AddEditIngredientWindow();
+
+                    addEditIngredientWindow.textBoxFIngredient.Text = selectedEdit.NameIngredients;
+                    addEditIngredientWindow.comboBoxType.Text = selectedEdit.IdType.ToString();
+                    addEditIngredientWindow.comboBoxProduct.Text = selectedEdit.IdProduct.ToString();
+                    addEditIngredientWindow.comboBoxUnit.Text = selectedEdit.IdUnit.ToString();
+                    addEditIngredientWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
+                    addEditIngredientWindow.textBoxWarehouse.Text = selectedEdit.Warehouse;
+
+                    AddEditIngredientWindow.selectedIndex = ingredients.FindIndex(u => u.IdIngredients == selectedEdit.IdIngredients);
+
+                    addEditIngredientWindow.Show();
+
+                    dataGridIngredient.ItemsSource = null;
+                    dataGridIngredient.ItemsSource = ingredients;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите ингредиент для редактирования.");
+            }
         }
 
         private async void buttonDelete_Click(object sender, RoutedEventArgs e)
@@ -106,7 +136,8 @@ namespace bakery.Page
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditIngredientWindow addEditIngredientWindow = new AddEditIngredientWindow();
+            addEditIngredientWindow.Show();
         }
     }
 }

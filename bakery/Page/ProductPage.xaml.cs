@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,38 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridProduct.SelectedItem != null)
+            {
+                Product selectedEdit = (Product)dataGridProduct.SelectedItem;
+                string warning = "Вы действительно хотите редактировать " + selectedEdit.NameProduct + "?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
+
+                    addEditProductWindow.textBoxProduct.Text = selectedEdit.NameProduct;
+                    addEditProductWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditProductWindow.datePickerReleases.Text = selectedEdit.Releasses.ToString();
+                    addEditProductWindow.textBoxPrice.Text = selectedEdit.Price.ToString();
+                    addEditProductWindow.datePickerManf.Text = selectedEdit.DateOfManufacture.ToString();
+                    addEditProductWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
+
+                    AddEditProductWindow.selectedIndex = product.FindIndex(u => u.IdProduct == selectedEdit.IdProduct);
+
+                    addEditProductWindow.Show();
+
+
+                    dataGridProduct.ItemsSource = null;
+                    dataGridProduct.ItemsSource = product;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите продукт для редактирования.");
+            }
+
 
         }
 
@@ -109,12 +142,12 @@ namespace bakery.Page
             {
                 MessageBox.Show("Пожалуйста, выберите продукт для удаления.");
             }
-
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
+            addEditProductWindow.Show();
         }
     }
 }

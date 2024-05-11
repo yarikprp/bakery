@@ -186,6 +186,33 @@
     <Compile Include="Page\СonsumptionOfIngredientsPage.xaml.cs">
       <DependentUpon>СonsumptionOfIngredientsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddEditCompanyWindow.xaml.cs">
+      <DependentUpon>AddEditCompanyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditEmployee.xaml.cs">
+      <DependentUpon>AddEditEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditIngredientWindow.xaml.cs">
+      <DependentUpon>AddEditIngredientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditProductRealsePlanWindow.xaml.cs">
+      <DependentUpon>AddEditProductRealsePlanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditProductWindow.xaml.cs">
+      <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditReceiptWarehouseWindow.xaml.cs">
+      <DependentUpon>AddEditReceiptWarehouseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditSaleWindow.xaml.cs">
+      <DependentUpon>AddEditSaleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditSupplierWindow.xaml.cs">
+      <DependentUpon>AddEditSupplierWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddEditСonsumptiontWindow.xaml.cs">
+      <DependentUpon>AddEditСonsumptiontWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AuthorisationsWindow.xaml.cs">
       <DependentUpon>AuthorisationsWindow.xaml</DependentUpon>
     </Compile>
@@ -197,6 +224,9 @@
     </Compile>
     <Compile Include="View\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserManegmentEdit.xaml.cs">
+      <DependentUpon>UserManegmentEdit.xaml</DependentUpon>
     </Compile>
     <Page Include="Page\IngredientPage.xaml">
       <SubType>Designer</SubType>
@@ -234,6 +264,42 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AddEditCompanyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditIngredientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditProductRealsePlanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditReceiptWarehouseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditSaleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditSupplierWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddEditСonsumptiontWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AuthorisationsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,6 +328,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserManegmentEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

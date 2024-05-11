@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -83,6 +84,32 @@ namespace bakery.Page
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
         {
+            if (dataGridCompany.SelectedItem != null)
+            {
+                Supplier selectedEdit = (Supplier)dataGridCompany.SelectedItem;
+                string warning = "Вы действительно хотите редактировать поставщика?";
+
+                MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
+
+                    addEditSupplierWindow.textBoxFIngredient.Text = selectedEdit.Ingredient;
+                    addEditSupplierWindow.comboBoxCompany.Text = selectedEdit.IdCompany.ToString();
+
+                    AddEditSupplierWindow.selectedIndex = supplier.FindIndex(u => u.IdCompany == selectedEdit.IdCompany);
+
+                    addEditSupplierWindow.Show();
+
+                    dataGridCompany.ItemsSource = null;
+                    dataGridCompany.ItemsSource = supplier;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Пожалуйста, выберите поставщика для редактирования.");
+            }
 
         }
 
@@ -109,12 +136,12 @@ namespace bakery.Page
             {
                 MessageBox.Show("Пожалуйста, выберите поставщика для удаления.");
             }
-
         }
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
+            addEditSupplierWindow.Show();
         }
     }
 }
