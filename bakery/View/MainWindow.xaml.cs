@@ -54,6 +54,8 @@ namespace bakery
                     FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
                     FrameClass.receiptWarehouseFrame = receiptWarehouseFrame;
                     FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
+                    FrameClass.companyFrame = companyFrame;
+                    FrameClass.companyFrame.Navigate(new Page.CompanyPage());
                     break;
                 case 2:
                     FrameClass.supplierFrame = supplierFrame;
@@ -68,6 +70,8 @@ namespace bakery
                     FrameClass.receiptWarehouseFrame.Navigate(new Page.ReceiptWarehousePage());
                     FrameClass.consumptionOfIngredientsFrame = consumptionOfIngredientsFrame;
                     FrameClass.consumptionOfIngredientsFrame.Navigate(new Page.СonsumptionOfIngredientsPage());
+                    FrameClass.companyFrame = companyFrame;
+                    FrameClass.companyFrame.Navigate(new Page.CompanyPage());
                     break;
                 case 3:
                     FrameClass.productFrame = productFrame;

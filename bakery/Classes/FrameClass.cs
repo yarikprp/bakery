@@ -19,5 +19,6 @@ namespace bakery.Classes
         public static Frame productRealsePlanFrame;
         public static Frame receiptWarehouseFrame;
         public static Frame consumptionOfIngredientsFrame;
+        public static Frame companyFrame;
     }
 }

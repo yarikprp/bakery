@@ -1,4 +1,4 @@
-﻿<Page x:Class="bakery.Page.SupplierPage"
+﻿<Page x:Class="bakery.Page.CompanyPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:bakery.Page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SupplierPage" Background="#fffeb6" Loaded="CompanyPage_Loaded">
+      Title="CompanyPage" Background="#fffeb6" Loaded="CompanyPage_Loaded">
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,16 +19,17 @@
             <TextBlock Text="Поиск" Height="30" Margin="120,0,0,0"/>
             <TextBox x:Name="txbSearchs" Width="150" Height="30" Margin="20,0,0,0" TextChanged="txbSearchs_TextChanged"/>
             <ComboBox x:Name="comboBoxCompany" DisplayMemberPath="companyName"  
-                      Width="200" Height="30" Margin="120,0,0,0" SelectionChanged="comboBoxPost_SelectionChanged" />
+                      Width="200" Height="30" Margin="120,0,0,0" SelectionChanged="comboBox_SelectionChanged" />
             <Button x:Name="Add" Content="Добавить" Margin="10" Click="buttonAdd_Click"/>
 
         </StackPanel>
 
         <DataGrid x:Name="dataGridCompany" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Ингердиент" Binding="{Binding Ingredient}" />
                 <DataGridTextColumn Header="Компания" Binding="{Binding NameCompany}" />
-                <DataGridTextColumn Header="Фио" Binding="{Binding IdCompany}" />
+                <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}" />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding NamePhone}" />
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Adress}" />
             </DataGrid.Columns>
         </DataGrid>
 

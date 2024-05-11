@@ -159,6 +159,9 @@
     <Compile Include="Model\TypeIngredientsFromDb.cs" />
     <Compile Include="Model\UnitFromDb.cs" />
     <Compile Include="Model\UserFromDb.cs" />
+    <Compile Include="Page\CompanyPage.xaml.cs">
+      <DependentUpon>CompanyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Page\IngredientPage.xaml.cs">
       <DependentUpon>IngredientPage.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,10 @@
     <Compile Include="View\UserManegmentEdit.xaml.cs">
       <DependentUpon>UserManegmentEdit.xaml</DependentUpon>
     </Compile>
+    <Page Include="Page\CompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Page\IngredientPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

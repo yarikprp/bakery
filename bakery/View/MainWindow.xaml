@@ -38,10 +38,19 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Source="/Images/supplier.png"/>
-                        <TextBlock Text="Продавец"/>
+                        <TextBlock Text="Поставщик"/>
                     </StackPanel>
                 </TabItem.Header>
                 <Frame x:Name="supplierFrame"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="/Images/supplier.png"/>
+                        <TextBlock Text="Компании"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Frame x:Name="companyFrame"/>
             </TabItem>
             <TabItem>
                 <TabItem.Header>
