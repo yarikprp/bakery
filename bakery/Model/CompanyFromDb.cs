@@ -70,5 +70,39 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+
+
+        public static async Task AddCompany(string name, int prot, int fats, int carb)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "CALL public.insert_company(prod_name, prod_protein, prod_fats, prod_carboh) " +
+                        "VALUES (@name, @prot, @fats, @carb)";
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("name", name);
+                    command.Parameters.AddWithValue("prot", prot);
+                    command.Parameters.AddWithValue("fats", fats);
+                    command.Parameters.AddWithValue("carb", carb);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Продукт {name} добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запрос отклонён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using bakery.Model;
 using kulinaria_app_v2.Classes;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace bakery.View
 {
@@ -18,14 +19,14 @@ namespace bakery.View
 
         private async void buttonLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxLogin.Text == "" && textBoxPassword.Password == "")
+            if (textBoxLogin.Text == "" && passwordBox.Password == "")
             {
                 MessageBox.Show("Введите данные");
                 return;
             }
             else
             {
-                CurrentUser = await UserFromDb.GetUser(textBoxLogin.Text, textBoxPassword.Password);
+                CurrentUser = await UserFromDb.GetUser(textBoxLogin.Text, passwordBox.Password);
 
                 if (CurrentUser != null)
                 {

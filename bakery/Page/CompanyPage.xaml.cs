@@ -3,6 +3,7 @@ using bakery.Model;
 using bakery.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,12 @@ namespace bakery.Page
         private async void CompanyPage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllCompany();
+
+            comboBoxCompany.DisplayMemberPath = "companyName";
+            comboBoxCompany.Items.Add("Company");
+            comboBoxCompany.Items.Add("Fio");
+            comboBoxCompany.Items.Add("NamePhone");
+            comboBoxCompany.Items.Add("Adress");
         }
 
         async Task ViewAllCompany()
@@ -37,6 +44,15 @@ namespace bakery.Page
             company = await CompanyFromDb.GetCompany();
 
             dataGridCompany.ItemsSource = company;
+        }
+
+        private void SortDataGrid(string sortBy, ListSortDirection direction)
+        {
+            var dataView = CollectionViewSource.GetDefaultView(dataGridCompany.ItemsSource);
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
         }
 
         List<Company> SearchSupplier(string searchString)
@@ -65,9 +81,15 @@ namespace bakery.Page
             }
         }
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void comboBoxCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxCompany.SelectedItem != null)
+            {
+                string selectedSortBy = (comboBoxCompany.SelectedItem).ToString();
+                ListSortDirection direction = ListSortDirection.Ascending;
 
+                SortDataGrid(selectedSortBy, direction);
+            }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)
