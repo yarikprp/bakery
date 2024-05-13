@@ -39,7 +39,7 @@ namespace bakery.Page
             comboBoxCompany.Items.Add("Adress");
         }
 
-        async Task ViewAllCompany()
+       public async Task ViewAllCompany()
         {
             company = await CompanyFromDb.GetCompany();
 
@@ -153,6 +153,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditCompanyWindow addEditCompanyWindow = new AddEditCompanyWindow();
+            addEditCompanyWindow.ParentPage = this;
             addEditCompanyWindow.Show();
         }
     }

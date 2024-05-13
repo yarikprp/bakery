@@ -33,9 +33,10 @@ namespace bakery.View
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-
             employee = await EmployeeFromDb.GetEmployee();
-            comboBoxPost.ItemsSource = await RoleFromDb.GetRoles();
+            comboBoxPost.ItemsSource = await PostFromDb.GetPost();
+            comboBoxPost.DisplayMemberPath = "PostName";
+            comboBoxPost.SelectedValuePath = "PostId";
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)

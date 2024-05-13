@@ -71,9 +71,7 @@ namespace bakery.Model
             }
         }
 
-
-
-        public static async Task AddCompany(string name, int prot, int fats, int carb)
+        public static async Task AddCompany(string nameCompany, string fio, string namePhone, string adress)
         {
             try
             {
@@ -81,21 +79,53 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "CALL public.insert_company(prod_name, prod_protein, prod_fats, prod_carboh) " +
-                        "VALUES (@name, @prot, @fats, @carb)";
+                    string add = "CALL public.insert_company(@company_name, @fio, @number_phone, @adress); ";
+
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
-                    command.Parameters.AddWithValue("name", name);
-                    command.Parameters.AddWithValue("prot", prot);
-                    command.Parameters.AddWithValue("fats", fats);
-                    command.Parameters.AddWithValue("carb", carb);
+                    command.Parameters.AddWithValue("company_name", nameCompany);
+                    command.Parameters.AddWithValue("fio", fio);
+                    command.Parameters.AddWithValue("number_phone", namePhone);
+                    command.Parameters.AddWithValue("adress", adress);
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show($"Продукт {name} добавлен");
+                        MessageBox.Show($"Компания {nameCompany} добавлена");
                     }
                     else
                     {
-                        MessageBox.Show("Запрос отклонён");
+                        MessageBox.Show($"Компания {nameCompany} добавлена");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task UpdateCompany(Company company)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "CALL update_company(@id, @company_name, @fio, @number_phone, @adress);";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id", company.IdCompany);
+                    command.Parameters.AddWithValue("company_name", company.NameCompany);
+                    command.Parameters.AddWithValue("fio", company.Fio);
+                    command.Parameters.AddWithValue("number_phone", company.NamePhone);
+                    command.Parameters.AddWithValue("adress", company.Adress);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show("Компания обновлена");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Компания обновлена");
                     }
                 }
             }

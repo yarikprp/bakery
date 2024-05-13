@@ -42,7 +42,7 @@ namespace bakery.Page
             comboBoxCompany.SelectedValuePath = "PostRoleId";*/
         }
 
-        async Task ViewAllCompany()
+        public async Task ViewAllCompany()
         {
             supplier = await SupplierFromDb.GetSupplier();
 

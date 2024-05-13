@@ -23,7 +23,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getRoles = "SELECT * FROM public.role_view ;";
+                    string getRoles = "SELECT * FROM public.role; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getRoles, connection);
 

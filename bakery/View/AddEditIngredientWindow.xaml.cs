@@ -21,14 +21,30 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditIngredientWindow : Window
     {
+        List<Ingredients> ingredients = new List<Ingredients>();
         public static int selectedIndex;
         public AddEditIngredientWindow()
         {
             InitializeComponent();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            ingredients = await IngredientsFromDb.GetIngredients();
+
+            comboBoxType.ItemsSource = await TypeIngredientsFromDb.GetTypeIngredients();
+            comboBoxType.DisplayMemberPath = "TypeIngredient";
+            comboBoxType.SelectedValuePath = "IdType";
+
+
+            comboBoxProduct.ItemsSource = await ProductFromDb.GetProduct();
+            comboBoxProduct.DisplayMemberPath = "NameProduct";
+            comboBoxProduct.SelectedValuePath = "IdProduct";
+
+
+            comboBoxUnit.ItemsSource = await UnitFromDb.GetUnit();
+            comboBoxUnit.DisplayMemberPath = "NameUnit";
+            comboBoxUnit.SelectedValuePath = "IdUnit";
 
         }
 

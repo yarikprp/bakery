@@ -229,6 +229,9 @@ namespace bakery.Model
 
                     string add = "INSERT INTO public.tb_user (first_name, last_name, patronymic, login, user_password, phone, adress, id_role, email) " +
                         "VALUES (@firstName, @lastName, '', @login, @password, '', '', default, @email)";
+
+                    /*                    string add = "CALL create_user('@firstName', '@lastName', '@login', '@email', '@password');";
+                    */
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("firstName", firstName);
                     command.Parameters.AddWithValue("lastName", lastName);

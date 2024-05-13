@@ -21,7 +21,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Компания" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxCompany" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxCompany" DisplayMemberPath="NameCompany"  Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <Button Name="buttonSave" Grid.Row="2" Content="Сохранить" HorizontalAlignment="Center" Margin="5" Height="29" Width="186" Click="buttonUpdate_Click"/>
         </StackPanel>

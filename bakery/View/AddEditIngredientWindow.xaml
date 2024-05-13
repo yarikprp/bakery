@@ -20,15 +20,15 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Тип" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxType" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxType" DisplayMemberPath="TypeIngredient" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Продукт" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxProduct" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxProduct" DisplayMemberPath="NameProduct" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Единица" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxUnit" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxUnit" DisplayMemberPath="NameUnit"  Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Количество" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>

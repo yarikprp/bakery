@@ -1,4 +1,6 @@
-﻿using System;
+﻿using bakery.Classes;
+using bakery.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,15 +21,23 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditProductRealsePlanWindow : Window
     {
+        List<ReceiptWarehouse> receiptWarehouses = new List<ReceiptWarehouse>();
         public static int selectedIndex;
         public AddEditProductRealsePlanWindow()
         {
             InitializeComponent();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            receiptWarehouses = await ReceiptWarehouseFromDb.GetReceiptWarehouse();
+            comboBoxProduct.ItemsSource = await ProductFromDb.GetProduct();
+            comboBoxProduct.DisplayMemberPath = "NameProduct";
+            comboBoxProduct.SelectedValuePath = "IdProduct";
 
+            comboBoxEmployee.ItemsSource = await EmployeeFromDb.GetEmployee();
+            comboBoxEmployee.DisplayMemberPath = "Fio";
+            comboBoxEmployee.SelectedValuePath = "IdEmployee";
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)

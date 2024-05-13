@@ -17,11 +17,11 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" Width="390" Margin="0,22,0,22">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Продукт" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxProduct" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxProduct" DisplayMemberPath="NameProduct" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Сотрудник" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxEmployee" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxEmployee" DisplayMemberPath="Fio" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Дата реализации" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>

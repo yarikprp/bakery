@@ -1,4 +1,7 @@
-﻿using System;
+﻿using bakery.Classes;
+using bakery.Model;
+using kulinaria_app_v2.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,16 +22,20 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditProductWindow : Window
     {
+        List<Product> product = new List<Product>();
         public static int selectedIndex;
 
         public AddEditProductWindow()
         {
             InitializeComponent();
         }
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-
+            product = await ProductFromDb.GetProduct();
+            comboBoxEmployee.ItemsSource = await EmployeeFromDb.GetEmployee();
+            comboBoxEmployee.DisplayMemberPath = "Fio";
+            comboBoxEmployee.SelectedValuePath = "IdEmployee";
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)

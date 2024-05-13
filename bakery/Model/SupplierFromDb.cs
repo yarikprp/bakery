@@ -70,5 +70,67 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task AddSupplier(string ingredient, string nameCompany)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "CALL insert_supplier(@ingredient, @company_name); ";
+
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("ingredient", ingredient);
+                    command.Parameters.AddWithValue("company_name", nameCompany);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Компания {ingredient} добавлена");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Компания {ingredient} добавлена");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+       /* public static async Task UpdateCompany(Supplier supplier)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "CALL update_company(@id, @company_name, @fio, @number_phone, @adress);";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id", company.IdCompany);
+                    command.Parameters.AddWithValue("company_name", company.NameCompany);
+                    command.Parameters.AddWithValue("fio", company.Fio);
+                    command.Parameters.AddWithValue("number_phone", company.NamePhone);
+                    command.Parameters.AddWithValue("adress", company.Adress);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show("Компания обновлена");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Компания обновлена");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }*/
     }
 }

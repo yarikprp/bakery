@@ -31,9 +31,10 @@ namespace bakery.View
 
         private async void UserManegmentEdit_Loaded(object sender, RoutedEventArgs e)
         {
-
             users = await UserFromDb.GetUsers();
             ComboBoxRole.ItemsSource = await RoleFromDb.GetRoles();
+            ComboBoxRole.DisplayMemberPath = "Name";
+            ComboBoxRole.SelectedValuePath = "Id";
         }
 
         private async void buttonSave_Click(object sender, RoutedEventArgs e)
