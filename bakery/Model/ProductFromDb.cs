@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getProduct = "SELECT * FROM public.product; ";
+                    string getProduct = "SELECT * FROM product_info; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getProduct, connection);
 
@@ -40,7 +40,7 @@ namespace bakery.Model
                             {
                                 dateOfManufacture = reader.GetDateTime(5);
                             }
-                            product.Add(new Product(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), releasses, reader.GetDecimal(4), dateOfManufacture, reader.GetInt32(6)));
+                            product.Add(new Product(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), releasses, reader.GetDecimal(4), dateOfManufacture, reader.GetInt32(6)));
                         }
                     }
                 }

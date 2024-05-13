@@ -28,7 +28,9 @@
                 <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" />
                 <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" />
                 <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" />
-                <DataGridTextColumn Header="Роль" Binding="{Binding RoleId}" />
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
+                <DataGridTextColumn Header="Почта" Binding="{Binding Email}" />
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Adress}" />
             </DataGrid.Columns>
         </DataGrid>
 

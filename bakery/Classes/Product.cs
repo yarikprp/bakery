@@ -10,16 +10,16 @@ namespace bakery.Classes
     {
         public int IdProduct { get; set; }
         public string NameProduct { get; set; }
-        public int IdEmployee { get; set; }
+        public string Fio { get; set; }
         public DateTime Releasses { get; set; }
         public decimal Price { get; set; }
         public DateTime DateOfManufacture { get; set; }
         public int Quantity { get; set; }
-        public Product(int idProduct,  string nameProduct, int idEmployee, DateTime releasses, decimal price, DateTime dateOfManufacture, int quantity)
+        public Product(int idProduct,  string nameProduct, string fio, DateTime releasses, decimal price, DateTime dateOfManufacture, int quantity)
         {
             IdProduct = idProduct;
             NameProduct = nameProduct;
-            IdEmployee = idEmployee;
+            Fio = fio;
             Releasses = releasses;
             Price = price;
             DateOfManufacture = dateOfManufacture;

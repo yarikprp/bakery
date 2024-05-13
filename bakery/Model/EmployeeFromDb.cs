@@ -22,7 +22,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getEmployee = "SELECT * FROM public.employee; ";
+                    string getEmployee = "SELECT * FROM employee_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getEmployee, connection);
 
@@ -36,7 +36,7 @@ namespace bakery.Model
                             {
                                 birthday = reader.GetDateTime(4);
                             }
-                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetDecimal(3), birthday));
+                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDecimal(3), birthday));
                         }
                     }
                 }

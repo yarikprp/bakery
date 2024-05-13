@@ -96,7 +96,7 @@ namespace bakery.Page
                     AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
 
                     addEditProductWindow.textBoxProduct.Text = selectedEdit.NameProduct;
-                    addEditProductWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditProductWindow.comboBoxEmployee.Text = selectedEdit.Fio;
                     addEditProductWindow.datePickerReleases.Text = selectedEdit.Releasses.ToString();
                     addEditProductWindow.textBoxPrice.Text = selectedEdit.Price.ToString();
                     addEditProductWindow.datePickerManf.Text = selectedEdit.DateOfManufacture.ToString();

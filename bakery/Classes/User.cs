@@ -19,7 +19,7 @@ namespace kulinaria_app_v2.Classes
         public string Adress { get; set; }
         public int RoleId { get; set; }
         public string Email { get; set; }
-     
+        
         public User(int userId, string firstName, string lastName, string patronymic, DateTime dateOfBirthday,
             string login, string password, string phone, string adress, int roleId, string email)
         {

@@ -22,7 +22,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getConsumptionOfIngredients = "SELECT * FROM public.consumption_of_ingredients; ";
+                    string getConsumptionOfIngredients = "SELECT * FROM consumption_plan_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getConsumptionOfIngredients, connection);
 

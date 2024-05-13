@@ -11,14 +11,14 @@ namespace bakery.Classes
     {
         public int IdEmployee { get; set; }
         public string Fio { get; set; }
-        public int IdPost { get; set; }
+        public string PostName { get; set; }
         public decimal Salary { get; set; }
         public DateTime DateOfEmployment { get; set; }
-        public Employee(int idEmployee, string fio, int idPost, decimal salary, DateTime dateOfEmployment)
+        public Employee(int idEmployee, string fio, string postName, decimal salary, DateTime dateOfEmployment)
         {
             IdEmployee = idEmployee;
             Fio = fio;
-            IdPost = idPost;
+            PostName = postName;
             Salary = salary;
             DateOfEmployment = dateOfEmployment;
         }

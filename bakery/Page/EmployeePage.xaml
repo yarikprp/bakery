@@ -26,7 +26,7 @@
         <DataGrid x:Name="dataGridEmployee" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ФИО" Binding="{Binding Fio}" />
-                <DataGridTextColumn Header="Должность" Binding="{Binding idPost}" />
+                <DataGridTextColumn Header="Должность" Binding="{Binding PostName}" />
                 <DataGridTextColumn Header="Зарплата" Binding="{Binding Salary}" />
                 <DataGridTextColumn Header="Дата принятия на работу" Binding="{Binding DateOfEmployment}" />
             </DataGrid.Columns>

@@ -9,17 +9,17 @@ namespace bakery.Classes
     public class ReceiptWarehouse
     {
         public int IdBalance { get; set; }
-        public int IdIngredients { get; set; }
-        public int IdProduct { get; set; }
-        public int IdSupplier { get; set; }
+        public string NameIngredients { get; set; }
+        public string NameProduct { get; set; }
+        public string NameCompany { get; set; }
         public DateTime DateOfReceipt { get; set; }
         public string Quantity { get; set; }
-        public ReceiptWarehouse(int idBalance, int idIngredients, int idProduct, int idSupplier, DateTime dateOfReceipt, string quantity)
+        public ReceiptWarehouse(int idBalance, string nameIngredients, string nameProduct, string nameCompany, DateTime dateOfReceipt, string quantity)
         {
             IdBalance = idBalance;
-            IdIngredients = idIngredients;
-            IdProduct = idProduct;
-            IdSupplier = idSupplier;
+            NameIngredients = nameIngredients;
+            NameProduct = nameProduct;
+            NameCompany = nameCompany;
             DateOfReceipt = dateOfReceipt;
             Quantity = quantity;
         }

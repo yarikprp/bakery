@@ -89,9 +89,9 @@ namespace bakery.Page
                     AddEditIngredientWindow addEditIngredientWindow = new AddEditIngredientWindow();
 
                     addEditIngredientWindow.textBoxFIngredient.Text = selectedEdit.NameIngredients;
-                    addEditIngredientWindow.comboBoxType.Text = selectedEdit.IdType.ToString();
-                    addEditIngredientWindow.comboBoxProduct.Text = selectedEdit.IdProduct.ToString();
-                    addEditIngredientWindow.comboBoxUnit.Text = selectedEdit.IdUnit.ToString();
+                    addEditIngredientWindow.comboBoxType.Text = selectedEdit.TypeIngredients;
+                    addEditIngredientWindow.comboBoxProduct.Text = selectedEdit.NameProduct;
+                    addEditIngredientWindow.comboBoxUnit.Text = selectedEdit.NameUnit;
                     addEditIngredientWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
                     addEditIngredientWindow.textBoxWarehouse.Text = selectedEdit.Warehouse;
 

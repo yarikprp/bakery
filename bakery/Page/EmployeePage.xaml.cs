@@ -120,7 +120,7 @@ namespace bakery.Page
                     AddEditEmployee addEditEmployee = new AddEditEmployee();
 
                     addEditEmployee.textBoxFIO.Text = selectedEdit.Fio;
-                    addEditEmployee.comboBoxPost.Text = selectedEdit.IdPost.ToString();
+                    addEditEmployee.comboBoxPost.Text = selectedEdit.PostName;
                     addEditEmployee.textBoxMoney.Text = selectedEdit.Salary.ToString();
                     addEditEmployee.dateTimeDateOfEmploymentPickerBirthDay.SelectedDate = selectedEdit.DateOfEmployment;
 

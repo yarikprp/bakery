@@ -80,7 +80,7 @@ namespace bakery.Page
             if (dataGridSale.SelectedItem != null)
             {
                 Sale selectedEdit = (Sale)dataGridSale.SelectedItem;
-                string warning = "Вы действительно хотите редактировать продажу?";
+                string warning = "Вы действительно хотите редактировать продажу от " + selectedEdit.DateOfSale + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
@@ -89,7 +89,7 @@ namespace bakery.Page
                     AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
 
                     addEditSaleWindow.comboBoxPlan.Text = selectedEdit.IdPlan.ToString();
-                    addEditSaleWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditSaleWindow.comboBoxEmployee.Text = selectedEdit.Fio;
                     addEditSaleWindow.dateTimeSale.Text = selectedEdit.DateOfSale.ToString();
                     addEditSaleWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
 
@@ -112,7 +112,7 @@ namespace bakery.Page
             if (dataGridSale.SelectedItem != null)
             {
                 Sale selected = (Sale)dataGridSale.SelectedItem;
-                string warning = "Вы действительно хотите удалить продажу?";
+                string warning = "Вы действительно хотите удалить продажу от " + selected.DateOfSale + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 

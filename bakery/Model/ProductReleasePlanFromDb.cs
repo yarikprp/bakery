@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getProductReleasePlan = "SELECT * FROM public.product_release_plan; ";
+                    string getProductReleasePlan = "SELECT * FROM product_release_plan_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getProductReleasePlan, connection);
 
@@ -35,7 +35,7 @@ namespace bakery.Model
                             {
                                 release = reader.GetDateTime(3);
                             }
-                            productReleasePlans.Add(new ProductReleasePlan(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), release));
+                            productReleasePlans.Add(new ProductReleasePlan(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), release));
                         }
                     }
                 }

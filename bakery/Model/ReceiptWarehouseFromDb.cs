@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getReceiptWarehouse = "SELECT * FROM public.receipt_warehouse; ";
+                    string getReceiptWarehouse = "SELECT * FROM receipt_details_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getReceiptWarehouse, connection);
 
@@ -35,7 +35,7 @@ namespace bakery.Model
                             {
                                 datereceipt = reader.GetDateTime(4);
                             }
-                            receiptWarehouses.Add(new ReceiptWarehouse(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), datereceipt, reader.GetString(5)));
+                            receiptWarehouses.Add(new ReceiptWarehouse(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), datereceipt, reader.GetString(5)));
                         }
                     }
                 }

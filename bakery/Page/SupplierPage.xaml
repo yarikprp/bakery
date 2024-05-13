@@ -27,7 +27,6 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ингердиент" Binding="{Binding Ingredient}" />
                 <DataGridTextColumn Header="Компания" Binding="{Binding NameCompany}" />
-                <DataGridTextColumn Header="Фио" Binding="{Binding IdCompany}" />
             </DataGrid.Columns>
         </DataGrid>
 

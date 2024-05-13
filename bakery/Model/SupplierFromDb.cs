@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getSupplier = "SELECT * FROM public.supplier; ";
+                    string getSupplier = "SELECT * FROM supplier_company_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getSupplier, connection);
 
@@ -30,7 +30,7 @@ namespace bakery.Model
                     {
                         while (await reader.ReadAsync())
                         {
-                            supplier.Add(new Supplier(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2)));
+                            supplier.Add(new Supplier(reader.GetInt32(0), reader.GetString(1), reader.GetString(2)));
                         }
                     }
                 }

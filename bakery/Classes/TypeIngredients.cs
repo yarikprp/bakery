@@ -9,11 +9,11 @@ namespace bakery.Classes
     public class TypeIngredients
     {
         public int IdType { get; set; }
-        public string NameIngredients { get; set; }
-        public TypeIngredients(int idType, string nameIngredients)
+        public string TypeIngredient { get; set; }
+        public TypeIngredients(int idType, string typeIngredient)
         {
             IdType = idType;
-            NameIngredients = nameIngredients;
+            TypeIngredient = typeIngredient;
         }
     }
 }

@@ -26,9 +26,9 @@
         <DataGrid x:Name="dataGridIngredient" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ингредиет" Binding="{Binding NameIngredients}" />
-                <DataGridTextColumn Header="Тип ингредиета" Binding="{Binding IdType}" />
-                <DataGridTextColumn Header="Продукт" Binding="{Binding IdProduct}" />
-                <DataGridTextColumn Header="Единица" Binding="{Binding IdUnit}" />
+                <DataGridTextColumn Header="Тип ингредиета" Binding="{Binding TypeIngredients}" />
+                <DataGridTextColumn Header="Продукт" Binding="{Binding NameProduct}" />
+                <DataGridTextColumn Header="Единица" Binding="{Binding NameUnit}" />
                 <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" />
                 <DataGridTextColumn Header="Склад" Binding="{Binding Warehouse}" />
             </DataGrid.Columns>

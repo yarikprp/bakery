@@ -21,7 +21,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string getSale = "SELECT * FROM public.sale; ";
+                    string getSale = "SELECT * FROM sale_view; ";
 
                     NpgsqlCommand command = new NpgsqlCommand(getSale, connection);
 
@@ -35,7 +35,7 @@ namespace bakery.Model
                             {
                                 date_of_sale = reader.GetDateTime(3);
                             }
-                            sale.Add(new Sale(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), date_of_sale, reader.GetInt32(4)));
+                            sale.Add(new Sale(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), date_of_sale, reader.GetInt32(4)));
                         }
                     }
                 }

@@ -25,8 +25,8 @@
 
         <DataGrid x:Name="dataGridProductReleasePlan" Grid.Row="1" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Продукт" Binding="{Binding IdProduct}" />
-                <DataGridTextColumn Header="Сотрудник" Binding="{Binding IdEmployee}" />
+                <DataGridTextColumn Header="Продукт" Binding="{Binding NameProduct}" />
+                <DataGridTextColumn Header="Сотрудник" Binding="{Binding Fio}" />
                 <DataGridTextColumn Header="Дата выпуска" Binding="{Binding PlannedReleaseDate}" />
             </DataGrid.Columns>
         </DataGrid>

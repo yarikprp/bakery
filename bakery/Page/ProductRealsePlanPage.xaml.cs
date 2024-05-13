@@ -81,7 +81,7 @@ namespace bakery.Page
             if (dataGridProductReleasePlan.SelectedItem != null)
             {
                 ProductReleasePlan selectedEdit = (ProductReleasePlan)dataGridProductReleasePlan.SelectedItem;
-                string warning = "Вы действительно хотите удалить план?";
+                string warning = "Вы действительно хотите редактировать из плана " + selectedEdit.NameProduct + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
@@ -89,8 +89,8 @@ namespace bakery.Page
                 {
                     AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
 
-                    addEditProductRealsePlanWindow.comboBoxProduct.Text = selectedEdit.IdEmployee.ToString();
-                    addEditProductRealsePlanWindow.comboBoxEmployee.Text = selectedEdit.IdEmployee.ToString();
+                    addEditProductRealsePlanWindow.comboBoxProduct.Text = selectedEdit.NameProduct;
+                    addEditProductRealsePlanWindow.comboBoxEmployee.Text = selectedEdit.Fio;
                     addEditProductRealsePlanWindow.datePickerRelease.Text = selectedEdit.PlannedReleaseDate.ToString();
 
                     AddEditProductRealsePlanWindow.selectedIndex = productReleasePlans.FindIndex(u => u.IdPlan == selectedEdit.IdPlan);
@@ -103,7 +103,7 @@ namespace bakery.Page
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите план для удаления.");
+                MessageBox.Show("Пожалуйста, выберите план для редактирования.");
             }
 
         }
@@ -113,7 +113,7 @@ namespace bakery.Page
             if (dataGridProductReleasePlan.SelectedItem != null)
             {
                 ProductReleasePlan selected = (ProductReleasePlan)dataGridProductReleasePlan.SelectedItem;
-                string warning = "Вы действительно хотите удалить план?";
+                string warning = "Вы действительно хотите удалить из плана " + selected.NameProduct + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 

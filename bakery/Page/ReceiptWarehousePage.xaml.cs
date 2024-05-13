@@ -81,7 +81,7 @@ namespace bakery.Page
             if (dataGridReceiptWarehouses.SelectedItem != null)
             {
                 ReceiptWarehouse selectedEdit = (ReceiptWarehouse)dataGridReceiptWarehouses.SelectedItem;
-                string warning = "Вы действительно хотите удалить товар?";
+                string warning = "Вы действительно хотите редактировать товар?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
@@ -89,9 +89,9 @@ namespace bakery.Page
                 {
                     AddEditReceiptWarehouseWindow addEditReceiptWarehouse = new AddEditReceiptWarehouseWindow();
 
-                    addEditReceiptWarehouse.comboBoxIngredients.Text = selectedEdit.IdIngredients.ToString();
-                    addEditReceiptWarehouse.comboBoxProduct.Text = selectedEdit.IdProduct.ToString();
-                    addEditReceiptWarehouse.comboBoxSupplier.Text = selectedEdit.IdSupplier.ToString();
+                    addEditReceiptWarehouse.comboBoxIngredients.Text = selectedEdit.NameIngredients;
+                    addEditReceiptWarehouse.comboBoxProduct.Text = selectedEdit.NameProduct;
+                    addEditReceiptWarehouse.comboBoxSupplier.Text = selectedEdit.NameCompany;
                     addEditReceiptWarehouse.dateTimeDateOfReceipt.Text = selectedEdit.DateOfReceipt.ToString();
                     addEditReceiptWarehouse.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
 
@@ -105,7 +105,7 @@ namespace bakery.Page
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите товар для удаления.");
+                MessageBox.Show("Пожалуйста, выберите товар для редактирования.");
             }
 
         }

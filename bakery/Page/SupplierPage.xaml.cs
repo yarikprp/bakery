@@ -87,7 +87,7 @@ namespace bakery.Page
             if (dataGridCompany.SelectedItem != null)
             {
                 Supplier selectedEdit = (Supplier)dataGridCompany.SelectedItem;
-                string warning = "Вы действительно хотите редактировать поставщика?";
+                string warning = "Вы действительно хотите редактировать поставщика " + selectedEdit.NameCompany + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
@@ -96,9 +96,9 @@ namespace bakery.Page
                     AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
 
                     addEditSupplierWindow.textBoxFIngredient.Text = selectedEdit.Ingredient;
-                    addEditSupplierWindow.comboBoxCompany.Text = selectedEdit.IdCompany.ToString();
+                    addEditSupplierWindow.comboBoxCompany.Text = selectedEdit.NameCompany.ToString();
 
-                    AddEditSupplierWindow.selectedIndex = supplier.FindIndex(u => u.IdCompany == selectedEdit.IdCompany);
+                    AddEditSupplierWindow.selectedIndex = supplier.FindIndex(u => u.NameCompany == selectedEdit.NameCompany);
 
                     addEditSupplierWindow.Show();
 
@@ -118,7 +118,7 @@ namespace bakery.Page
             if (dataGridCompany.SelectedItem != null)
             {
                 Supplier selected = (Supplier)dataGridCompany.SelectedItem;
-                string warning = "Вы действительно хотите удалить поставщика?";
+                string warning = "Вы действительно хотите удалить поставщика " + selected.NameCompany + "?";
 
                 MessageBoxResult result = MessageBox.Show(warning, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
 
