@@ -49,10 +49,10 @@ namespace bakery.Page
 
             foreach (ReceiptWarehouse item in receiptWarehouse)
             {
-               /* if (item.Fio.StartsWith(searchString))
+                if (item.NameIngredients.StartsWith(searchString) || item.NameProduct.StartsWith(searchString) || item.NameCompany.StartsWith(searchString))
                 {
                     receiptWarehouseSearch.Add(item);
-                }*/
+                }
             }
 
             return receiptWarehouseSearch;

@@ -49,10 +49,10 @@ namespace bakery.Page
 
             foreach (ProductReleasePlan item in productReleasePlans)
             {
-                /*if (item.Fio.StartsWith(searchString))
+                if (item.Fio.StartsWith(searchString) || item.NameProduct.StartsWith(searchString))
                 {
                     productReleasePlansSearch.Add(item);
-                }*/
+                }
             }
 
             return productReleasePlansSearch;

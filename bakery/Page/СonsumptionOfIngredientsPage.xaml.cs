@@ -45,10 +45,10 @@ namespace bakery.Page
 
             foreach (ConsumptionOfIngredients item in consumptionOfIngredients)
             {
-                /*if (item.Fio.StartsWith(searchString))
+                if (item.IdPlan.ToString().StartsWith(searchString))
                 {
                     consumptionOfIngredientsSearch.Add(item);
-                }*/
+                }
             }
 
             return consumptionOfIngredientsSearch;

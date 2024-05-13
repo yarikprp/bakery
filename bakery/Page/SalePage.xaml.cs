@@ -48,10 +48,10 @@ namespace bakery.Page
 
             foreach (Sale item in sale)
             {
-               /* if (item.Fio.StartsWith(searchString))
+                if (item.Fio.StartsWith(searchString))
                 {
                     saleSearch.Add(item);
-                }*/
+                }
             }
 
             return saleSearch;
