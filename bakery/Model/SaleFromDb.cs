@@ -3,6 +3,7 @@ using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -67,6 +68,38 @@ namespace bakery.Model
                     else
                     {
                         MessageBox.Show($"Продажа удалёна");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        public static async Task AddSale(int plan, string employee, DateTime dateSale, int quantitys)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.sale(id_plan, id_employee, date_of_sale, quantity) VALUES ((SELECT id_plan FROM public.product_release_plan WHERE id_plan = @id_plan), (SELECT id_employee FROM public.employee WHERE fio = @fio), @date_of_sale, @quantity); ";
+                    
+
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("id_plan", plan);
+                    command.Parameters.AddWithValue("fio", employee);
+                    command.Parameters.AddWithValue("date_of_sale", dateSale);
+                    command.Parameters.AddWithValue("quantity", quantitys);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Продажа {dateSale} добавлена");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Продажа {dateSale} добавлена");
                     }
                 }
             }

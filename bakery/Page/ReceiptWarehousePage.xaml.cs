@@ -25,6 +25,7 @@ namespace bakery.Page
     {
         List<ReceiptWarehouse> receiptWarehouse = new List<ReceiptWarehouse>();
         List<ReceiptWarehouse> receiptWarehouseSearch = new List<ReceiptWarehouse>();
+        public static ReceiptWarehouse CurrentReceiptWarehouse { get; set; } = null;
 
         public ReceiptWarehousePage()
         {
@@ -36,7 +37,7 @@ namespace bakery.Page
             await ViewAllReceiptWarehouse();
         }
 
-        async Task ViewAllReceiptWarehouse()
+        public async Task ViewAllReceiptWarehouse()
         {
             receiptWarehouse = await ReceiptWarehouseFromDb.GetReceiptWarehouse();
 
@@ -138,6 +139,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditReceiptWarehouseWindow addEditReceiptWarehouseWindow = new AddEditReceiptWarehouseWindow();
+            addEditReceiptWarehouseWindow.ParentPage = this;
             addEditReceiptWarehouseWindow.ShowDialog();
         }
     }

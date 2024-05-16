@@ -24,7 +24,9 @@ namespace bakery.Page
     public partial class SalePage : System.Windows.Controls.Page
     {
         List<Sale> sale = new List<Sale>();
-        List<Sale> saleSearch = new List<Sale>();
+        List<Sale> saleSearch = new List<Sale>(); 
+        public static Supplier CurrentSupplier { get; set; } = null;
+
         public SalePage()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace bakery.Page
             await ViewAllEmployee();
         }
 
-        async Task ViewAllEmployee()
+        public async Task ViewAllEmployee()
         {
             sale = await SaleFromDb.GetSale();
 
@@ -135,6 +137,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
+            addEditSaleWindow.ParentPage = this;
             addEditSaleWindow.ShowDialog();
         }
     }

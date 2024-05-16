@@ -79,7 +79,8 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "CALL insert_supplier(@ingredient, @company_name); ";
+/*                    string add = "INSERT INTO public.supplier(ingredient, id_company) VALUES (@ingredient, (SELECT id_company FROM public.company WHERE company_name = @company_name)); ";
+*/                    string add = "CALL insert_supplier(@ingredient, @company_name); ";
 
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("ingredient", ingredient);
@@ -87,11 +88,11 @@ namespace bakery.Model
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show($"Компания {ingredient} добавлена");
+                        MessageBox.Show($"Поставщик {ingredient} добавлен");
                     }
                     else
                     {
-                        MessageBox.Show($"Компания {ingredient} добавлена");
+                        MessageBox.Show($"Поставщик {ingredient} добавлен");
                     }
                 }
             }

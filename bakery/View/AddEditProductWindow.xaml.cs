@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.Page;
 using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditProductWindow : Window
     {
+        public ProductPage ParentPage { get; set; }
         List<Product> product = new List<Product>();
         public static int selectedIndex;
 
@@ -38,9 +40,79 @@ namespace bakery.View
             comboBoxEmployee.SelectedValuePath = "IdEmployee";
         }
 
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if(ValidateInput())
+            {
+                string product = textBoxProduct.Text;
+                string employee = comboBoxEmployee.Text;
+                DateTime daterealeases = DateTime.Parse(datePickerReleases.Text);
+                int price = Convert.ToInt32(textBoxPrice.Text);
+                DateTime datemanf = DateTime.Parse(datePickerManf.Text);
+                int quantity = Convert.ToInt32(textBoxQuantity.Text);
 
+                await ProductFromDb.AddProduct(product, employee, daterealeases, price, datemanf, quantity);
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllProduct();
+                }
+            }
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxProduct.Text))
+            {
+                MessageBox.Show("Поле 'Продукт' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxEmployee.Text))
+            {
+                MessageBox.Show("Поле 'Сотрудник' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(datePickerReleases.Text))
+            {
+                MessageBox.Show("Поле 'Дата реализации' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxPrice.Text))
+            {
+                MessageBox.Show("Поле 'Цена' не может быть пустым.");
+                return false;
+            }
+
+            int price;
+            if (!int.TryParse(textBoxPrice.Text, out price))
+            {
+                MessageBox.Show("Поле 'Цена' должно содержать только числовое значение.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(datePickerManf.Text))
+            {
+                MessageBox.Show("Поле 'Срок годностьи' не может быть пустым.");
+                return false;
+            }
+
+            int quantity;
+            if (!int.TryParse(textBoxQuantity.Text, out quantity))
+            {
+                MessageBox.Show("Поле 'Количество' должно содержать только числовое значение.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxQuantity.Text))
+            {
+                MessageBox.Show("Поле 'Количество' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -36,7 +36,7 @@ namespace bakery.Model
                             {
                                 birthday = reader.GetDateTime(4);
                             }
-                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDecimal(3), birthday));
+                            employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), birthday));
                         }
                     }
                 }
@@ -68,6 +68,40 @@ namespace bakery.Model
                     else
                     {
                         MessageBox.Show($"{employee.Fio} удалён");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task AddEmployee(string fio, string postName, string money, DateTime date)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.employee(fio, id_post, salary, date_of_employment) VALUES (@fio, (SELECT id_post FROM public.post WHERE name_post = @name_post), @salary, @date_of_employment); ";
+
+/*                    string add = "CALL public.insert_employee(@fio_param, @name_post_param, @salary_param, date_of_employment_param);  ";
+*/
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("fio", fio);
+                    command.Parameters.AddWithValue("name_post", postName);
+                    command.Parameters.AddWithValue("salary", money);
+                    command.Parameters.AddWithValue("date_of_employment", date);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Сотрудник {fio} добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Сотрудник {fio} добавлен");
                     }
                 }
             }

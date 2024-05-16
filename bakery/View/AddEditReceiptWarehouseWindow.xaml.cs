@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace bakery.View
     {
         List<ReceiptWarehouse> receiptWarehouses = new List<ReceiptWarehouse>();
         public static int selectedIndex;
+        public ReceiptWarehousePage ParentPage { get; set; }
         public AddEditReceiptWarehouseWindow()
         {
             InitializeComponent();
@@ -39,14 +41,70 @@ namespace bakery.View
             comboBoxProduct.DisplayMemberPath = "NameProduct";
             comboBoxProduct.SelectedValuePath = "IdProduct";
 
-            comboBoxSupplier.ItemsSource = await CompanyFromDb.GetCompany();
-            comboBoxSupplier.DisplayMemberPath = "NameCompany";
-            comboBoxSupplier.SelectedValuePath = "IdCompany";
+            comboBoxSupplier.ItemsSource = await SupplierFromDb.GetSupplier();
+            comboBoxSupplier.DisplayMemberPath = "IdSupplier";
+            comboBoxSupplier.SelectedValuePath = "IdSupplier";
+        }
+        
+        private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if(ValidateInput())
+            {
+                string ingredient = comboBoxIngredients.Text;
+                string product = comboBoxProduct.Text;
+                int company = Convert.ToInt32(comboBoxSupplier.Text);
+                DateTime date = DateTime.Parse(dateTimeDateOfReceipt.Text);
+                int quantitys = Convert.ToInt32(textBoxQuantity.Text);
+                await ReceiptWarehouseFromDb.AddReceiptWarehouse(ingredient, product, company, date, quantitys);
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllReceiptWarehouse();
+                }
+
+            }
         }
 
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        private bool ValidateInput()
         {
+            if (string.IsNullOrWhiteSpace(comboBoxIngredients.Text))
+            {
+                MessageBox.Show("Поле 'Ингредиент' не может быть пустым.");
+                return false;
+            }
 
+            if (string.IsNullOrWhiteSpace(comboBoxProduct.Text))
+            {
+                MessageBox.Show("Поле 'Продукт' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxSupplier.Text))
+            {
+                MessageBox.Show("Поле 'Поставщик' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(dateTimeDateOfReceipt.Text))
+            {
+                MessageBox.Show("Поле 'Дата' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxQuantity.Text))
+            {
+                MessageBox.Show("Поле 'Количество' не может быть пустым.");
+                return false;
+            }
+
+            int money;
+            if (!int.TryParse(textBoxQuantity.Text, out money))
+            {
+                MessageBox.Show("Поле 'Количество' должно содержать только числовое значение.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

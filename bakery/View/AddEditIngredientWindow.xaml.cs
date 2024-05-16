@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditIngredientWindow : Window
     {
+        public IngredientPage ParentPage { get; set; }
         List<Ingredients> ingredients = new List<Ingredients>();
         public static int selectedIndex;
         public AddEditIngredientWindow()
@@ -48,9 +50,58 @@ namespace bakery.View
 
         }
 
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if(ValidateInput())
+            {
+                string ingredient = textBoxFIngredient.Text;
+                string type = comboBoxType.Text;
+                string product = comboBoxProduct.Text;
+                string unit = comboBoxUnit.Text;
+                int quantity = Convert.ToInt32(textBoxQuantity.Text);
+                string warehouse = textBoxWarehouse.Text;
+                await IngredientsFromDb.AddIngredients(ingredient, type, product, unit, quantity, warehouse);
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllIngredients();
+                }
+            }
+        }
 
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxFIngredient.Text))
+            {
+                MessageBox.Show("Поле 'Ингредиент' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxType.Text))
+            {
+                MessageBox.Show("Поле 'Тип ингредиента' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxProduct.Text))
+            {
+                MessageBox.Show("Поле 'Продукт' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxUnit.Text))
+            {
+                MessageBox.Show("Поле 'Единица' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxWarehouse.Text))
+            {
+                MessageBox.Show("Поле 'Склад' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -1,19 +1,7 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.Page;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace bakery.View
 {
@@ -41,34 +29,65 @@ namespace bakery.View
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (CompanyPage.CurrentCompany != null)
+            if (ValidateInput())
             {
-                CompanyPage.CurrentCompany.NameCompany = textBoxCompany.Text;
-                CompanyPage.CurrentCompany.Fio = textBoxFio.Text;
-                CompanyPage.CurrentCompany.NamePhone = textBoxPhone.Text;
-                CompanyPage.CurrentCompany.Adress = textBoxAdress.Text;
+                if (CompanyPage.CurrentCompany != null)
+                {
+                    CompanyPage.CurrentCompany.NameCompany = textBoxCompany.Text;
+                    CompanyPage.CurrentCompany.Fio = textBoxFio.Text;
+                    CompanyPage.CurrentCompany.NamePhone = textBoxPhone.Text;
+                    CompanyPage.CurrentCompany.Adress = textBoxAdress.Text;
 
-                await CompanyFromDb.UpdateCompany(CompanyPage.CurrentCompany);
+                    await CompanyFromDb.UpdateCompany(CompanyPage.CurrentCompany);
 
-                Close();
+                    Close();
+                }
+                else
+                {
+                    string nameCompany = textBoxCompany.Text;
+                    string fio = textBoxFio.Text;
+                    string namePhone = textBoxPhone.Text;
+                    string adress = textBoxAdress.Text;
+
+                    await CompanyFromDb.AddCompany(nameCompany, fio, namePhone, adress);
+
+                    Close();
+                }
+
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllCompany();
+                }
             }
-            else
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxCompany.Text))
             {
-                string nameCompany = textBoxCompany.Text;
-                string fio = textBoxFio.Text;
-                string namePhone = textBoxPhone.Text;
-                string adress = textBoxAdress.Text;
-
-                await CompanyFromDb.AddCompany(nameCompany, fio, namePhone, adress);
-
-                Close();
+                MessageBox.Show("Поле 'Название компании' не может быть пустым.");
+                return false;
             }
 
-
-            if (ParentPage != null)
+            if (string.IsNullOrWhiteSpace(textBoxFio.Text))
             {
-                await ParentPage.ViewAllCompany();
+                MessageBox.Show("Поле 'ФИО' не может быть пустым.");
+                return false;
             }
+
+            if (string.IsNullOrWhiteSpace(textBoxPhone.Text))
+            {
+                MessageBox.Show("Поле 'Телефон' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxAdress.Text))
+            {
+                MessageBox.Show("Поле 'Адрес' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -75,5 +75,38 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task AddReceiptWarehouse(string ingredient, string product, int company, DateTime date, int quantitys)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.receipt_warehouse(id_ingredients, id_product, id_supplier, date_of_receipt, quantity) VALUES ((SELECT id_ingredients FROM public.ingredients WHERE name_ingredients = @name_ingredients), (SELECT id_product FROM public.product WHERE product_name = @product_name), (SELECT id_supplier FROM public.supplier WHERE id_supplier = @id_supplier), @date_of_receipt, @quantity); ";
+
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("name_ingredients", ingredient);
+                    command.Parameters.AddWithValue("product_name", product);
+                    command.Parameters.AddWithValue("id_supplier", company);
+                    command.Parameters.AddWithValue("date_of_receipt", date);
+                    command.Parameters.AddWithValue("quantity", quantitys);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Остаток добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Остаток добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

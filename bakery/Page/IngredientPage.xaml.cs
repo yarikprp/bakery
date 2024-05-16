@@ -24,7 +24,9 @@ namespace bakery.Page
     public partial class IngredientPage : System.Windows.Controls.Page
     {
         List<Ingredients> ingredients = new List<Ingredients>();
-        List<Ingredients> ingredientsSearch = new List<Ingredients>();
+        List<Ingredients> ingredientsSearch = new List<Ingredients>(); 
+        public static Ingredients CurrentIngredients { get; set; } = null;
+
         public IngredientPage()
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace bakery.Page
             await ViewAllIngredients();
         }
 
-        async Task ViewAllIngredients()
+        public async Task ViewAllIngredients()
         {
             ingredients = await IngredientsFromDb.GetIngredients();
 
@@ -137,6 +139,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditIngredientWindow addEditIngredientWindow = new AddEditIngredientWindow();
+            addEditIngredientWindow.ParentPage = this;
             addEditIngredientWindow.ShowDialog();
         }
     }

@@ -24,9 +24,12 @@ namespace bakery.Page
     public partial class ProductPage : System.Windows.Controls.Page
     {
         List<Product> product = new List<Product>();
-        List<Product> productSearch = new List<Product>();
-/*        static List<Employee> employee = new List<Employee>();
-*/        public ProductPage()
+        List<Product> productSearch = new List<Product>(); 
+        public static Supplier CurrentProduct { get; set; } = null;
+
+        /*        static List<Employee> employee = new List<Employee>();
+        */
+        public ProductPage()
         {
             InitializeComponent();
         }
@@ -42,7 +45,7 @@ namespace bakery.Page
             comboBoxProduct.SelectedValuePath = "PostId";*/
         }
 
-        async Task ViewAllProduct()
+        public async Task ViewAllProduct()
         {
             product = await ProductFromDb.GetProduct();
 
@@ -147,6 +150,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
+            addEditProductWindow.ParentPage = this;
             addEditProductWindow.ShowDialog();
         }
     }

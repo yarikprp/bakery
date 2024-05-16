@@ -25,6 +25,7 @@ namespace bakery.Page
     {
         List<ProductReleasePlan> productReleasePlans = new List<ProductReleasePlan>();
         List<ProductReleasePlan> productReleasePlansSearch = new List<ProductReleasePlan>();
+        public static ProductReleasePlan CurrentProductReleasePlan { get; set; } = null;
 
         public ProductRealsePlanPage()
         {
@@ -36,7 +37,7 @@ namespace bakery.Page
             await ViewAllProductReleasePlan();
         }
 
-        async Task ViewAllProductReleasePlan()
+        public async Task ViewAllProductReleasePlan()
         {
             productReleasePlans = await ProductReleasePlanFromDb.GetProductReleasePlan();
 
@@ -137,6 +138,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
+            addEditProductRealsePlanWindow.ParentPage = this;
             addEditProductRealsePlanWindow.ShowDialog();
         }
     }

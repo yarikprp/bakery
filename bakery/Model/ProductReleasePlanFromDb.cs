@@ -75,5 +75,37 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task AddProductReleasePlan(string product, string fio, DateTime date)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.product_release_plan(id_product, id_employee, planned_release_date) VALUES ((SELECT id_employee FROM public.employee WHERE fio = @fio), (SELECT id_product FROM public.product WHERE product_name = @product_name), @planned_release_date); ";
+                    
+
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("product_name", product);
+                    command.Parameters.AddWithValue("fio", fio);
+                    command.Parameters.AddWithValue("planned_release_date", date);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"План добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"План добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

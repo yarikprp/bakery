@@ -32,7 +32,7 @@ namespace bakery.Page
             await ViewAllConsumptionOfIngredients();
         }
 
-        async Task ViewAllConsumptionOfIngredients()
+        public async Task ViewAllConsumptionOfIngredients()
         {
             consumptionOfIngredients = await ConsumptionFromDb.GetConsumptionOfIngredients();
 
@@ -131,6 +131,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditСonsumptiontWindow addEditСonsumptiontWindow = new AddEditСonsumptiontWindow();
+            addEditСonsumptiontWindow.ParentPage = this;
             addEditСonsumptiontWindow.ShowDialog();
         }
     }

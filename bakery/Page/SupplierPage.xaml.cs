@@ -26,6 +26,8 @@ namespace bakery.Page
         List<Supplier> supplier = new List<Supplier>();
         List<Supplier> supplierSearch = new List<Supplier>();
         static List<Company> companies = new List<Company>();
+        public static Supplier CurrentSupplier { get; set; } = null;
+
         public SupplierPage()
         {
             InitializeComponent();
@@ -140,7 +142,8 @@ namespace bakery.Page
 
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
+            AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow(); 
+            addEditSupplierWindow.ParentPage = this;
             addEditSupplierWindow.ShowDialog();
         }
     }

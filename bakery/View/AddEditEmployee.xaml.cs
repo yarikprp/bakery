@@ -1,6 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
-using kulinaria_app_v2.Classes;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,8 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditEmployee : Window
     {
+        public EmployeePage ParentPage { get; set; }
+
         List<Employee> employee = new List<Employee>();
 
         public static int selectedIndex;
@@ -39,9 +41,59 @@ namespace bakery.View
             comboBoxPost.SelectedValuePath = "PostId";
         }
 
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if(ValidateInput())
+            {
+                string fio = textBoxFIO.Text;
+                string postName = comboBoxPost.Text;
+                string salary = textBoxMoney.Text;
+                DateTime date = DateTime.Parse(dateTimeDateOfEmploymentPickerBirthDay.Text);
 
+                await EmployeeFromDb.AddEmployee(fio, postName, salary, date);
+
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllEmployee();
+                }
+            }
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxFIO.Text))
+            {
+                MessageBox.Show("Поле 'ФИО' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxPost.Text))
+            {
+                MessageBox.Show("Поле 'Должность' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxMoney.Text))
+            {
+                MessageBox.Show("Поле 'Цена' не может быть пустым.");
+                return false;
+            }
+
+            double money;
+            if (!double.TryParse(textBoxMoney.Text, out money))
+            {
+                MessageBox.Show("Поле 'Цена' должно содержать только числовое значение.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(dateTimeDateOfEmploymentPickerBirthDay.Text))
+            {
+                MessageBox.Show("Поле 'Дата' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

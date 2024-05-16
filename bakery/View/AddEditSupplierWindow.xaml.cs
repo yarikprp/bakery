@@ -40,14 +40,34 @@ namespace bakery.View
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            string ingredient = textBoxFIngredient.Text;
-            string nameCompany = comboBoxCompany.Text;
-            await SupplierFromDb.AddSupplier(ingredient, nameCompany);
-
-            if (ParentPage != null)
+            if(ValidateInput())
             {
-                await ParentPage.ViewAllCompany();
+                string ingredient = textBoxFIngredient.Text;
+                string nameCompany = comboBoxCompany.Text;
+                await SupplierFromDb.AddSupplier(ingredient, nameCompany);
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllCompany();
+                }
             }
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxFIngredient.Text))
+            {
+                MessageBox.Show("Поле 'Ингредиент' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxCompany.Text))
+            {
+                MessageBox.Show("Поле 'Компания' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

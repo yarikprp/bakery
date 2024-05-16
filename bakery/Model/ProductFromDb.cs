@@ -80,5 +80,38 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task AddProduct(string product, string employee, DateTime daterealeases, int price, DateTime datemanf, int quantity)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.product(product_name, id_employee, releases, price, date_of_manufacture, quantity) VALUES (@product_name, (SELECT id_employee FROM public.employee WHERE fio = @fio), @releases, @price, @date_of_manufacture, @quantity); ";
+                    
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("product_name", product);
+                    command.Parameters.AddWithValue("fio", employee);
+                    command.Parameters.AddWithValue("releases", daterealeases);
+                    command.Parameters.AddWithValue("price", price);
+                    command.Parameters.AddWithValue("date_of_manufacture", datemanf);
+                    command.Parameters.AddWithValue("quantity", quantity);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Продукт {product} quantity");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Продукт {product} добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

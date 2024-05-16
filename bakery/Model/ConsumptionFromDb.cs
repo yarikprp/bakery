@@ -71,5 +71,35 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task AddConsumption(int plan, int consumption)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.consumption_of_ingredients(id_plan, consumption) VALUES (@consumption, (SELECT id_plan FROM public.product_release_plan WHERE id_plan = @id_plan)); ";
+                    
+
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("id_plan", plan);
+                    command.Parameters.AddWithValue("consumption", consumption);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Поставщик {plan} добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Поставщик {plan} добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

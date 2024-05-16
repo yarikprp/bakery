@@ -1,7 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
-using kulinaria_app_v2.Classes;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -18,6 +17,8 @@ namespace bakery.Page
         List<Employee> employee = new List<Employee>();
         List<Employee> employeeSearch = new List<Employee>();
         static List<Post> post = new List<Post>();
+        public static Employee CurrentEmployee { get; set; } = null;
+
         public EmployeePage()
         {
             InitializeComponent();
@@ -34,7 +35,7 @@ namespace bakery.Page
             comboBoxPost.SelectedValuePath = "PostId";
         }
 
-        async Task ViewAllEmployee()
+        public async Task ViewAllEmployee()
         {
             employee = await EmployeeFromDb.GetEmployee();
 
@@ -103,6 +104,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditEmployee addEditEmployee = new AddEditEmployee();
+            addEditEmployee.ParentPage = this;
             addEditEmployee.ShowDialog();
         }
 

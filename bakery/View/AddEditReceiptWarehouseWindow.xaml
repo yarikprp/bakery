@@ -25,7 +25,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Поставщик" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>
-                <ComboBox Name="comboBoxSupplier" DisplayMemberPath="NameCompany" Margin="5" Height="30" Width="250"/>
+                <ComboBox Name="comboBoxSupplier" DisplayMemberPath="IdSupplier" Margin="5" Height="30" Width="250"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Дата поставки" FontSize="16" Margin="5" Width="120" Height="30" TextAlignment="Justify"/>

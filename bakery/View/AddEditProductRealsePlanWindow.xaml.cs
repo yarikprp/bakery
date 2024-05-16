@@ -1,5 +1,6 @@
 ﻿using bakery.Classes;
 using bakery.Model;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace bakery.View
     /// </summary>
     public partial class AddEditProductRealsePlanWindow : Window
     {
+        public ProductRealsePlanPage ParentPage { get; set; }
         List<ReceiptWarehouse> receiptWarehouses = new List<ReceiptWarehouse>();
         public static int selectedIndex;
         public AddEditProductRealsePlanWindow()
@@ -39,10 +41,44 @@ namespace bakery.View
             comboBoxEmployee.DisplayMemberPath = "Fio";
             comboBoxEmployee.SelectedValuePath = "IdEmployee";
         }
-
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        
+        private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if(ValidateInput())
+            {
+                string product = comboBoxProduct.Text;
+                string fio = comboBoxEmployee.Text;
+                DateTime date = DateTime.Parse(datePickerRelease.Text);
+                await ProductReleasePlanFromDb.AddProductReleasePlan(product, fio, date);
+                Close();
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllProductReleasePlan();
+                }
+            }
+        }
 
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(comboBoxProduct.Text))
+            {
+                MessageBox.Show("Поле 'Продукт' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(comboBoxEmployee.Text))
+            {
+                MessageBox.Show("Поле 'Сотрудник' не может быть пустым.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(datePickerRelease.Text))
+            {
+                MessageBox.Show("Поле 'Дата реализации' не может быть пустым.");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -12,9 +12,9 @@ namespace bakery.Classes
         public int IdEmployee { get; set; }
         public string Fio { get; set; }
         public string PostName { get; set; }
-        public decimal Salary { get; set; }
+        public string Salary { get; set; }
         public DateTime DateOfEmployment { get; set; }
-        public Employee(int idEmployee, string fio, string postName, decimal salary, DateTime dateOfEmployment)
+        public Employee(int idEmployee, string fio, string postName, string salary, DateTime dateOfEmployment)
         {
             IdEmployee = idEmployee;
             Fio = fio;

@@ -70,5 +70,38 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task AddIngredients(string ingredient, string type, string product, string unit, int quantity, string warehouse)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string add = "INSERT INTO public.ingredients(id_type, id_product, id_unit, quantity, warehouse, name_ingredients) VALUES ((SELECT id_type FROM public.type_ingredients WHERE type_ingredient = @type_ingredient) ,(SELECT id_product FROM public.product WHERE product_name = @product_name), (SELECT id_unit FROM public.unit WHERE name_unit = @name_unit), @quantity, @warehouse, @name_ingredients); ";
+                    
+                    NpgsqlCommand command = new NpgsqlCommand(add, connection);
+                    command.Parameters.AddWithValue("type_ingredient", type);
+                    command.Parameters.AddWithValue("product_name", product);
+                    command.Parameters.AddWithValue("name_unit", unit);
+                    command.Parameters.AddWithValue("quantity", quantity);
+                    command.Parameters.AddWithValue("warehouse", warehouse);
+                    command.Parameters.AddWithValue("name_ingredients", ingredient);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Поставщик {ingredient} добавлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Поставщик {ingredient} добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
