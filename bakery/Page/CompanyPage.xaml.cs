@@ -1,6 +1,7 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +24,8 @@ namespace bakery.Page
     {
         List<Company> company = new List<Company>();
         List<Company> companySearch = new List<Company>();
+        public static Company CurrentCompany { get; set; } = null;
+
         public CompanyPage()
         {
             InitializeComponent();
@@ -105,14 +108,9 @@ namespace bakery.Page
                 {
                     AddEditCompanyWindow addEditCompanyWindow = new AddEditCompanyWindow();
 
-                    addEditCompanyWindow.textBoxCompany.Text = selectedEdit.NameCompany;
-                    addEditCompanyWindow.textBoxFio.Text = selectedEdit.Fio;
-                    addEditCompanyWindow.textBoxPhone.Text = selectedEdit.NamePhone;
-                    addEditCompanyWindow.textBoxAdress.Text = selectedEdit.Adress.ToString();
+                    CurrentCompany = (Company)dataGridCompany.SelectedItem;
 
-                    AddEditCompanyWindow.selectedIndex = company.FindIndex(u => u.IdCompany == selectedEdit.IdCompany);
-
-                    addEditCompanyWindow.Show();
+                    addEditCompanyWindow.ShowDialog();
 
                     dataGridCompany.ItemsSource = null;
                     dataGridCompany.ItemsSource = company;
@@ -154,7 +152,7 @@ namespace bakery.Page
         {
             AddEditCompanyWindow addEditCompanyWindow = new AddEditCompanyWindow();
             addEditCompanyWindow.ParentPage = this;
-            addEditCompanyWindow.Show();
+            addEditCompanyWindow.ShowDialog();
         }
     }
 }

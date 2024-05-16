@@ -25,21 +25,21 @@ namespace bakery.Page
     {
         List<Supplier> supplier = new List<Supplier>();
         List<Supplier> supplierSearch = new List<Supplier>();
-/*        static List<Post> post = new List<Post>();
-*/        public SupplierPage()
+        static List<Company> companies = new List<Company>();
+        public SupplierPage()
         {
             InitializeComponent();
         }
 
         private async void CompanyPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewAllCompany();/*
-            post = await PostFromDb.GetPost();
-            post.Insert(0, new Post(0, "Все"));*/
-/*
-            comboBoxCompany.ItemsSource = post;
-            comboBoxCompany.DisplayMemberPath = "PostName";
-            comboBoxCompany.SelectedValuePath = "PostRoleId";*/
+            await ViewAllCompany();
+            companies = await CompanyFromDb.GetCompany();
+/*            companies.Insert(0, new Company(0, "Все"));
+*/
+            comboBoxCompany.ItemsSource = companies;
+            comboBoxCompany.DisplayMemberPath = "NameCompany";
+            comboBoxCompany.SelectedValuePath = "IdCompany";
         }
 
         public async Task ViewAllCompany()

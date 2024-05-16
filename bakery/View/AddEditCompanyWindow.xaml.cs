@@ -20,7 +20,7 @@ namespace bakery.View
     public partial class AddEditCompanyWindow : Window
     {
         public CompanyPage ParentPage { get; set; }
-        Company company;
+        public Company company;
 
         public static int selectedIndex;
         public AddEditCompanyWindow()
@@ -30,14 +30,27 @@ namespace bakery.View
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-
+            if (CompanyPage.CurrentCompany != null)
+            {
+                textBoxCompany.Text = CompanyPage.CurrentCompany.NameCompany;
+                textBoxFio.Text = CompanyPage.CurrentCompany.Fio;
+                textBoxPhone.Text = CompanyPage.CurrentCompany.NamePhone;
+                textBoxAdress.Text = CompanyPage.CurrentCompany.Adress;
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (company != null)
+            if (CompanyPage.CurrentCompany != null)
             {
-                await CompanyFromDb.UpdateCompany(company);
+                CompanyPage.CurrentCompany.NameCompany = textBoxCompany.Text;
+                CompanyPage.CurrentCompany.Fio = textBoxFio.Text;
+                CompanyPage.CurrentCompany.NamePhone = textBoxPhone.Text;
+                CompanyPage.CurrentCompany.Adress = textBoxAdress.Text;
+
+                await CompanyFromDb.UpdateCompany(CompanyPage.CurrentCompany);
+
+                Close();
             }
             else
             {
@@ -45,15 +58,17 @@ namespace bakery.View
                 string fio = textBoxFio.Text;
                 string namePhone = textBoxPhone.Text;
                 string adress = textBoxAdress.Text;
+
                 await CompanyFromDb.AddCompany(nameCompany, fio, namePhone, adress);
+
+                Close();
             }
+
 
             if (ParentPage != null)
             {
                 await ParentPage.ViewAllCompany();
             }
-
-            this.Close();
         }
     }
 }

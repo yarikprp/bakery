@@ -347,7 +347,7 @@ namespace bakery.Model
             return filtered_users;
         }
 
-        public static async Task DeleteUser(User user)        {
+        public static async Task DeleteUser(User user) {
             try
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))

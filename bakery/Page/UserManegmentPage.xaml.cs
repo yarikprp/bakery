@@ -37,8 +37,8 @@ namespace bakery.Page
             role.Insert(0, new Role(0, "Все"));
 
             comboBoxRoles.ItemsSource = role;
-            comboBoxRoles.DisplayMemberPath = "RoleName";
-            comboBoxRoles.SelectedValuePath = "RoleId";
+            comboBoxRoles.DisplayMemberPath = "Name";
+            comboBoxRoles.SelectedValuePath = "Id";
         }
 
         async Task ViewAllUsers()

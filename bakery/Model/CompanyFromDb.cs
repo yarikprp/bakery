@@ -121,11 +121,11 @@ namespace bakery.Model
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show("Компания обновлена");
+                        MessageBox.Show($"Компания {company.NameCompany} обновлена");
                     }
                     else
                     {
-                        MessageBox.Show("Компания обновлена");
+                        MessageBox.Show($"Компания {company.NameCompany} обновлена");
                     }
                 }
             }
