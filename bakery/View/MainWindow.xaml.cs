@@ -93,7 +93,7 @@ namespace bakery
         private void EditProfile_Click(object sender, RoutedEventArgs e)
         {
             ProfileEditWindow profileEditWindow = new ProfileEditWindow();
-            profileEditWindow.Show();
+            profileEditWindow.ShowDialog();
         }
 
         private void ChangePassword_Click(object sender, RoutedEventArgs e)
@@ -103,7 +103,7 @@ namespace bakery
 
             if (result == true)
             {
-                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.ShowDialog();
                 Close();
             }
         }
@@ -111,7 +111,7 @@ namespace bakery
         private void ChangeUser_Click(object sender, RoutedEventArgs e)
         {
             AuthorisationsWindow.CurrentUser = null;
-            Application.Current.MainWindow.Show();
+            Application.Current.MainWindow.ShowDialog();
             Close();
         }
 

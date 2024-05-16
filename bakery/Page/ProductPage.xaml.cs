@@ -104,7 +104,7 @@ namespace bakery.Page
 
                     AddEditProductWindow.selectedIndex = product.FindIndex(u => u.IdProduct == selectedEdit.IdProduct);
 
-                    addEditProductWindow.Show();
+                    addEditProductWindow.ShowDialog();
 
 
                     dataGridProduct.ItemsSource = null;
@@ -147,7 +147,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
-            addEditProductWindow.Show();
+            addEditProductWindow.ShowDialog();
         }
     }
 }

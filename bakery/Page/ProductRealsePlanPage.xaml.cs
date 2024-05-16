@@ -95,7 +95,7 @@ namespace bakery.Page
 
                     AddEditProductRealsePlanWindow.selectedIndex = productReleasePlans.FindIndex(u => u.IdPlan == selectedEdit.IdPlan);
 
-                    addEditProductRealsePlanWindow.Show();
+                    addEditProductRealsePlanWindow.ShowDialog();
 
                     dataGridProductReleasePlan.ItemsSource = null;
                     dataGridProductReleasePlan.ItemsSource = productReleasePlans;
@@ -137,7 +137,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
-            addEditProductRealsePlanWindow.Show();
+            addEditProductRealsePlanWindow.ShowDialog();
         }
     }
 }

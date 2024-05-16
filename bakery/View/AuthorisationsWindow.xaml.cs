@@ -45,7 +45,7 @@ namespace bakery.View
         private void buttonRegister_Click(object sender, RoutedEventArgs e)
         {
             RegistrationWindow registrationWindow = new RegistrationWindow();
-            registrationWindow.Show();
+            registrationWindow.ShowDialog();
 
             MessageBoxResult res = MessageBox.Show("Вы точно хотите создать аккаунт?", "Создание аккаунта", MessageBoxButton.OKCancel);
             if (res == MessageBoxResult.OK)

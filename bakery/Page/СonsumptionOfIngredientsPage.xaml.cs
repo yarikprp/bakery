@@ -90,7 +90,7 @@ namespace bakery.Page
 
                     AddEditСonsumptiontWindow.selectedIndex = consumptionOfIngredients.FindIndex(u => u.IdConsumption == selectedEdit.IdConsumption);
 
-                    addEditСonsumptiontWindow.Show();
+                    addEditСonsumptiontWindow.ShowDialog();
 
                     dataGridСonsumptionOfIngredientsPage.ItemsSource = null;
                     dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
@@ -131,7 +131,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditСonsumptiontWindow addEditСonsumptiontWindow = new AddEditСonsumptiontWindow();
-            addEditСonsumptiontWindow.Show();
+            addEditСonsumptiontWindow.ShowDialog();
         }
     }
 }

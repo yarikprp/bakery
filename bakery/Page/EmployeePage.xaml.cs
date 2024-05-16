@@ -103,7 +103,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditEmployee addEditEmployee = new AddEditEmployee();
-            addEditEmployee.Show();
+            addEditEmployee.ShowDialog();
         }
 
         private  void buttonEdit_Click(object sender, RoutedEventArgs e)
@@ -126,7 +126,7 @@ namespace bakery.Page
 
                     AddEditEmployee.selectedIndex = employee.FindIndex(u => u.IdEmployee == selectedEdit.IdEmployee);
 
-                    addEditEmployee.Show();
+                    addEditEmployee.ShowDialog();
                     dataGridEmployee.ItemsSource = null;
                     dataGridEmployee.ItemsSource = employee;
                 }

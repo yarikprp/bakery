@@ -100,7 +100,7 @@ namespace bakery.Page
 
                     AddEditSupplierWindow.selectedIndex = supplier.FindIndex(u => u.NameCompany == selectedEdit.NameCompany);
 
-                    addEditSupplierWindow.Show();
+                    addEditSupplierWindow.ShowDialog();
 
                     dataGridCompany.ItemsSource = null;
                     dataGridCompany.ItemsSource = supplier;
@@ -141,7 +141,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
-            addEditSupplierWindow.Show();
+            addEditSupplierWindow.ShowDialog();
         }
     }
 }

@@ -97,7 +97,7 @@ namespace bakery.Page
 
                     AddEditReceiptWarehouseWindow.selectedIndex = receiptWarehouse.FindIndex(u => u.IdBalance == selectedEdit.IdBalance);
 
-                    addEditReceiptWarehouse.Show();
+                    addEditReceiptWarehouse.ShowDialog();
 
                     dataGridReceiptWarehouses.ItemsSource = null;
                     dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
@@ -138,7 +138,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditReceiptWarehouseWindow addEditReceiptWarehouseWindow = new AddEditReceiptWarehouseWindow();
-            addEditReceiptWarehouseWindow.Show();
+            addEditReceiptWarehouseWindow.ShowDialog();
         }
     }
 }

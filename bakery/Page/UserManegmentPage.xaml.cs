@@ -160,7 +160,7 @@ namespace bakery.Page
 
                         userManegmentEdit.selectedIndex = users.FindIndex(u => u.UserId == selectedUser.UserId);
 
-                        userManegmentEdit.Show();
+                        userManegmentEdit.ShowDialog();
                         dataGridUser.ItemsSource = null;
                         dataGridUser.ItemsSource = users;
                     }

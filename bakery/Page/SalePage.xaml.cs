@@ -95,7 +95,7 @@ namespace bakery.Page
 
                     AddEditSaleWindow.selectedIndex = sale.FindIndex(u => u.IdSale == selectedEdit.IdSale);
 
-                    addEditSaleWindow.Show();
+                    addEditSaleWindow.ShowDialog();
 
                     dataGridSale.ItemsSource = null;
                     dataGridSale.ItemsSource = sale;
@@ -135,7 +135,7 @@ namespace bakery.Page
         private void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
-            addEditSaleWindow.Show();
+            addEditSaleWindow.ShowDialog();
         }
     }
 }
