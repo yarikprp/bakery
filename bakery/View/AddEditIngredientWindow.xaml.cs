@@ -48,20 +48,47 @@ namespace bakery.View
             comboBoxUnit.DisplayMemberPath = "NameUnit";
             comboBoxUnit.SelectedValuePath = "IdUnit";
 
+            if (IngredientPage.CurrentIngredients != null)
+            {
+                textBoxFIngredient.Text = IngredientPage.CurrentIngredients.NameIngredients;
+                comboBoxType.Text = IngredientPage.CurrentIngredients.TypeIngredients;
+                comboBoxProduct.Text = IngredientPage.CurrentIngredients.NameProduct;
+                comboBoxUnit.Text = IngredientPage.CurrentIngredients.NameUnit;
+                textBoxQuantity.Text = IngredientPage.CurrentIngredients.Quantity.ToString();
+                textBoxWarehouse.Text = IngredientPage.CurrentIngredients.Warehouse;
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string ingredient = textBoxFIngredient.Text;
-                string type = comboBoxType.Text;
-                string product = comboBoxProduct.Text;
-                string unit = comboBoxUnit.Text;
-                int quantity = Convert.ToInt32(textBoxQuantity.Text);
-                string warehouse = textBoxWarehouse.Text;
-                await IngredientsFromDb.AddIngredients(ingredient, type, product, unit, quantity, warehouse);
-                Close();
+                if (IngredientPage.CurrentIngredients != null)
+                {
+                    IngredientPage.CurrentIngredients.NameIngredients = textBoxFIngredient.Text;
+                    IngredientPage.CurrentIngredients.TypeIngredients = comboBoxType.Text;
+                    IngredientPage.CurrentIngredients.NameProduct = comboBoxProduct.Text;
+                    IngredientPage.CurrentIngredients.NameUnit = comboBoxUnit.Text;
+                    IngredientPage.CurrentIngredients.Quantity = Convert.ToInt32(textBoxQuantity.Text);
+                    IngredientPage.CurrentIngredients.Warehouse = textBoxWarehouse.Text;
+
+                    await IngredientsFromDb.UpdateIngredients(IngredientPage.CurrentIngredients);
+
+                    Close();
+                }
+                else
+                {
+                    string ingredient = textBoxFIngredient.Text;
+                    string type = comboBoxType.Text;
+                    string product = comboBoxProduct.Text;
+                    string unit = comboBoxUnit.Text;
+                    int quantity = Convert.ToInt32(textBoxQuantity.Text);
+                    string warehouse = textBoxWarehouse.Text;
+                    await IngredientsFromDb.AddIngredients(ingredient, type, product, unit, quantity, warehouse);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllIngredients();

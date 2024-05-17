@@ -108,5 +108,38 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task UpdateReceiptWarehouse(ReceiptWarehouse receiptWarehouse)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "UPDATE public.receipt_warehouse SET id_ingredients = (SELECT id_ingredients FROM public.ingredients WHERE name_ingredients = @name_ingredients), id_product = (SELECT id_product FROM public.product WHERE product_name = @product_name), id_supplier = (SELECT id_supplier FROM public.supplier WHERE id_supplier = @id_supplier), date_of_receipt = @date_of_receipt, quantity = @quantity WHERE id_balance = @id_balance; ";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id_balance", receiptWarehouse.IdBalance);
+                    command.Parameters.AddWithValue("name_ingredients", receiptWarehouse.NameIngredients);
+                    command.Parameters.AddWithValue("product_name", receiptWarehouse.NameProduct);
+                    command.Parameters.AddWithValue("id_supplier", receiptWarehouse.NameCompany);
+                    command.Parameters.AddWithValue("date_of_receipt", receiptWarehouse.DateOfReceipt);
+                    command.Parameters.AddWithValue("quantity", receiptWarehouse.Quantity);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Остаток обновлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Остаток обновлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

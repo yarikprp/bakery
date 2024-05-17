@@ -15,6 +15,8 @@ namespace bakery.Classes
         public int Quantity { get; set; }
         public string Warehouse { get; set; }
         public string NameIngredients { get; set; }
+        public object Adress { get; internal set; }
+
         public Ingredients(int idIngredients, string typeIngredients, string nameProduct, string nameUnit, int quantity, string warehouse, string nameIngredients)
         {
             IdIngredients = idIngredients;

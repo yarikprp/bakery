@@ -38,21 +38,50 @@ namespace bakery.View
             comboBoxEmployee.ItemsSource = await EmployeeFromDb.GetEmployee();
             comboBoxEmployee.DisplayMemberPath = "Fio";
             comboBoxEmployee.SelectedValuePath = "IdEmployee";
+
+            if (ProductPage.CurrentProduct != null)
+            {
+                textBoxProduct.Text = ProductPage.CurrentProduct.NameProduct;
+                comboBoxEmployee.Text = ProductPage.CurrentProduct.Fio;
+                datePickerReleases.Text = ProductPage.CurrentProduct.Releasses.ToString();
+                textBoxPrice.Text = ProductPage.CurrentProduct.Price.ToString();
+                datePickerManf.Text = ProductPage.CurrentProduct.DateOfManufacture.ToString();
+                textBoxQuantity.Text = ProductPage.CurrentProduct.Quantity.ToString();
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string product = textBoxProduct.Text;
-                string employee = comboBoxEmployee.Text;
-                DateTime daterealeases = DateTime.Parse(datePickerReleases.Text);
-                int price = Convert.ToInt32(textBoxPrice.Text);
-                DateTime datemanf = DateTime.Parse(datePickerManf.Text);
-                int quantity = Convert.ToInt32(textBoxQuantity.Text);
+                if (ProductPage.CurrentProduct != null)
+                {
+                    ProductPage.CurrentProduct.NameProduct = textBoxProduct.Text;
+                    ProductPage.CurrentProduct.Fio = comboBoxEmployee.Text;
+                    ProductPage.CurrentProduct.Releasses = DateTime.Parse(datePickerReleases.Text);
+                    ProductPage.CurrentProduct.Price = Convert.ToInt32(textBoxPrice.Text);
+                    ProductPage.CurrentProduct.DateOfManufacture = DateTime.Parse(datePickerManf.Text);
+                    ProductPage.CurrentProduct.Quantity = int.Parse(textBoxQuantity.Text);
 
-                await ProductFromDb.AddProduct(product, employee, daterealeases, price, datemanf, quantity);
-                Close();
+
+                    await ProductFromDb.UpdateProduct(ProductPage.CurrentProduct);
+
+                    Close();
+                }
+                else
+                {
+                    string product = textBoxProduct.Text;
+                    string employee = comboBoxEmployee.Text;
+                    DateTime daterealeases = DateTime.Parse(datePickerReleases.Text);
+                    int price = Convert.ToInt32(textBoxPrice.Text);
+                    DateTime datemanf = DateTime.Parse(datePickerManf.Text);
+                    int quantity = Convert.ToInt32(textBoxQuantity.Text);
+
+                    await ProductFromDb.AddProduct(product, employee, daterealeases, price, datemanf, quantity);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllProduct();

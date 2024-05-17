@@ -41,18 +41,41 @@ namespace bakery.View
             comboBoxEmployee.DisplayMemberPath = "Fio";
             comboBoxEmployee.SelectedValuePath = "IdEmployee";
 
+            if (SalePage.CurrentSale != null)
+            {
+                comboBoxPlan.Text = SalePage.CurrentSale.IdPlan.ToString();
+                comboBoxEmployee.Text = SalePage.CurrentSale.Fio;
+                dateTimeSale.Text = SalePage.CurrentSale.DateOfSale.ToString();
+                textBoxQuantity.Text = SalePage.CurrentSale.Quantity.ToString();
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if (ValidateInput())
             {
-                int plan = Convert.ToInt32(comboBoxPlan.Text);
-                string employee = comboBoxEmployee.Text;
-                DateTime dateSale = DateTime.Parse(dateTimeSale.Text);
-                int quantitys = Convert.ToInt32(textBoxQuantity.Text);
-                await SaleFromDb.AddSale(plan, employee, dateSale, quantitys);
-                Close();
+                if (SalePage.CurrentSale != null)
+                {
+                    SalePage.CurrentSale.IdPlan = Convert.ToInt32(comboBoxPlan.Text);
+                    SalePage.CurrentSale.Fio = comboBoxEmployee.Text;
+                    SalePage.CurrentSale.DateOfSale = DateTime.Parse(dateTimeSale.Text);
+                    SalePage.CurrentSale.Quantity = Convert.ToInt32(textBoxQuantity.Text);
+
+                    await SaleFromDb.UpdateSale(SalePage.CurrentSale);
+
+                    Close();
+                }
+                else
+                {
+                    int plan = Convert.ToInt32(comboBoxPlan.Text);
+                    string employee = comboBoxEmployee.Text;
+                    DateTime dateSale = DateTime.Parse(dateTimeSale.Text);
+                    int quantitys = Convert.ToInt32(textBoxQuantity.Text);
+                    await SaleFromDb.AddSale(plan, employee, dateSale, quantitys);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllEmployee();

@@ -90,11 +90,45 @@ namespace bakery.Model
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show($"Поставщик {ingredient} добавлен");
+                        MessageBox.Show($"Ингредиент {ingredient} добавлен");
                     }
                     else
                     {
-                        MessageBox.Show($"Поставщик {ingredient} добавлен");
+                        MessageBox.Show($"Ингредиент {ingredient} добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task UpdateIngredients(Ingredients ingredients)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "UPDATE public.ingredients SET id_type = (SELECT id_type FROM public.type_ingredients WHERE type_ingredient = @type_ingredient), id_product = (SELECT id_product FROM public.product WHERE product_name = @product_name), id_unit = (SELECT id_unit FROM public.unit WHERE name_unit = @name_unit), quantity = @quantity, warehouse = @warehouse, name_ingredients = @name_ingredients WHERE id_ingredients = @id_ingredients; ";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id_ingredients", ingredients.IdIngredients);
+                    command.Parameters.AddWithValue("type_ingredient", ingredients.TypeIngredients);
+                    command.Parameters.AddWithValue("product_name", ingredients.NameProduct);
+                    command.Parameters.AddWithValue("name_unit", ingredients.NameUnit);
+                    command.Parameters.AddWithValue("quantity", ingredients.Quantity);
+                    command.Parameters.AddWithValue("warehouse", ingredients.Warehouse);
+                    command.Parameters.AddWithValue("name_ingredients", ingredients.NameIngredients);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Ингредиент {ingredients.NameIngredients} обновлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Ингредиент {ingredients.NameIngredients} обновлен");
                     }
                 }
             }

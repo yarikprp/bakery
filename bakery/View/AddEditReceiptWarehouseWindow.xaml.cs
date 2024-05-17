@@ -44,19 +44,46 @@ namespace bakery.View
             comboBoxSupplier.ItemsSource = await SupplierFromDb.GetSupplier();
             comboBoxSupplier.DisplayMemberPath = "IdSupplier";
             comboBoxSupplier.SelectedValuePath = "IdSupplier";
+
+            if (ReceiptWarehousePage.CurrentReceiptWarehouse != null)
+            {
+                comboBoxIngredients.Text = ReceiptWarehousePage.CurrentReceiptWarehouse.NameIngredients;
+                comboBoxProduct.Text = ReceiptWarehousePage.CurrentReceiptWarehouse.NameProduct;
+                comboBoxSupplier.Text = ReceiptWarehousePage.CurrentReceiptWarehouse.NameCompany;
+                dateTimeDateOfReceipt.Text = ReceiptWarehousePage.CurrentReceiptWarehouse.DateOfReceipt.ToString();
+                textBoxQuantity.Text = ReceiptWarehousePage.CurrentReceiptWarehouse.Quantity.ToString();
+            }
         }
         
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string ingredient = comboBoxIngredients.Text;
-                string product = comboBoxProduct.Text;
-                int company = Convert.ToInt32(comboBoxSupplier.Text);
-                DateTime date = DateTime.Parse(dateTimeDateOfReceipt.Text);
-                int quantitys = Convert.ToInt32(textBoxQuantity.Text);
-                await ReceiptWarehouseFromDb.AddReceiptWarehouse(ingredient, product, company, date, quantitys);
-                Close();
+                if (ReceiptWarehousePage.CurrentReceiptWarehouse != null)
+                {
+                    ReceiptWarehousePage.CurrentReceiptWarehouse.NameIngredients = comboBoxIngredients.Text;
+                    ReceiptWarehousePage.CurrentReceiptWarehouse.NameProduct = comboBoxProduct.Text;
+                    ReceiptWarehousePage.CurrentReceiptWarehouse.NameCompany = comboBoxSupplier.Text;
+                    ReceiptWarehousePage.CurrentReceiptWarehouse.DateOfReceipt = DateTime.Parse(dateTimeDateOfReceipt.Text);
+                    ReceiptWarehousePage.CurrentReceiptWarehouse.Quantity = textBoxQuantity.Text;
+
+                    await ReceiptWarehouseFromDb.UpdateReceiptWarehouse(ReceiptWarehousePage.CurrentReceiptWarehouse);
+
+                    Close();
+                }
+                else
+                {
+                    string ingredient = comboBoxIngredients.Text;
+                    string product = comboBoxProduct.Text;
+                    int company = Convert.ToInt32(comboBoxSupplier.Text);
+                    DateTime date = DateTime.Parse(dateTimeDateOfReceipt.Text);
+                    int quantitys = Convert.ToInt32(textBoxQuantity.Text);
+
+                    await ReceiptWarehouseFromDb.AddReceiptWarehouse(ingredient, product, company, date, quantitys);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllReceiptWarehouse();

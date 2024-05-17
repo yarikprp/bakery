@@ -25,7 +25,7 @@ namespace bakery.Page
     {
         List<Sale> sale = new List<Sale>();
         List<Sale> saleSearch = new List<Sale>(); 
-        public static Supplier CurrentSupplier { get; set; } = null;
+        public static Sale CurrentSale { get; set; } = null;
 
         public SalePage()
         {
@@ -90,10 +90,7 @@ namespace bakery.Page
                 {
                     AddEditSaleWindow addEditSaleWindow = new AddEditSaleWindow();
 
-                    addEditSaleWindow.comboBoxPlan.Text = selectedEdit.IdPlan.ToString();
-                    addEditSaleWindow.comboBoxEmployee.Text = selectedEdit.Fio;
-                    addEditSaleWindow.dateTimeSale.Text = selectedEdit.DateOfSale.ToString();
-                    addEditSaleWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
+                    CurrentSale = (Sale)dataGridSale.SelectedItem;
 
                     AddEditSaleWindow.selectedIndex = sale.FindIndex(u => u.IdSale == selectedEdit.IdSale);
 

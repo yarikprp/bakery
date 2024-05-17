@@ -27,16 +27,37 @@ namespace bakery.View
             comboBoxPlan.ItemsSource = await ProductReleasePlanFromDb.GetProductReleasePlan();
             comboBoxPlan.DisplayMemberPath = "IdPlan";
             comboBoxPlan.SelectedValuePath = "IdPlan";
+
+            if (СonsumptionOfIngredientsPage.CurrentConsumption != null)
+            {
+                textBoxСonsumption.Text = СonsumptionOfIngredientsPage.CurrentConsumption.Consumption.ToString();
+                comboBoxPlan.Text = СonsumptionOfIngredientsPage.CurrentConsumption.IdPlan.ToString();
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                int consumption = Convert.ToInt32(textBoxСonsumption.Text);
-                int plan = Convert.ToInt32(comboBoxPlan.Text);
-                await ConsumptionFromDb.AddConsumption(plan, consumption);
-                Close();
+                if (СonsumptionOfIngredientsPage.CurrentConsumption != null)
+                {
+                    textBoxСonsumption.Text = СonsumptionOfIngredientsPage.CurrentConsumption.Consumption.ToString();
+                    comboBoxPlan.Text = СonsumptionOfIngredientsPage.CurrentConsumption.IdPlan.ToString();
+
+                    await ConsumptionFromDb.UpdateConsumption(СonsumptionOfIngredientsPage.CurrentConsumption);
+
+                    Close();
+                }
+                else
+                {
+                    int consumption = Convert.ToInt32(textBoxСonsumption.Text);
+                    int plan = Convert.ToInt32(comboBoxPlan.Text);
+
+                    await ConsumptionFromDb.AddConsumption(plan, consumption);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllConsumptionOfIngredients();

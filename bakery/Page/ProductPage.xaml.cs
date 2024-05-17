@@ -25,7 +25,7 @@ namespace bakery.Page
     {
         List<Product> product = new List<Product>();
         List<Product> productSearch = new List<Product>(); 
-        public static Supplier CurrentProduct { get; set; } = null;
+        public static Product CurrentProduct { get; set; } = null;
 
         /*        static List<Employee> employee = new List<Employee>();
         */
@@ -98,14 +98,7 @@ namespace bakery.Page
                 {
                     AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
 
-                    addEditProductWindow.textBoxProduct.Text = selectedEdit.NameProduct;
-                    addEditProductWindow.comboBoxEmployee.Text = selectedEdit.Fio;
-                    addEditProductWindow.datePickerReleases.Text = selectedEdit.Releasses.ToString();
-                    addEditProductWindow.textBoxPrice.Text = selectedEdit.Price.ToString();
-                    addEditProductWindow.datePickerManf.Text = selectedEdit.DateOfManufacture.ToString();
-                    addEditProductWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
-
-                    AddEditProductWindow.selectedIndex = product.FindIndex(u => u.IdProduct == selectedEdit.IdProduct);
+                    CurrentProduct = (Product)dataGridProduct.SelectedItem;
 
                     addEditProductWindow.ShowDialog();
 

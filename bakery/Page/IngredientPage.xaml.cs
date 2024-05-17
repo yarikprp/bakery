@@ -90,14 +90,7 @@ namespace bakery.Page
                 {
                     AddEditIngredientWindow addEditIngredientWindow = new AddEditIngredientWindow();
 
-                    addEditIngredientWindow.textBoxFIngredient.Text = selectedEdit.NameIngredients;
-                    addEditIngredientWindow.comboBoxType.Text = selectedEdit.TypeIngredients;
-                    addEditIngredientWindow.comboBoxProduct.Text = selectedEdit.NameProduct;
-                    addEditIngredientWindow.comboBoxUnit.Text = selectedEdit.NameUnit;
-                    addEditIngredientWindow.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
-                    addEditIngredientWindow.textBoxWarehouse.Text = selectedEdit.Warehouse;
-
-                    AddEditIngredientWindow.selectedIndex = ingredients.FindIndex(u => u.IdIngredients == selectedEdit.IdIngredients);
+                    CurrentIngredients = (Ingredients)dataGridIngredient.SelectedItem;
 
                     addEditIngredientWindow.ShowDialog();
 

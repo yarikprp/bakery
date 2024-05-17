@@ -95,12 +95,10 @@ namespace bakery.Page
 
                 if (result == MessageBoxResult.OK)
                 {
-                    AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow();
+                    AddEditSupplierWindow addEditSupplierWindow = new AddEditSupplierWindow(); 
+                    
+                    CurrentSupplier = (Supplier)dataGridCompany.SelectedItem;
 
-                    addEditSupplierWindow.textBoxFIngredient.Text = selectedEdit.Ingredient;
-                    addEditSupplierWindow.comboBoxCompany.Text = selectedEdit.NameCompany.ToString();
-
-                    AddEditSupplierWindow.selectedIndex = supplier.FindIndex(u => u.NameCompany == selectedEdit.NameCompany);
 
                     addEditSupplierWindow.ShowDialog();
 

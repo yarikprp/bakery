@@ -36,16 +36,36 @@ namespace bakery.View
             comboBoxCompany.ItemsSource = await CompanyFromDb.GetCompany();
             comboBoxCompany.DisplayMemberPath = "NameCompany";
             comboBoxCompany.SelectedValuePath = "IdCompany";
+
+            if (SupplierPage.CurrentSupplier != null)
+            {
+                textBoxFIngredient.Text = SupplierPage.CurrentSupplier.Ingredient;
+                comboBoxCompany.Text = SupplierPage.CurrentSupplier.NameCompany;
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string ingredient = textBoxFIngredient.Text;
-                string nameCompany = comboBoxCompany.Text;
-                await SupplierFromDb.AddSupplier(ingredient, nameCompany);
-                Close();
+                if (SupplierPage.CurrentSupplier != null)
+                {
+                    SupplierPage.CurrentSupplier.Ingredient = textBoxFIngredient.Text;
+                    SupplierPage.CurrentSupplier.NameCompany = comboBoxCompany.Text;
+
+                    await SupplierFromDb.UpdateCompany(SupplierPage.CurrentSupplier);
+
+                    Close();
+                }
+                else
+                {
+                    string ingredient = textBoxFIngredient.Text;
+                    string nameCompany = comboBoxCompany.Text;
+                    await SupplierFromDb.AddSupplier(ingredient, nameCompany);
+
+
+                    Close();
+                }
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllCompany();

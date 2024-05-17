@@ -101,5 +101,35 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task UpdateConsumption(ConsumptionOfIngredients consumptionOfIngredients)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "UPDATE public.consumption_of_ingredients SET consumption = (SELECT id_plan FROM public.product_release_plan WHERE id_plan = @id_plan) WHERE id_consumption = @id_consumption; ";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id_consumption", consumptionOfIngredients.IdConsumption);
+                    command.Parameters.AddWithValue("id_plan", consumptionOfIngredients.IdPlan);
+                    command.Parameters.AddWithValue("consumption", consumptionOfIngredients.Consumption);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show("Расход обновлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Запрос отклонен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

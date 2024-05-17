@@ -40,17 +40,39 @@ namespace bakery.View
             comboBoxEmployee.ItemsSource = await EmployeeFromDb.GetEmployee();
             comboBoxEmployee.DisplayMemberPath = "Fio";
             comboBoxEmployee.SelectedValuePath = "IdEmployee";
+
+            if (ProductRealsePlanPage.CurrentProductReleasePlan != null)
+            {
+                comboBoxProduct.Text = ProductRealsePlanPage.CurrentProductReleasePlan.NameProduct;
+                comboBoxEmployee.Text = ProductRealsePlanPage.CurrentProductReleasePlan.Fio;
+                datePickerRelease.Text = ProductRealsePlanPage.CurrentProductReleasePlan.PlannedReleaseDate.ToString();
+            }
         }
         
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string product = comboBoxProduct.Text;
-                string fio = comboBoxEmployee.Text;
-                DateTime date = DateTime.Parse(datePickerRelease.Text);
-                await ProductReleasePlanFromDb.AddProductReleasePlan(product, fio, date);
-                Close();
+                if (ProductRealsePlanPage.CurrentProductReleasePlan != null)
+                {
+                    ProductRealsePlanPage.CurrentProductReleasePlan.NameProduct = comboBoxProduct.Text;
+                    ProductRealsePlanPage.CurrentProductReleasePlan.Fio = comboBoxEmployee.Text;
+                    ProductRealsePlanPage.CurrentProductReleasePlan.PlannedReleaseDate = DateTime.Parse(datePickerRelease.Text);
+
+                    await ProductReleasePlanFromDb.UpdateProductReleasePlan(ProductRealsePlanPage.CurrentProductReleasePlan);
+
+                    Close();
+                }
+                else
+                {
+                    string product = comboBoxProduct.Text;
+                    string fio = comboBoxEmployee.Text;
+                    DateTime date = DateTime.Parse(datePickerRelease.Text);
+                    await ProductReleasePlanFromDb.AddProductReleasePlan(product, fio, date);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllProductReleasePlan();

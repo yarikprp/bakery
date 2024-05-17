@@ -22,6 +22,7 @@ namespace bakery.Page
     {
         List<ConsumptionOfIngredients> consumptionOfIngredients = new List<ConsumptionOfIngredients>();
         List<ConsumptionOfIngredients> consumptionOfIngredientsSearch = new List<ConsumptionOfIngredients>();
+        public static ConsumptionOfIngredients CurrentConsumption { get; set; } = null;
         public СonsumptionOfIngredientsPage()
         {
             InitializeComponent();
@@ -85,10 +86,7 @@ namespace bakery.Page
                 {
                     AddEditСonsumptiontWindow addEditСonsumptiontWindow = new AddEditСonsumptiontWindow();
 
-                    addEditСonsumptiontWindow.comboBoxPlan.Text = selectedEdit.IdPlan.ToString();
-                    addEditСonsumptiontWindow.textBoxСonsumption.Text = selectedEdit.Consumption.ToString();
-
-                    AddEditСonsumptiontWindow.selectedIndex = consumptionOfIngredients.FindIndex(u => u.IdConsumption == selectedEdit.IdConsumption);
+                    CurrentConsumption = (ConsumptionOfIngredients)dataGridСonsumptionOfIngredientsPage.SelectedItem;
 
                     addEditСonsumptiontWindow.ShowDialog();
 

@@ -90,11 +90,7 @@ namespace bakery.Page
                 {
                     AddEditProductRealsePlanWindow addEditProductRealsePlanWindow = new AddEditProductRealsePlanWindow();
 
-                    addEditProductRealsePlanWindow.comboBoxProduct.Text = selectedEdit.NameProduct;
-                    addEditProductRealsePlanWindow.comboBoxEmployee.Text = selectedEdit.Fio;
-                    addEditProductRealsePlanWindow.datePickerRelease.Text = selectedEdit.PlannedReleaseDate.ToString();
-
-                    AddEditProductRealsePlanWindow.selectedIndex = productReleasePlans.FindIndex(u => u.IdPlan == selectedEdit.IdPlan);
+                    CurrentProductReleasePlan = (ProductReleasePlan)dataGridProductReleasePlan.SelectedItem;
 
                     addEditProductRealsePlanWindow.ShowDialog();
 

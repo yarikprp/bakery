@@ -79,8 +79,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-/*                    string add = "INSERT INTO public.supplier(ingredient, id_company) VALUES (@ingredient, (SELECT id_company FROM public.company WHERE company_name = @company_name)); ";
-*/                    string add = "CALL insert_supplier(@ingredient, @company_name); ";
+                    string add = "CALL insert_supplier(@ingredient, @company_name); ";
 
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("ingredient", ingredient);
@@ -102,7 +101,7 @@ namespace bakery.Model
             }
         }
 
-       /* public static async Task UpdateCompany(Supplier supplier)
+       public static async Task UpdateCompany(Supplier supplier)
         {
             try
             {
@@ -110,21 +109,19 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string update = "CALL update_company(@id, @company_name, @fio, @number_phone, @adress);";
+                    string update = "UPDATE public.supplier SET id_company = (SELECT id_company FROM public.company WHERE company_name = @company_name) WHERE ingredient = @ingredient AND id_supplier = @id_supplier; ";
                     NpgsqlCommand command = new NpgsqlCommand(update, connection);
-                    command.Parameters.AddWithValue("id", company.IdCompany);
-                    command.Parameters.AddWithValue("company_name", company.NameCompany);
-                    command.Parameters.AddWithValue("fio", company.Fio);
-                    command.Parameters.AddWithValue("number_phone", company.NamePhone);
-                    command.Parameters.AddWithValue("adress", company.Adress);
+                    command.Parameters.AddWithValue("id_supplier", supplier.IdSupplier);
+                    command.Parameters.AddWithValue("ingredient", supplier.Ingredient);
+                    command.Parameters.AddWithValue("company_name", supplier.NameCompany);
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show("Компания обновлена");
+                        MessageBox.Show($"Поставщик {supplier.Ingredient} добавлен");
                     }
                     else
                     {
-                        MessageBox.Show("Компания обновлена");
+                        MessageBox.Show($"Поставщик {supplier.Ingredient} добавлен");
                     }
                 }
             }
@@ -132,6 +129,6 @@ namespace bakery.Model
             {
                 MessageBox.Show(ex.Message);
             }
-        }*/
+        }
     }
 }

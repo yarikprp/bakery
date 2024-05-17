@@ -90,13 +90,7 @@ namespace bakery.Page
                 {
                     AddEditReceiptWarehouseWindow addEditReceiptWarehouse = new AddEditReceiptWarehouseWindow();
 
-                    addEditReceiptWarehouse.comboBoxIngredients.Text = selectedEdit.NameIngredients;
-                    addEditReceiptWarehouse.comboBoxProduct.Text = selectedEdit.NameProduct;
-                    addEditReceiptWarehouse.comboBoxSupplier.Text = selectedEdit.NameCompany;
-                    addEditReceiptWarehouse.dateTimeDateOfReceipt.Text = selectedEdit.DateOfReceipt.ToString();
-                    addEditReceiptWarehouse.textBoxQuantity.Text = selectedEdit.Quantity.ToString();
-
-                    AddEditReceiptWarehouseWindow.selectedIndex = receiptWarehouse.FindIndex(u => u.IdBalance == selectedEdit.IdBalance);
+                    CurrentReceiptWarehouse = (ReceiptWarehouse)dataGridReceiptWarehouses.SelectedItem;
 
                     addEditReceiptWarehouse.ShowDialog();
 
