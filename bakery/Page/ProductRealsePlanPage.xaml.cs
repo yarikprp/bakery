@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,11 @@ namespace bakery.Page
         private async void ProductReleasePlanPage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllProductReleasePlan();
+            productReleasePlans = await ProductReleasePlanFromDb.GetProductReleasePlan();
+
+            comboBoxProductReleasePlan.ItemsSource = productReleasePlans;
+            comboBoxProductReleasePlan.DisplayMemberPath = "IdPlan";
+            comboBoxProductReleasePlan.SelectedValuePath = "IdPlan";
         }
 
         public async Task ViewAllProductReleasePlan()
@@ -72,9 +79,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxProductReleasePlan_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxProductReleasePlan_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxProductReleasePlan.SelectedIndex == 0)
+            {
+                await ViewAllProductReleasePlan();
+            }
+            else
+            {
+                productReleasePlans = await ProductReleasePlanFromDb.FilterPlanByDate(comboBoxProductReleasePlan.SelectedIndex);
 
+                dataGridProductReleasePlan.ItemsSource = productReleasePlans;
+            }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)

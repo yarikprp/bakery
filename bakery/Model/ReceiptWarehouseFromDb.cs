@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -141,5 +142,46 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task<List<ReceiptWarehouse>> FilterReceiptWarehouseByIngredients(int idIngredients)
+        {
+            List<ReceiptWarehouse> filtered_warehouse = new List<ReceiptWarehouse>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterWarehouse = "SELECT rw.id_balance, i.name_ingredients, p.product_name, c.company_name, rw.date_of_receipt, rw.quantity FROM receipt_warehouse rw JOIN ingredients i ON rw.id_ingredients = i.id_ingredients JOIN product p ON rw.id_product = p.id_product JOIN supplier s ON rw.id_supplier = s.id_supplier JOIN company c ON s.id_company = c.id_company WHERE i.id_ingredients = @id_ingredients; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterWarehouse, connection);
+                cmd.Parameters.AddWithValue("id_ingredients", idIngredients);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        DateTime datereceipt = DateTime.Now;
+                        if (!(reader[4] is DBNull))
+                        {
+                            datereceipt = reader.GetDateTime(4);
+                        }
+                        filtered_warehouse.Add(new ReceiptWarehouse(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), datereceipt, reader.GetString(5)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_warehouse;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -137,6 +138,46 @@ namespace bakery.Model
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        public static async Task<List<ProductReleasePlan>> FilterPlanByDate(int date)
+        {
+            List<ProductReleasePlan> filtered_plan = new List<ProductReleasePlan>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterPlan = "SELECT prp.id_plan, p.product_name, e.fio, prp.planned_release_date FROM product_release_plan prp JOIN employee e ON prp.id_employee = e.id_employee JOIN product p ON prp.id_product = p.id_product WHERE prp.id_plan = @id_plan; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterPlan, connection);
+                cmd.Parameters.AddWithValue("id_plan", date);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        DateTime release = DateTime.Now;
+                        if (!(reader[3] is DBNull))
+                        {
+                            release = reader.GetDateTime(3);
+                        }
+                        filtered_plan.Add(new ProductReleasePlan(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), release));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_plan;
         }
     }
 }

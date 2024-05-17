@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -139,6 +140,46 @@ namespace bakery.Model
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        public static async Task<List<Sale>> FilterSaleByPlan(int idPlan)
+        {
+            List<Sale> filtered_sale = new List<Sale>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterSale = "SELECT s.id_sale, prp.id_plan, e.fio, s.date_of_sale, s.quantity FROM sale s JOIN product_release_plan prp ON s.id_plan = prp.id_plan JOIN employee e ON s.id_employee = e.id_employee WHERE prp.id_plan = @id_plan; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterSale, connection);
+                cmd.Parameters.AddWithValue("id_plan", idPlan);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        DateTime date_of_sale = DateTime.Now;
+                        if (!(reader[3] is DBNull))
+                        {
+                            date_of_sale = reader.GetDateTime(3);
+                        }
+                        filtered_sale.Add(new Sale(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), date_of_sale, reader.GetInt32(4)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_sale;
         }
     }
 }

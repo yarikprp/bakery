@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,7 @@ namespace bakery.Page
     {
         List<Ingredients> ingredients = new List<Ingredients>();
         List<Ingredients> ingredientsSearch = new List<Ingredients>(); 
+        List<TypeIngredients> typeIngredients = new List<TypeIngredients>();
         public static Ingredients CurrentIngredients { get; set; } = null;
 
         public IngredientPage()
@@ -35,6 +38,14 @@ namespace bakery.Page
         private async void IngredientPage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllIngredients();
+
+            typeIngredients = await TypeIngredientsFromDb.GetTypeIngredients();
+
+            typeIngredients.Insert(0, new TypeIngredients(0, "Все"));
+
+            comboBoxIngredient.ItemsSource = typeIngredients;
+            comboBoxIngredient.DisplayMemberPath = "TypeIngredient";
+            comboBoxIngredient.SelectedValuePath = "IdType";
         }
 
         public async Task ViewAllIngredients()
@@ -72,8 +83,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxIngredient_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxIngredient_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxIngredient.SelectedIndex == 0)
+            {
+                await ViewAllIngredients();
+            }
+            else
+            {
+                ingredients = await IngredientsFromDb.FilterUserByRole(comboBoxIngredient.SelectedIndex);
+
+                dataGridIngredient.ItemsSource = ingredients;
+            }
 
         }
 

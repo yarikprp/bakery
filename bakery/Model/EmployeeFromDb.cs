@@ -1,5 +1,4 @@
 ﻿using bakery.Classes;
-using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -109,6 +108,42 @@ namespace bakery.Model
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public static async Task<List<Employee>> FilterEmployeeByPost(int idPost)
+        {
+            List<Employee> filtered_employee = new List<Employee>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterEmployee = "SELECT employee.id_employee, employee.fio, post.name_post, employee.salary, employee.date_of_employment FROM employee JOIN post ON employee.id_post = post.id_post WHERE employee.id_post = @id_post; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterEmployee, connection);
+                cmd.Parameters.AddWithValue("id_post", idPost);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        filtered_employee.Add(new Employee(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetDateTime(4)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_employee;
         }
     }
 }

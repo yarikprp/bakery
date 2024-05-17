@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -137,5 +138,41 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task<List<Ingredients>> FilterUserByRole(int idType)
+        {
+            List<Ingredients> filtered_type = new List<Ingredients>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterIngredients = "SELECT i.id_ingredients, ti.type_ingredient, p.product_name, u.name_unit, i.quantity, i.warehouse, i.name_ingredients FROM ingredients i JOIN type_ingredients ti ON i.id_type = ti.id_type JOIN unit u ON i.id_unit = u.id_unit JOIN product p ON i.id_product = p.id_product WHERE ti.id_type = @id_type; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterIngredients, connection);
+                cmd.Parameters.AddWithValue("id_type", idType);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        filtered_type.Add(new Ingredients(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_type;
+        }
+
     }
 }

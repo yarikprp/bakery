@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,12 @@ namespace bakery.Page
         private async void ConsumptionOfIngredients_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllConsumptionOfIngredients();
+            consumptionOfIngredients = await ConsumptionFromDb.GetConsumptionOfIngredients();
+            consumptionOfIngredients.Insert(0, new ConsumptionOfIngredients(0, 0, 0));
+
+            comboBoxСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
+            comboBoxСonsumptionOfIngredientsPage.DisplayMemberPath = "IdConsumption";
+            comboBoxСonsumptionOfIngredientsPage.SelectedValuePath = "IdConsumption";
         }
 
         public async Task ViewAllConsumptionOfIngredients()
@@ -68,8 +76,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxСonsumptionOfIngredientsPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxСonsumptionOfIngredientsPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxСonsumptionOfIngredientsPage.SelectedIndex == 0)
+            {
+                await ViewAllConsumptionOfIngredients();
+            }
+            else
+            {
+                consumptionOfIngredients = await ConsumptionFromDb.FilterConsumptionOfIngredientsById(comboBoxСonsumptionOfIngredientsPage.SelectedIndex);
+
+                dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
+            }
 
         }
 

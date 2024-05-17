@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +28,7 @@ namespace bakery.Page
         List<Product> product = new List<Product>();
         List<Product> productSearch = new List<Product>(); 
         public static Product CurrentProduct { get; set; } = null;
-
-        /*        static List<Employee> employee = new List<Employee>();
-        */
+        
         public ProductPage()
         {
             InitializeComponent();
@@ -36,13 +36,12 @@ namespace bakery.Page
 
         private async void ProductPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewAllProduct();/*
-            post = await EmployeeFromDb.GetEmployee();
-            post.Insert(0, new Employee(0, "Все"));
+            await ViewAllProduct();
+            product = await ProductFromDb.GetProduct();
 
-            comboBoxProduct.ItemsSource = post;
-            comboBoxProduct.DisplayMemberPath = "PostName";
-            comboBoxProduct.SelectedValuePath = "PostId";*/
+            comboBoxProduct.ItemsSource = product;
+            comboBoxProduct.DisplayMemberPath = "NameProduct";
+            comboBoxProduct.SelectedValuePath = "IdProduct";
         }
 
         public async Task ViewAllProduct()
@@ -80,9 +79,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxProduct.SelectedIndex == 0)
+            {
+                await ViewAllProduct();
+            }
+            else
+            {
+                product = await ProductFromDb.FilterProductByEmployee(comboBoxProduct.SelectedIndex);
 
+                dataGridProduct.ItemsSource = product;
+            }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)

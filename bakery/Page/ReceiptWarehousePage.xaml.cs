@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,7 @@ namespace bakery.Page
     {
         List<ReceiptWarehouse> receiptWarehouse = new List<ReceiptWarehouse>();
         List<ReceiptWarehouse> receiptWarehouseSearch = new List<ReceiptWarehouse>();
+        List<Ingredients> ingredients = new List<Ingredients>();
         public static ReceiptWarehouse CurrentReceiptWarehouse { get; set; } = null;
 
         public ReceiptWarehousePage()
@@ -35,6 +38,13 @@ namespace bakery.Page
         private async void ReceiptWarehousePage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllReceiptWarehouse();
+
+            ingredients = await IngredientsFromDb.GetIngredients();
+            ingredients.Insert(0, new Ingredients(0, null, null, null, 0, null, "Все"));
+
+            comboBoxReceiptWarehouses.ItemsSource = ingredients;
+            comboBoxReceiptWarehouses.DisplayMemberPath = "NameProduct";
+            comboBoxReceiptWarehouses.SelectedValuePath = "IdIngredients";
         }
 
         public async Task ViewAllReceiptWarehouse()
@@ -72,8 +82,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxReceiptWarehouses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxReceiptWarehouses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxReceiptWarehouses.SelectedIndex == 0)
+            {
+                await ViewAllReceiptWarehouse();
+            }
+            else
+            {
+                receiptWarehouse = await ReceiptWarehouseFromDb.FilterReceiptWarehouseByIngredients(comboBoxReceiptWarehouses.SelectedIndex);
+
+                dataGridReceiptWarehouses.ItemsSource = receiptWarehouse;
+            }
 
         }
 

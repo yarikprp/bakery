@@ -1,6 +1,7 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,8 @@ namespace bakery.Page
         {
             await ViewAllCompany();
             companies = await CompanyFromDb.GetCompany();
-/*            companies.Insert(0, new Company(0, "Все"));
-*/
+            companies.Insert(0, new Company(0, null, null, null, "Все"));
+
             comboBoxCompany.ItemsSource = companies;
             comboBoxCompany.DisplayMemberPath = "NameCompany";
             comboBoxCompany.SelectedValuePath = "IdCompany";
@@ -79,9 +80,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxCompany.SelectedIndex == 0)
+            {
+                await ViewAllCompany();
+            }
+            else
+            {
+                supplier = await SupplierFromDb.FilterUserByCompany(comboBoxCompany.SelectedIndex);
 
+                dataGridCompany.ItemsSource = supplier;
+            }
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)

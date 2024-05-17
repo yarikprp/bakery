@@ -5,6 +5,7 @@ using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,29 +35,21 @@ namespace bakery.Page
         private async void CompanyPage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllCompany();
+            company = await CompanyFromDb.GetCompany();
+            company.Insert(0, new Company(0, null, null, null, "Все"));
 
-            comboBoxCompany.DisplayMemberPath = "companyName";
-            comboBoxCompany.Items.Add("Company");
-            comboBoxCompany.Items.Add("Fio");
-            comboBoxCompany.Items.Add("NamePhone");
-            comboBoxCompany.Items.Add("Adress");
+            comboBoxCompany.ItemsSource = company;
+            comboBoxCompany.DisplayMemberPath = "NameCompany";
+            comboBoxCompany.SelectedValuePath = "IdCompany";
+
         }
 
        public async Task ViewAllCompany()
-        {
+       {
             company = await CompanyFromDb.GetCompany();
 
             dataGridCompany.ItemsSource = company;
-        }
-
-        private void SortDataGrid(string sortBy, ListSortDirection direction)
-        {
-            var dataView = CollectionViewSource.GetDefaultView(dataGridCompany.ItemsSource);
-            dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
-            dataView.Refresh();
-        }
+       }
 
         List<Company> SearchSupplier(string searchString)
         {
@@ -84,14 +77,17 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxCompany_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBoxCompany.SelectedItem != null)
+            if (comboBoxCompany.SelectedIndex == 0)
             {
-                string selectedSortBy = (comboBoxCompany.SelectedItem).ToString();
-                ListSortDirection direction = ListSortDirection.Ascending;
+                await ViewAllCompany();
+            }
+            else
+            {
+                company = await CompanyFromDb.FilterCompanuById(comboBoxCompany.SelectedIndex);
 
-                SortDataGrid(selectedSortBy, direction);
+                dataGridCompany.ItemsSource = company;
             }
         }
 

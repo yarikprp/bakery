@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -130,5 +131,42 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public static async Task<List<Supplier>> FilterUserByCompany(int idCompany)
+        {
+            List<Supplier> filtered_supplier = new List<Supplier>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterSupplier = "SELECT supplier.id_supplier, supplier.ingredient, company.company_name FROM supplier JOIN company ON supplier.id_company = company.id_company WHERE company.id_company = @id_company;";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterSupplier, connection);
+                cmd.Parameters.AddWithValue("@id_company", idCompany);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        filtered_supplier.Add(new Supplier(reader.GetInt32(0), reader.GetString(1), reader.GetString(2)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_supplier;
+        }
+
     }
 }

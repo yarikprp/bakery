@@ -1,4 +1,5 @@
 ﻿using bakery.Classes;
+using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -147,5 +148,51 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
+        public static async Task<List<Product>> FilterProductByEmployee(int NameProduct)
+        {
+            List<Product> filtered_product = new List<Product>();
+            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
+
+            try
+            {
+                await connection.OpenAsync();
+
+                string filterProduct = "SELECT * FROM product_info WHERE id_product = @id_product; ";
+
+                NpgsqlCommand cmd = new NpgsqlCommand(filterProduct, connection);
+                cmd.Parameters.AddWithValue("id_product", NameProduct);
+
+                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
+                if (reader.HasRows)
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        DateTime releasses = DateTime.Now;
+                        if (!(reader[3] is DBNull))
+                        {
+                            releasses = reader.GetDateTime(3);
+                        }
+                        DateTime dateOfManufacture = DateTime.Now;
+                        if (!(reader[5] is DBNull))
+                        {
+                            dateOfManufacture = reader.GetDateTime(5);
+                        }
+                        filtered_product.Add(new Product(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), releasses, reader.GetDecimal(4), dateOfManufacture, reader.GetInt32(6)));
+                    }
+                    await reader.CloseAsync();
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+            return filtered_product;
+        }
+
     }
 }

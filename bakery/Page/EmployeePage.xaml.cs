@@ -1,6 +1,7 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -70,9 +71,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxPost_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxPost.SelectedIndex == 0)
+            {
+                await ViewAllEmployee();
+            }
+            else
+            {
+                employee = await EmployeeFromDb.FilterEmployeeByPost(comboBoxPost.SelectedIndex);
 
+                dataGridEmployee.ItemsSource = employee;
+            }
         }
 
         private async void buttonDelete_Click(object sender, RoutedEventArgs e)

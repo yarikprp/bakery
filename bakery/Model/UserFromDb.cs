@@ -309,10 +309,10 @@ namespace bakery.Model
             {
                 await connection.OpenAsync();
 
-                string filterUser = "SELECT * FROM user_info; ";
+                string filterUser = "SELECT * FROM user_info WHERE id_role = @roleId; ";
 
                 NpgsqlCommand cmd = new NpgsqlCommand(filterUser, connection);
-                cmd.Parameters.AddWithValue("", idRole);
+                cmd.Parameters.AddWithValue("roleId", idRole);
 
                 NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
                 if (reader.HasRows)

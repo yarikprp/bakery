@@ -1,8 +1,10 @@
 ﻿using bakery.Classes;
 using bakery.Model;
 using bakery.View;
+using kulinaria_app_v2.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +27,7 @@ namespace bakery.Page
     {
         List<Sale> sale = new List<Sale>();
         List<Sale> saleSearch = new List<Sale>(); 
+        List<ProductReleasePlan> productReleasePlans = new List<ProductReleasePlan>();
         public static Sale CurrentSale { get; set; } = null;
 
         public SalePage()
@@ -35,6 +38,12 @@ namespace bakery.Page
         private async void SalePage_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewAllEmployee();
+
+            productReleasePlans = await ProductReleasePlanFromDb.GetProductReleasePlan();
+
+            comboBoxSale.ItemsSource = productReleasePlans;
+            comboBoxSale.DisplayMemberPath = "IdPlan";
+            comboBoxSale.SelectedValuePath = "IdPlan";
         }
 
         public async Task ViewAllEmployee()
@@ -72,8 +81,18 @@ namespace bakery.Page
             }
         }
 
-        private void comboBoxSale_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboBoxSale_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (comboBoxSale.SelectedIndex == 0)
+            {
+                await ViewAllEmployee();
+            }
+            else
+            {
+                sale = await SaleFromDb.FilterSaleByPlan(comboBoxSale.SelectedIndex);
+
+                dataGridSale.ItemsSource = sale;
+            }
 
         }
 
