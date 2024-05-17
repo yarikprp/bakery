@@ -79,7 +79,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "INSERT INTO public.ingredients(id_type, id_product, id_unit, quantity, warehouse, name_ingredients) VALUES ((SELECT id_type FROM public.type_ingredients WHERE type_ingredient = @type_ingredient) ,(SELECT id_product FROM public.product WHERE product_name = @product_name), (SELECT id_unit FROM public.unit WHERE name_unit = @name_unit), @quantity, @warehouse, @name_ingredients); ";
+                    string add = "CALL insert_ingredient(@type_ingredient, @product_name, @name_unit, @quantity, @warehouse, @name_ingredients)";
                     
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("type_ingredient", type);

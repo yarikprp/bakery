@@ -86,8 +86,6 @@ namespace bakery.Model
 
                     string add = "INSERT INTO public.employee(fio, id_post, salary, date_of_employment) VALUES (@fio, (SELECT id_post FROM public.post WHERE name_post = @name_post), @salary, @date_of_employment); ";
 
-/*                    string add = "CALL public.insert_employee(@fio_param, @name_post_param, @salary_param, date_of_employment_param);  ";
-*/
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("fio", fio);
                     command.Parameters.AddWithValue("name_post", postName);
@@ -101,6 +99,38 @@ namespace bakery.Model
                     else
                     {
                         MessageBox.Show($"Сотрудник {fio} добавлен");
+                    }
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public static async Task UpdateEmployee(Employee employee)
+        {
+            try
+            {
+                using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
+                {
+                    await connection.OpenAsync();
+
+                    string update = "UPDATE public.employee SET id_post = (SELECT id_post FROM public.post WHERE name_post = @name_post), salary = @salary, date_of_employment = @date_of_employment WHERE fio = @fio ;";
+                    NpgsqlCommand command = new NpgsqlCommand(update, connection);
+                    command.Parameters.AddWithValue("id_post", employee.IdEmployee);
+                    command.Parameters.AddWithValue("fio", employee.Fio);
+                    command.Parameters.AddWithValue("name_post", employee.PostName);
+                    command.Parameters.AddWithValue("salary", employee.Salary);
+                    command.Parameters.AddWithValue("date_of_employment", employee.DateOfEmployment);
+
+                    if (await command.ExecuteNonQueryAsync() == 1)
+                    {
+                        MessageBox.Show($"Сотрудник {employee.Fio} обновлен");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Сотрудник {employee.Fio} обновлен");
                     }
                 }
             }

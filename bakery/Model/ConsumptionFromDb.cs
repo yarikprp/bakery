@@ -79,7 +79,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "INSERT INTO public.consumption_of_ingredients(id_plan, consumption) VALUES (@consumption, (SELECT id_plan FROM public.product_release_plan WHERE id_plan = @id_plan)); ";
+                    string add = "CALL insert_consumption_of_ingredients(@id_plan, @consumption); ";
                     
 
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
@@ -131,44 +131,5 @@ namespace bakery.Model
                 MessageBox.Show(ex.Message);
             }
         }
-        public static async Task<List<ConsumptionOfIngredients>> FilterConsumptionOfIngredientsById(int id)
-        {
-            List<ConsumptionOfIngredients> consumption = new List<ConsumptionOfIngredients>();
-            NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString);
-
-            try
-            {
-                await connection.OpenAsync();
-
-                string filterUser = "SELECT com.id_consumption, prod.planned_release_date FROM consumption_of_ingredients com JOIN product_release_plan prod ON prod.id_plan = com.id_plan WHERE com.id_consumption = @id_consumption; ";
-
-                NpgsqlCommand cmd = new NpgsqlCommand(filterUser, connection);
-                cmd.Parameters.AddWithValue("id_consumption", id);
-
-                NpgsqlDataReader reader = await cmd.ExecuteReaderAsync();
-                if (reader.HasRows)
-                {
-                    while (await reader.ReadAsync())
-                    {
-                        while (await reader.ReadAsync())
-                        {
-                            consumption.Add(new ConsumptionOfIngredients(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2)));
-                        }
-                    }
-                    await reader.CloseAsync();
-                }
-            }
-            catch (NpgsqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                await connection.CloseAsync();
-            }
-
-            return consumption;
-        }
-
     }
 }

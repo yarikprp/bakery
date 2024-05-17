@@ -106,7 +106,9 @@ namespace bakery.Page
                 {
                     AddEditProductWindow addEditProductWindow = new AddEditProductWindow();
 
-                    CurrentProduct = (Product)dataGridProduct.SelectedItem;
+                    CurrentProduct = (Product)dataGridProduct.SelectedItem; 
+                    addEditProductWindow.ParentPage = this;
+
 
                     addEditProductWindow.ShowDialog();
 

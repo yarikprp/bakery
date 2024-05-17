@@ -35,10 +35,6 @@ namespace bakery.Page
             await ViewAllConsumptionOfIngredients();
             consumptionOfIngredients = await ConsumptionFromDb.GetConsumptionOfIngredients();
             consumptionOfIngredients.Insert(0, new ConsumptionOfIngredients(0, 0, 0));
-
-            comboBoxСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
-            comboBoxСonsumptionOfIngredientsPage.DisplayMemberPath = "IdConsumption";
-            comboBoxСonsumptionOfIngredientsPage.SelectedValuePath = "IdConsumption";
         }
 
         public async Task ViewAllConsumptionOfIngredients()
@@ -74,21 +70,6 @@ namespace bakery.Page
             {
                 dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
             }
-        }
-
-        private async void comboBoxСonsumptionOfIngredientsPage_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (comboBoxСonsumptionOfIngredientsPage.SelectedIndex == 0)
-            {
-                await ViewAllConsumptionOfIngredients();
-            }
-            else
-            {
-                consumptionOfIngredients = await ConsumptionFromDb.FilterConsumptionOfIngredientsById(comboBoxСonsumptionOfIngredientsPage.SelectedIndex);
-
-                dataGridСonsumptionOfIngredientsPage.ItemsSource = consumptionOfIngredients;
-            }
-
         }
 
         private void buttonEdit_Click(object sender, RoutedEventArgs e)

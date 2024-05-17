@@ -131,12 +131,7 @@ namespace bakery.Page
                 {
                     AddEditEmployee addEditEmployee = new AddEditEmployee();
 
-                    addEditEmployee.textBoxFIO.Text = selectedEdit.Fio;
-                    addEditEmployee.comboBoxPost.Text = selectedEdit.PostName;
-                    addEditEmployee.textBoxMoney.Text = selectedEdit.Salary.ToString();
-                    addEditEmployee.dateTimeDateOfEmploymentPickerBirthDay.SelectedDate = selectedEdit.DateOfEmployment;
-
-                    AddEditEmployee.selectedIndex = employee.FindIndex(u => u.IdEmployee == selectedEdit.IdEmployee);
+                    CurrentEmployee = (Employee)dataGridEmployee.SelectedItem;
 
                     addEditEmployee.ShowDialog();
                     dataGridEmployee.ItemsSource = null;

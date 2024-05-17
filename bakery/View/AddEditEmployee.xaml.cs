@@ -39,20 +39,43 @@ namespace bakery.View
             comboBoxPost.ItemsSource = await PostFromDb.GetPost();
             comboBoxPost.DisplayMemberPath = "PostName";
             comboBoxPost.SelectedValuePath = "PostId";
+
+            if (EmployeePage.CurrentEmployee != null)
+            {
+                textBoxFIO.Text = EmployeePage.CurrentEmployee.Fio;
+                comboBoxPost.Text = EmployeePage.CurrentEmployee.PostName;
+                textBoxMoney.Text = EmployeePage.CurrentEmployee.Salary.ToString();
+                dateTimeDateOfEmploymentPickerBirthDay.Text = EmployeePage.CurrentEmployee.DateOfEmployment.ToString();
+            }
         }
 
         private async void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
             if(ValidateInput())
             {
-                string fio = textBoxFIO.Text;
-                string postName = comboBoxPost.Text;
-                string salary = textBoxMoney.Text;
-                DateTime date = DateTime.Parse(dateTimeDateOfEmploymentPickerBirthDay.Text);
+                if (EmployeePage.CurrentEmployee != null)
+                {
+                    EmployeePage.CurrentEmployee.Fio = textBoxFIO.Text;
+                    EmployeePage.CurrentEmployee.PostName = comboBoxPost.Text;
+                    EmployeePage.CurrentEmployee.Salary = textBoxMoney.Text;
+                    EmployeePage.CurrentEmployee.DateOfEmployment = DateTime.Parse(dateTimeDateOfEmploymentPickerBirthDay.Text);
 
-                await EmployeeFromDb.AddEmployee(fio, postName, salary, date);
+                    await EmployeeFromDb.UpdateEmployee(EmployeePage.CurrentEmployee);
 
-                Close();
+                    Close();
+                }
+                else
+                {
+                    string fio = textBoxFIO.Text;
+                    string postName = comboBoxPost.Text;
+                    string salary = textBoxMoney.Text;
+                    DateTime date = DateTime.Parse(dateTimeDateOfEmploymentPickerBirthDay.Text);
+
+                    await EmployeeFromDb.AddEmployee(fio, postName, salary, date);
+
+                    Close();
+                }
+
                 if (ParentPage != null)
                 {
                     await ParentPage.ViewAllEmployee();

@@ -77,7 +77,7 @@ namespace bakery.Model
 
                     string update = "UPDATE public.tb_user SET first_name=@fName, last_name=@lName, patronymic=@patronymic, " +
                         "date_of_birthday=@birthday, phone=@phone, adress=@adress " +
-                        "WHERE user_id=@id;";
+                        "WHERE user_id=@id; ";
                     NpgsqlCommand command = new NpgsqlCommand(update, connection);
                     command.Parameters.AddWithValue("fName", user.FirstName);
                     command.Parameters.AddWithValue("lName", user.LastName);
@@ -105,12 +105,11 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string change = "UPDATE public.tb_user SET user_password=@new " +
-                        "WHERE user_id = @id";
+                    string change = "CALL update_user_password(@id_param, @new_password_param); ";
 
                     NpgsqlCommand command = new NpgsqlCommand(change, connection);
-                    command.Parameters.AddWithValue("id", idUser);
-                    command.Parameters.AddWithValue("new", Verification.GetSHA512Hash(newPass));
+                    command.Parameters.AddWithValue("id_param", idUser);
+                    command.Parameters.AddWithValue("new_password_param", Verification.GetSHA512Hash(newPass));
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
@@ -118,7 +117,7 @@ namespace bakery.Model
                     }
                     else
                     {
-                        MessageBox.Show("Запрос отклонён");
+                        MessageBox.Show("Пароль изменён");
                     }
                 }
             }
@@ -227,11 +226,8 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string add = "INSERT INTO public.tb_user (first_name, last_name, patronymic, login, user_password, phone, adress, id_role, email) " +
-                        "VALUES (@firstName, @lastName, '', @login, @password, '', '', default, @email)";
-
-                    /*                    string add = "CALL create_user('@firstName', '@lastName', '@login', '@email', '@password');";
-                    */
+                    string add = "CALL insert_user(@firstName, @lastName, '', @login, @password, '', '', null, @email); ";
+                   
                     NpgsqlCommand command = new NpgsqlCommand(add, connection);
                     command.Parameters.AddWithValue("firstName", firstName);
                     command.Parameters.AddWithValue("lastName", lastName);
@@ -246,7 +242,7 @@ namespace bakery.Model
                     }
                     else
                     {
-                        MessageBox.Show("Ошибка записи");
+                        MessageBox.Show("Вы успешно зарегистрировались");
                     }
                 }
             }

@@ -115,8 +115,8 @@ namespace bakery.View
                 return false;
             }
 
-            int price;
-            if (!int.TryParse(textBoxPrice.Text, out price))
+            decimal price;
+            if (!decimal.TryParse(textBoxPrice.Text, out price))
             {
                 MessageBox.Show("Поле 'Цена' должно содержать только числовое значение.");
                 return false;

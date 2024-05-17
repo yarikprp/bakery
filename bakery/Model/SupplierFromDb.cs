@@ -1,5 +1,4 @@
 ﻿using bakery.Classes;
-using kulinaria_app_v2.Classes;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -103,14 +102,14 @@ namespace bakery.Model
         }
 
        public static async Task UpdateCompany(Supplier supplier)
-        {
+       {
             try
             {
                 using (NpgsqlConnection connection = new NpgsqlConnection(DbConnection.ConnectionString))
                 {
                     await connection.OpenAsync();
 
-                    string update = "UPDATE public.supplier SET id_company = (SELECT id_company FROM public.company WHERE company_name = @company_name) WHERE ingredient = @ingredient AND id_supplier = @id_supplier; ";
+                    string update = "UPDATE public.supplier SET ingredient = @ingredient, id_supplier = @id_supplier WHERE id_company = (SELECT id_company FROM public.company WHERE company_name = @company_name); ";
                     NpgsqlCommand command = new NpgsqlCommand(update, connection);
                     command.Parameters.AddWithValue("id_supplier", supplier.IdSupplier);
                     command.Parameters.AddWithValue("ingredient", supplier.Ingredient);
@@ -118,11 +117,11 @@ namespace bakery.Model
 
                     if (await command.ExecuteNonQueryAsync() == 1)
                     {
-                        MessageBox.Show($"Поставщик {supplier.Ingredient} добавлен");
+                        MessageBox.Show($"Поставщик {supplier.Ingredient} обновлен");
                     }
                     else
                     {
-                        MessageBox.Show($"Поставщик {supplier.Ingredient} добавлен");
+                        MessageBox.Show($"Поставщик {supplier.Ingredient} обновлен");
                     }
                 }
             }
