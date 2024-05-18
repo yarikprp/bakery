@@ -1,4 +1,5 @@
 ﻿using bakery.Model;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,6 +22,8 @@ namespace bakery.View
     /// </summary>
     public partial class ProfileEditWindow : Window
     {
+        public UserManegmentPage ParentPage { get; set; }
+
         public ProfileEditWindow()
         {
             InitializeComponent();
@@ -56,6 +59,10 @@ namespace bakery.View
             else
             {
                 MessageBox.Show("Имя и фамилия являются обязательными полями для заполнения.");
+            }
+            if (ParentPage != null)
+            {
+                await ParentPage.ViewAllUsers();
             }
         }
     }

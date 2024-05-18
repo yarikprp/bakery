@@ -36,7 +36,6 @@ namespace bakery.Page
         {
             await ViewAllCompany();
             company = await CompanyFromDb.GetCompany();
-            company.Insert(0, new Company(0, null, null, null, "Все"));
 
             comboBoxCompany.ItemsSource = company;
             comboBoxCompany.DisplayMemberPath = "NameCompany";

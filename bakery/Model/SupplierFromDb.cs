@@ -109,7 +109,7 @@ namespace bakery.Model
                 {
                     await connection.OpenAsync();
 
-                    string update = "UPDATE public.supplier SET ingredient = @ingredient, id_supplier = @id_supplier WHERE id_company = (SELECT id_company FROM public.company WHERE company_name = @company_name); ";
+                    string update = "UPDATE public.supplier SET ingredient = @ingredient FROM public.company WHERE public.supplier.id_supplier = @id_supplier AND public.company.id_company = public.supplier.id_company AND public.company.company_name = @company_name; ";
                     NpgsqlCommand command = new NpgsqlCommand(update, connection);
                     command.Parameters.AddWithValue("id_supplier", supplier.IdSupplier);
                     command.Parameters.AddWithValue("ingredient", supplier.Ingredient);

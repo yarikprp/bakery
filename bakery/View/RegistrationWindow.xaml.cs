@@ -1,4 +1,5 @@
 ﻿using bakery.Model;
+using bakery.Page;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace bakery.View
     /// </summary>
     public partial class RegistrationWindow : Window
     {
+        public UserManegmentPage ParentPage { get; set; }
         public RegistrationWindow()
         {
             InitializeComponent();
@@ -72,6 +74,11 @@ namespace bakery.View
                 else
                 {
                     Close();
+                }
+
+                if (ParentPage != null)
+                {
+                    await ParentPage.ViewAllUsers();
                 }
             }
         }

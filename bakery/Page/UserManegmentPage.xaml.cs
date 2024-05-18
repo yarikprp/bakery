@@ -41,7 +41,7 @@ namespace bakery.Page
             comboBoxRoles.SelectedValuePath = "Id";
         }
 
-        async Task ViewAllUsers()
+        public async Task ViewAllUsers()
         {
             users = await UserFromDb.GetUsers();
 
@@ -51,6 +51,7 @@ namespace bakery.Page
         private async void buttonAdd_Click(object sender, RoutedEventArgs e)
         {
             RegistrationWindow registrationWindow = new RegistrationWindow();
+            registrationWindow.ParentPage = this;
             registrationWindow.Hide();
 
             bool? res = registrationWindow.ShowDialog();
